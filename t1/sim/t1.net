@@ -8,6 +8,12 @@ CIRCUITO
 * forces current values to be saved
 .options savecurrents
 
+
+* Paramiters
+.param Kb = 7.26294962318m;
+.param Kc = 8.23798173787k;
+
+
 * supply voltage
 Va a 0 5.02770960543 
 
@@ -18,27 +24,29 @@ R3 b d 3.09219210964k
 R4 0 d 4.13741259708k
 R5 d e 3.11995097026k
 R6 0 f 2.00264223494K
-R7 f g 1.02137871871K
+R7 h g 1.02137871871K
 
  *Extra voltage source
  Ve 0 f 0
 
 * Voltage Sources
-Hc d g Ve 8.23798173787
+Ve f h 0
+Hc d g Ve Kc
 
 * Current Sources
-Gb e c (b,d) 7.26294962318 
-* Mudei os nós por forma a colocar a direção da corrente correta
+Gb e c b d Kb
 Id e g 1.03462284298m
-* Mudei de h para g
+
  
 
 
 *Control commads
 .control
 op
+<<<<<<< HEAD
 print v(a,0) v(d,g) v(e,h) V(c,e) v(a,b) v(b,c) v(b,d) v(0,d) v(d,e) v(0,f) v(f,g)
-*print i(Va) i(Vc)
+print i(Va) i(Ve)
+
 .endc
 .END
 *isto e uma alteraçao
