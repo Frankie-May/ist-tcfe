@@ -6,8 +6,35 @@ clear all
 
 pkg load symbolic
 
-syms V0 Vb Vc Vd Ve Vf Vg
+%% Resistances
+sym R1
+sym R2
+sym R3
+sym R4
+sym R5
+sym R6
+sym R7
+sym Kb
+sym Kc
 
+%%Voltage Variables
+sym Va
+sym Vb
+sym Vc
+
+%%Current Variables
+sym Ib
+sym Ic
+sym Id
+
+%%Mesh Currents
+sym Ima
+sym Imb
+sym Imc
+sym Imd
+
+
+%% Values Attribution
 Va = 5.02770960543;
 R1 = 1.02055434268*10^3;
 R2 = 2.00415325659*10^3;
@@ -20,11 +47,17 @@ Id = 1.03462284298*10^-3;
 Kb = 7.26294962318*10^-3;
 Kc = 8.23798173787*10^3;
 
-eqn1 = (Va-Vb)/(R1) + (Vc-Vb)/(R2) + (Vb-Vd)/(R3) == 0;
-eqn2 = (Kb*(Vb-Vd)) + (Vc-Vb)/(R2) == 0;
-eqn3 = Id + (Vd-Ve)/(R5) - Kb*(Vb-Vd) == 0;
-eqn4 = (V0-Vf)/(R6) + (Vf-Vg)/(R7) == 0;
-eqn5 = V0 == 0;
-eqn6 = Vg == Vd - Kc*(V0-Vf)/(R6);
+%%Equations
+eq1 = Imb == - Ib;
+eq2 = Imd == - Id;
+eq3 = Va - R1 * Ima - R3 * (Ima-Imb) + R4 * (Imc - Ima) == 0;
+eq4 = R6 * Imc - R4 * (Imc-Ima) - Vc + R7 * Imc == 0;
 
-%solve([eqn1, eqn2, eqn3, eqn4,e qn5, eqn6], [Vb, Vc, Vd, Ve, V0, Vf, Vg])
+%%Extra Equations
+Ib = Kb * Vb;
+Vc = kc* Ic;
+Vb = R3 * (Ima-Imb);
+Ic = Imc;
+
+%%Solution
+%solve (eq1 , eq2 , eq3 , eq4 , Ima , Imb , Imc , Imd)
