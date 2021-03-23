@@ -1,8 +1,11 @@
 \section{Theoretical Analysis}
 \label{sec:analysis}
 
-In this section, the circuit shown in Figure~\ref{fig:rc} is analysed
-theoretically, in terms of its time and frequency responses.
+To theoretically analyse the circuit, as stated before, we make use of two circuit analysing methods, the Meshes' Method and the Nodes' Method.
+
+The Meshes' Method consists in writing Kirchhoff's Voltage Law (KVL) for every mesh in the circuit. To do so we assume that every mesh has a current associated with it, which flows only in this mesh. We call this currents mesh currents. It is with this mesh currents that we may write the KVL. Per example, for resistor $R1$ we write its voltage as $V_{R1} =R_1*I_{M1}$ where $I_{M1}$ is the mesh current that flows through the upper-left mesh. For circuit components in the border between two meshes the current flowing through them is the sum of the adjacent mesh currents. Per example,assuming that all mesh currents flow clockwise, for resistor $R3$, the current flowing through it is given by $I_{R3} = I_{M1}-I_{M2}$. We then write voltage between the resistor's terminals using Ohm's Law the same way we did with resistor $R1$.
+
+When analysing a circuit with the Nodes' Method we associate different voltages to every node, as we associated different currents to every mesh. By writing Kirchhoff's Current Law (KCL) for every node that is not connected to a voltage source we obtain the equations which will determine the voltage values in each node. Because most of the times this equations are not enough to all nodes' voltage, we may obtain other equations through direct circuit analysis. Per example, defining the node that connects $V_a$, $R_4$ and $R_6$ as the $0V$ node, we have that the voltage in the upper-right node, which we may call node A is equal to the voltage created by voltage source $V_a$. That is, $V_A = V_a$. KCL must be written in terms of the nodes' voltages. To do so we only need to apply Ohm's Law to obtain the current flowing through the resistors in terms of its terminal's voltage.
 
 \section{Time response}
 
