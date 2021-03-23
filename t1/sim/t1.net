@@ -25,28 +25,26 @@ R5 d e 3.11995097026k
 R6 0 f 2.00264223494K
 R7 h g 1.02137871871K
 
-*Extra voltage source
-Ve 0 f 0
-
 * Voltage Sources
-Ve f h 0
+Vee f h 0
 Hc d g Vee Kc
 
 * Current Sources
 Gb e c b d Kb
-Id e g 1.03462284298m
+Id g e 1.03462284298m
 
- 
 
 
 *Control commads
 .control
+op
 
 echo "********************************************"
 echo  "Operating point"
 echo "********************************************"
 
-*print @R1[i]
+print @R1[i]
+print v(a,b)
 
 echo  "op_TAB"
 print all
