@@ -26,8 +26,8 @@ R6 0 f 2.00264223494K
 R7 h g 1.02137871871K
 
 * Voltage Sources
-Ve f h 0
-Hc d g Ve Kc
+Vee f h 0
+Hc d g Vee Kc
 
 * Current Sources
 Gb e c b d Kb
