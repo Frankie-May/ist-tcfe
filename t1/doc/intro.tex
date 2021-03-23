@@ -1,13 +1,31 @@
-\section{Introduction}
-\label{sec: introduction}
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[portuguese]{babel}
+\usepackage{indentfirst}
+\usepackage{authblk}
+\usepackage{graphicx}
 
-The objective of this laboratory assignment is to study a circuit containing two sinusoidal voltage sources, seven resistors, and two controlled voltage sources, grouped in four loops. The circuit can be seen in Figure~\ref{Fig1: circuit}
+\title{T1}
+\author{.}
+\affil{Instituto Superior Técnico}
+\date{March 2021}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+
+The objective of this laboratory assignment is to study a circuit containing the following components: seven resistors, one independent voltage source, one independent current source, one voltage controlled current source and one current controlled voltage source, grouped in four meshes. The circuit can be seen in Figure~\ref{Fig1: circuit}
 
 We will start by making a theoretical analysis of the circuit, first by  using the mesh method, in which we’ll look at the circuit’s four meshes, calculating each mesh’s current; and by making a nodal analysis of it, determining the voltage between nodes.
 After that, the circuit will be analysed by simulation, whose results will be compared to the theoretical ones.
 
 \begin{figure}[h] \centering
-\includegraphics[width=0.6\linewidth]{circuito.pdf}
-\caption{Circuito}
-\label{Fig1: circuito}
+\includegraphics[width=0.6\linewidth]{Imagens/circuito.png}
+\caption{Circuit to analyze.}
+\label{Fig1: circuit}
 \end{figure}
+
+\end{document}

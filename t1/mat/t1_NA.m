@@ -94,7 +94,3 @@ printf("|Vd|%e|\n" , A(3));
 printf("|Ve|%e| \n" , A(4));
 printf("|Vf|%e| \n" , A(5));
 printf("|Vg|%e| \n" , A(6));
-
-printf("  op_TAB\n");
-disp("  Test ");
-disp("  op_END");
