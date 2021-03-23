@@ -4,7 +4,7 @@
 * NGSPICE simulation script
 * BJT amp with feedback
 *
-CIRCUITO
+t1
 * forces current values to be saved
 .options savecurrents
 
@@ -27,11 +27,11 @@ R6 0 f 2.00264223494K
 R7 h g 1.02137871871K
 
  *Extra voltage source
- Ve 0 f 0
+ Vee 0 f 0
 
 * Voltage Sources
 Ve f h 0
-Hc d g Ve Kc
+Hc d g Vee Kc
 
 * Current Sources
 Gb e c b d Kb
@@ -42,11 +42,8 @@ Id e g 1.03462284298m
 
 *Control commads
 .control
-op
-<<<<<<< HEAD
 print v(a,0) v(d,g) v(e,h) V(c,e) v(a,b) v(b,c) v(b,d) v(0,d) v(d,e) v(0,f) v(f,g)
-print i(Va) i(Ve)
+*print i(Va) i(Ve)
 
 .endc
 .END
-
