@@ -44,7 +44,7 @@ R1 * (A^-1*C)(1,1)
 R2 * (A^-1*C)(2,1)
 R3 * ((A^-1*C)(1,1)-(A^-1*C)(2,1))
 
-printf(  "op_TAB\n");
+printf(  "MA_TAB\n");
 printf("i1 = %e\n" , D(1));
 printf("i2 = %e\n" , D(2));
 printf("i3 = %e\n" , D(1)-D(2));
@@ -59,4 +59,4 @@ printf("Vd = %e\n" , Va-R1*D(1)-R3*(D(1)-D(2)));
 printf("Ve = %e\n" , Va-R1*D(1)-R3*(D(1)-D(2))+R5*(D(2)-D(4)));
 printf("Vf = %e\n" , R6*D(3));
 printf("Vg = %e\n" , R6*D(3)+R7*D(3));
-printf("op_END");
+printf("MA_END");

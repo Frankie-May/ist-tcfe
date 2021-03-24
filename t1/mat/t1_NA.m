@@ -95,7 +95,7 @@ printf("|Ve|%e| \n" , A(4));
 printf("|Vf|%e| \n" , A(5));
 printf("|Vg|%e| \n" , A(6));
 
-printf(  "op_TAB\n");
+printf(  "NA_TAB\n");
 printf("i1 = %e\n" , (Va-A(1))/(R1));
 printf("i2 = %e\n" , (A(1)-A(2))/(R2));
 printf("i3 = %e\n" , (A(1)-A(3))/(R3));
@@ -110,4 +110,4 @@ printf("Vd = %e\n" , A(3));
 printf("Ve = %e\n" , A(4));
 printf("Vf = %e\n" , A(5));
 printf("Vg = %e\n" , A(6));
-printf("op_END");
+printf("NA_END");
