@@ -34,10 +34,13 @@ Gb e c b d Kb
 Id g e 1.03462284298m
 
 
+.op
+.end
+
 
 *Control commads
 .control
-op
+
 
 echo "********************************************"
 echo  "Operating point"
@@ -49,6 +52,3 @@ print v(a,b) V(e)
 echo  "op_TAB"
 print all
 echo  "op_END"
-
-.endc
-.end
