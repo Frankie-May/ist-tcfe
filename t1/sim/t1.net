@@ -34,13 +34,12 @@ Gb e c b d Kb
 Id g e 1.03462284298m
 
 
-.op
-.end
 
 
 *Control commads
 .control
 
+op
 
 echo "********************************************"
 echo  "Operating point"
