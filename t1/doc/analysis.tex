@@ -7,8 +7,6 @@ The Meshes' Method consists in writing Kirchhoff's Voltage Law (KVL) for every m
 
 When analysing a circuit with the Nodes' Method we associate different voltages to every node, as we associated different currents to every mesh. By writing Kirchhoff's Current Law (KCL) for every node that is not connected to a voltage source we obtain the equations which will determine the voltage values in each node. Because most of the times this equations are not enough to all nodes' voltage, we may obtain other equations through direct circuit analysis. Per example, defining the node that connects $V_a$, $R_4$ and $R_6$ as the $0V$ node, we have that the voltage in the upper-right node, which we may call node A is equal to the voltage created by voltage source $V_a$. That is, $V_A = V_a$. KCL must be written in terms of the nodes' voltages. To do so we only need to apply Ohm's Law to obtain the current flowing through the resistors in terms of its terminal's voltage.
 
-As noticeable in the following tables, the current and voltage values obtained through theoretical analysis are similar to those obtained by the Ngspice simulation. This happens because Ngspice uses the Nodes' Method to solve circuits, therefore the values obtained through the theoretical Nodes' method is equal to those values obtained in the simulation. Concerning the Meshes' Method, this method has a similar degree of precision to that of the Nodes' Method, so it is expected that the results are also very similar.
-
 \begin{equation}
 \begin{bmatrix}
 \centering
