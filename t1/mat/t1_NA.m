@@ -68,7 +68,7 @@ G7 = 1/R7;
 
 %solve([eqn1, eqn2, eqn3, eqn4,e qn5, eqn6, eqn7], [Vb, Vc, Vd, Ve, Vf, Vg, Ik])
 
-C = [ G1+G2+G3   -G2              -G3         0	            0      0       0
+C = [ G1+G2+G3   -G2              -G3         0	               0      0       0
      -G2-Kb       G2               Kb         0                0      0       0
        -G3        0             G3+G4+G5     -G5               0      0      -1
         Kb        0             -G5-Kb        G5               0      0       0
@@ -82,7 +82,7 @@ D = [Va*G1
 	 Id
 	 0
 	 -Id
-	 -0]
+	 0]
 
 
 A = C^-1*D
@@ -94,3 +94,20 @@ printf("|Vd|%e|\n" , A(3));
 printf("|Ve|%e| \n" , A(4));
 printf("|Vf|%e| \n" , A(5));
 printf("|Vg|%e| \n" , A(6));
+
+printf(  "op_TAB\n");
+printf("i1 = %e\n" , (Va-A(1))/(R1));
+printf("i2 = %e\n" , (A(1)-A(2))/(R2));
+printf("i3 = %e\n" , (A(1)-A(3))/(R3));
+printf("i4 = %e\n" , (0-A(3))/(R4));
+printf("i5 = %e\n" , (A(3)-A(4))/(R5));
+printf("i6 = %e\n" , (0-A(5))/(R6));
+printf("i7 = %e\n" , (A(5)-A(6))/(R7));
+printf("Va = %e\n" , Va);
+printf("Vb = %e\n" , A(1));
+printf("Vc = %e\n" , A(2));
+printf("Vd = %e\n" , A(3));
+printf("Ve = %e\n" , A(4));
+printf("Vf = %e\n" , A(5));
+printf("Vg = %e\n" , A(6));
+printf("op_END");

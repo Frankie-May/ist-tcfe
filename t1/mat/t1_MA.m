@@ -2,6 +2,7 @@ close all
 clear all
 
 %% SYMBOLIC COMPUTATIONS OF t1
+%% Mesh Analysis
 
 pkg load symbolic
 
@@ -22,10 +23,10 @@ Id = 1.03462284298*10^-3;
 Kb = 7.26294962318*10^-3;
 Kc = 8.23798173787*10^3;
 
-A = [R1+R2+R4    -R3          -R4          0
-       -R3     R2+R3+R5-Kb*R3   0         -R5
+A = [R1+R3+R4    -R3          -R4          0
+       Kb*R3    1-Kb*R3         0          0
        -R4        0           R4+R6+R7-Kc  0
-        0        -R5            0          R5-Kc]
+        0         0             0          1]
 
 B = [Ij
 	 Ik
@@ -37,8 +38,25 @@ C = [Va
 	 0
 	-Id]
 
-A^-1*C
+D=A^-1*C
 
 R1 * (A^-1*C)(1,1)
 R2 * (A^-1*C)(2,1)
 R3 * ((A^-1*C)(1,1)-(A^-1*C)(2,1))
+
+printf(  "op_TAB\n");
+printf("i1 = %e\n" , D(1));
+printf("i2 = %e\n" , D(2));
+printf("i3 = %e\n" , D(1)-D(2));
+printf("i4 = %e\n" , D(1)-D(3));
+printf("i5 = %e\n" , D(2)-D(4));
+printf("i6 = %e\n" , D(3));
+printf("i7 = %e\n" , D(3));
+printf("Va = %e\n" , Va);
+printf("Vb = %e\n" , Va-R1*D(1));
+printf("Vc = %e\n" , Va-R1*D(1)-R2*D(2));
+printf("Vd = %e\n" , Va-R1*D(1)-R3*(D(1)-D(2)));
+printf("Ve = %e\n" , Va-R1*D(1)-R3*(D(1)-D(2))+R5*(D(2)-D(4)));
+printf("Vf = %e\n" , R6*D(3));
+printf("Vg = %e\n" , R6*D(3)+R7*D(3));
+printf("op_END");
