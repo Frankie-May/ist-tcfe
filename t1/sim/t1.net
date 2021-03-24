@@ -51,4 +51,4 @@ print all
 echo  "op_END"
 
 .endc
-.END
+.end
