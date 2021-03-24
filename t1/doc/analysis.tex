@@ -7,64 +7,50 @@ The Meshes' Method consists in writing Kirchhoff's Voltage Law (KVL) for every m
 
 When analysing a circuit with the Nodes' Method we associate different voltages to every node, as we associated different currents to every mesh. By writing Kirchhoff's Current Law (KCL) for every node that is not connected to a voltage source we obtain the equations which will determine the voltage values in each node. Because most of the times this equations are not enough to all nodes' voltage, we may obtain other equations through direct circuit analysis. Per example, defining the node that connects $V_a$, $R_4$ and $R_6$ as the $0V$ node, we have that the voltage in the upper-right node, which we may call node A is equal to the voltage created by voltage source $V_a$. That is, $V_A = V_a$. KCL must be written in terms of the nodes' voltages. To do so we only need to apply Ohm's Law to obtain the current flowing through the resistors in terms of its terminal's voltage.
 
-\section{Time response}
-
-The circuit consists of a single V-R-C loop where a current $i(t)$ circulates. The
-voltage source $v_I(t)$ drives its input, and the output voltage $v_O(t)$ is taken from
-the capacitor terminals. Applying the Kirchhoff Voltage Law (KVL), a single
-equation for the single loop in the circuit can be written as
+As noticeable in the following tables, the current and voltage values obtained through theoretical analysis are similar to those obtained by the Ngspice simulation. This happens because Ngspice uses the Nodes' Method to solve circuits, therefore the values obtained through the theoretical Nodes' method is equal to those values obtained in the simulation. Concerning the Meshes' Method, this method has a similar degree of precision to that of the Nodes' Method, so it is expected that the results are also very similar.
 
 \begin{equation}
-  Ri(t) + v_O(t) = v_I(t).
-  \label{eq:kvl}
+\begin{bmatrix}
+\centering
+G1+G2+G3 & -G2 & -G3 & 0 & 0 & 0 & 0\\ %Nó B
+-G2-Kb & G2 & Kb & 0 & 0 & 0 & 0\\ %Nó C
+-G3 & 0 & G3+G4+G5 & -G5 & 0 & 0 & -1\\ %Nó D
+Kb & 0 & -G5-Kb & G5 & 0 & 0 & 0\\ %Nó E
+0 & 0 & 0 & 0 & G6+G7 & -G7 & 0\\ %Nó F
+0 & 0 & 0 & 0 & -G7 & G7 & 1\\ %Nó G
+0 & 0 & 1 & 0 & Kc*G6 & -1 & 0 %Tensão D com tensão G
+\end{bmatrix}
 \end{equation}
 
-Because $v_O$ is the voltage between capacitor C's plates, it is related to the
-current $i$ by
-\begin{equation}
-  i(t) = C\frac{dv_O}{dt}.
-\end{equation}
-
-Hence, Equation~(\ref{eq:kvl}) can be rewritten as
-\begin{equation}
-  RC\frac{dv_O}{dt} + v_O(t) = v_I.
-  \label{eq:kvl2}
-\end{equation}
-
-Equation~(\ref{eq:kvl2}) is a linear differencial equation whose solution is a
-superposition of a natural solution $v_{On}$ and a forced solution $v_{Of}$:
+The above matrix is used in the Nodes' Method. The first five equations are obtained directly through KCL applied to nodes B, C, D, E and F respectively. The sixth equation is obtained through KCL applied to node G. The last equation relates node D's voltage with node G's through the dependent voltage source $V_C$ ($V_C=K_C*I_C$).
 
 \begin{equation}
-  v_O(t) = v_{On}(t) + v_{Of}(t).
-  \label{eq:vo_sol}
+\begin{bmatrix}
+\centering
+R1+R3+R4 & -R3 & -R4 & 0\\
+Kb*R3 & 1-Kb*R3 & 0 & 0\\
+-R4 & 0 & R4+R6+R7-Kc & 0\\
+ 0 & 0 & 0 & 1
+\end{bmatrix}
 \end{equation}
+\par
+\par
+The above matrix is used in the Meshes' Method. These equations were obtained directly through KVL applied to meshes j, k, l and m respectively.
 
-As learned in the theory classes the natural solution is of the form
-\begin{equation}
-  v_{On}(t) = Ae^{-\frac{t}{RC}},
-  \label{eq:vo_nat}
-\end{equation}
-where $A$ is an integration constant.
+\begin{comment}
 
-The forced solution is of the form given in Equation~(\ref{eq:vo_for}) and is
-illustrated in Figure~\ref{fig:forced}.
+\begin{table}[h]
+  \centering
+  \begin{tabular}{|l|r|}
+    \hline    
+    {\bf Name} & {\bf Value [A or V]} \\ \hline
+    \input{op_tab}
+  \end{tabular}
+  \caption{Operating point. A variable preceded by @ is of type {\em current}
+    and expressed in Ampere; other variables are of type {\it voltage} and expressed in
+    Volt.}
+  \label{tab:op}
+\end{table}
 
-\begin{equation}
-  V_{Of}(t) = |\bar{V}_{Of}| cos(\omega t + \angle \bar{V}_{Of}),
-  \label{eq:vo_for}
-\end{equation}
-
-\lipsum[1-1]
-
-
-\begin{figure}[h] \centering
-\includegraphics[width=0.8\linewidth]{forced.eps}
-\caption{Forced sinusoidal response.}
-\label{fig:forced}
-\end{figure}
-
-\section{Frequency response}
-
-\lipsum[1-1]
-
+\end{comment}
 
