@@ -31,7 +31,7 @@ Hc d g Ve Kc
 
 * Current Sources
 Gb e c b d Kb
-Id e g 1.03462284298m
+Id g e 1.03462284298m
 
 
 
@@ -44,7 +44,7 @@ echo  "Operating point"
 echo "********************************************"
 
 print @R1[i]
-print v(a,b)
+print v(a,b) V(e)
 
 echo  "op_TAB"
 print all
