@@ -5,11 +5,11 @@
 # ------------------------------------------------------------
 
 all:
-	@make -C simplify
+	@make -C mat
 	@make -C doc
 	@cp doc/report.pdf .
 
 clean:
 	@make -C doc clean
-	@make -C simplify clean
+	@make -C mat clean
 .PHONY: all clean

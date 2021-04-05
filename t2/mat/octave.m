@@ -162,6 +162,15 @@ J = [Vss;
 
 K = I\J;
 
+%%K = [V1;
+%	V2;
+%	V3
+%	V5;
+%	V6;
+%	V7;
+%	V8;
+%	Ix;
+%	Iy]
 
 printf("Ix = %.12f \n", K(8));
 %%Equivalent Resistance and Time Constant determined
@@ -170,3 +179,28 @@ sym tau;
 
 Req = Vx / abs(K(8));
 tau = Req * Cf;
+V06 = K(5);
+
+%%Natural Solution v6_n(t)
+t = 0:(20*10^-3)/1000:20*10^-3;
+
+v6_nt = V06*e.^(-(t/tau));
+
+graf_nat = figure();
+
+plot(t*1e3 , v6_nt);
+hold on;
+xlabel("t, ms");
+ylabel("V6, V");
+title("V6(t) natural solution plot");
+legend("Natural solution plot for node 6 with t belonging to [0, 20]ms" , "location" , "north");
+%%prints natural solution graphic prepared to be converted to pdf
+print (graf_nat, "graf_nat.pdf", "-dpdflatexstandalone");
+
+%%creates pdf of graphic and deletes unused files
+system("pdflatex graf_nat");
+system("rm graf_nat.aux && rm graf_nat-inc.pdf && rm graf_nat.log && rm graf_nat.tex");
+
+
+
+
