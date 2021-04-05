@@ -1,0 +1,20 @@
+\section{Simulation Analysis}
+\label{sec:simulation}
+
+The circuit that we have analysed through the mesh and the node method is going to be simulated using a circuit simulation platform, Ngspice. This program allows you to use simple notation to represent the circuit components and through the indication of the nodes that the components are connected to, it's able to compute the voltages and the currents that characterise the circuit.
+
+\begin{table}[h]
+  \centering
+  \begin{tabular}{|l|r|}
+    \hline    
+    {\bf Name} & {\bf Value [A or V]} \\ \hline
+    \input{op_tab}
+  \end{tabular}
+  \caption{Voltage and current values obtained through simulation. gb is the current produced by the voltage controled current source. ib is the current produced by the independent current source. $r_j[i]$ for $1<=j<=7$ is the current flowing through resistor $r_j$. Every other letter refers to the voltage in the respective same letter node.}
+  \label{tab:op}
+\end{table}
+
+
+As noticeable in the tables shown above, the current and voltage values obtained through theoretical analysis are similar to those obtained by the Ngspice simulation. This happens because Ngspice uses the Nodes' Method to solve circuits, therefore the values obtained through the theoretical Nodes' method is equal to those values obtained in the simulation. Concerning the Meshes' Method, this method has a similar degree of precision to that of the Nodes' Method, so it is expected that the results are also very similar.
+
+The error calculation in this case is proved to be unnecessary due to the close similarity between simulation results and theoretical results.
