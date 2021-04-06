@@ -62,7 +62,7 @@ sym Ic;
 sym Id;
 
 %%Capacity Variables
-sym C;
+sym Cf;
 
 %%Values attribution
 Vs = C{1,8};
@@ -90,7 +90,7 @@ A =[1 , 0 , 0 , 0 , 0 , 0 , 0;
 	0 , -(G2 + Kb) , G2 , Kb , 0 , 0 , 0;
 	0 , -Kb , 0 , (G5 + Kb) , -G5 , 0 , 0;
 	0 , 0 , 0 , 0 , 0 , (G6 + G7) , -G7;
-	0 , 0 , 0 , 1 , 0 , -(Kd * G6) , -1;
+	0 , 0 , 0 , 1 , 0 , (Kd * G6) , -1;
 	0 , G3 , 0 , (G4 - G3 - G5) , G5 , G7 , -G7;]
 
 D = [Vs;
@@ -145,7 +145,7 @@ I = [1 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0;
 	0 , -(G2+Kb) , G2 , Kb , 0 , 0 , 0 , 0 , 0;
 	0 , 0 , 0 , 0 , 0 , (G6 + G7) , -G7 , 0 , 0;
 	0 , 0 , 0 , 0 , 1 , 0 , -1 , 0 , 0;
-	0 , 0 , 0 , 1 , 0 , (-Kd * G6) , -1 , 0 , 0;
+	0 , 0 , 0 , 1 , 0 , (Kd * G6) , -1 , 0 , 0;
 	0 , Kb , 0 , (G5 - Kb) , -G5 , 0 , 0 , -1 , 0;
 	0 , G3 , 0 , (G4-G3-G5) , G6 , 0 , 0 , 0 , -1;
 	0 , 0 , 0 , 0 , 0 , -G7 , G7 , -1 , -1]
@@ -200,6 +200,54 @@ print (graf_nat, "graf_nat.pdf", "-dpdflatexstandalone");
 %%creates pdf of graphic and deletes unused files
 system("pdflatex graf_nat");
 system("rm graf_nat.aux && rm graf_nat-inc.pdf && rm graf_nat.log && rm graf_nat.tex");
+
+%%Complex amplitude determination. Nodal analysis for complete circuit when e^(t/tau) = 1:
+
+%%Additional Variables and new values assignment
+sym w;
+w = 2*pi*1;
+
+sym Zc;
+
+Zc = 1/(j*w*Cf);
+
+Vss = 1;
+E = [-G1 , (G1+G2+G3) , -G2 , -G3 , 0 , 0 , 0 , 0 , 0;
+	0 , -(G2+Kb) , G2 , Kb , 0 , 0 , 0 , 0 , 0;
+	0 , -Kb , 0 , (G5+Kb) , -(G5 + (1/Zc)) , 0 , (1/Zc) , 0 , 0;
+	0 , 0 , 0 , 0 , 0 , -(G6+G7) , G7 , 0 , 0;
+	0 , -G3 , 0 , (G3 + G4 + G5) , -G5 , 0 , 0 , 1 , 0;
+	0 , 0 , 0 , -1 , 0 , -Kd*G6 , 1 , 0 , 0;
+	-G1 , G1 , 0 , 0 , 0 , 0 , 0 , 0 , -1;
+	1 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0;
+	0 , 0 , 0 , 0 , 1/Zc , G7 , -(G7+(1/Zc)) , 1 , 0]
+
+F =[0;
+	0;
+	0;
+	0;
+	0;
+	0;
+	0;
+	Vss;
+	0]
+
+G = E\F;
+
+printf("new_Complex_Amplitude_Tabel\n");
+printf("V1 = %.12f\n" , arg(C(1)));
+printf("V2 = %.12f\n" , arg(C(2)));
+printf("V3 = %.12f\n" , arg(C(3)));
+printf("V4 = 0.000000000000V\n");
+printf("V5 = %.12f\n" , arg(C(4)));
+printf("V6 = %.12f\n" , arg(C(5)));
+printf("V7 = %.12f\n" , arg(C(6)));
+printf("V8 = %.12f\n" , arg(C(7)));
+printf("end_Complex_Amplitude_Tabel\n");
+
+%%Forced solution
+V_ft = e.^(j*(w*tempo-(pi/2)));
+V6_ft = abs(G(5))*V_ft;
 
 
 
