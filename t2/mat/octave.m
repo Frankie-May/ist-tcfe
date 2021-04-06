@@ -306,3 +306,27 @@ printf("|iVs| %.12eA|\n" , ((N(2)-N(1))*G1));
 printf("|iVd| %.12eA|\n" , ((N(7)-N(6))*G7));
 printf("|ib | %.12eA|\n" , Kb * (N(2)-N(5)));
 printf("FS_END\n");
+
+
+%%Total Solution v6(t)
+t1 = -5:(20*10^-3+5)/1000:20*10^-3;
+t2 = -5:(20*10^-3+5)/1000:0;
+t3 = 0:(20*10^-3+5)/1000:20*10^-3;
+
+v6_t = [Vss+(0*t2) , V06*e.^(-(t3/tau)+N(6)*e.^(-j*(2*pi*1e3*t3-pi/2)))];
+
+
+graf_V6_t = figure();
+
+plot(t1*1e3 , v6_t);
+hold on;
+xlabel("t, ms");
+ylabel("V6, V");
+title("V6(t) total solution plot");
+legend("Total solution plot for node 6, (the effect of the natural solution and the forced solution) with t belonging to [-5, 20]ms" , "location" , "north");
+%%prints natural solution graphic prepared to be converted to pdf
+print (graf_V6_t, "graf_V6_t.pdf", "-dpdflatexstandalone");
+
+%%creates pdf of graphic and deletes unused files
+system("pdflatex graf_V6_t");
+system("rm graf_V6_t.aux && rm graf_V6_t-inc.pdf && rm graf_V6_t.log && rm graf_V6_t.tex");
