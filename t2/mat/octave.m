@@ -62,7 +62,7 @@ sym Ic;
 sym Id;
 
 %%Capacity Variables
-sym C;
+sym Cf;
 
 %%Values attribution
 Vs = C{1,8};
@@ -98,7 +98,8 @@ D = [Vs;
 	0;
 	0;
 	0;
-	0;]
+	0;
+	0]
 
 X = A\D;
 
@@ -200,12 +201,69 @@ print (graf_nat, "graf_nat.pdf", "-dpdflatexstandalone");
 system("pdflatex graf_nat");
 system("rm graf_nat.aux && rm graf_nat-inc.pdf && rm graf_nat.log && rm graf_nat.tex");
 
+%%Complex amplitude determination. Nodal analysis for complete circuit when e^(t/tau) = 1: (DIOGO, PRINTS VOLTAGES)
 
-%%Nodal analysis for forced solution
+%%Additional Variables and new values assignment
+sym w;
+w = 2*pi*1e3;
+
+sym Zc;
+
+Zc = 1/(j*w*Cf);
+
+Vss = 1;
+E = [-G1 , (G1+G2+G3) , -G2 , -G3 , 0 , 0 , 0 , 0 , 0;
+	0 , -(G2+Kb) , G2 , Kb , 0 , 0 , 0 , 0 , 0;
+	0 , -Kb , 0 , (G5+Kb) , -(G5 + (1/Zc)) , 0 , (1/Zc) , 0 , 0;
+	0 , 0 , 0 , 0 , 0 , -(G6+G7) , G7 , 0 , 0;
+	0 , -G3 , 0 , (G3 + G4 + G5) , -G5 , 0 , 0 , 1 , 0;
+	0 , 0 , 0 , -1 , 0 , -Kd*G6 , 1 , 0 , 0;
+	-G1 , G1 , 0 , 0 , 0 , 0 , 0 , 0 , -1;
+	1 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0;
+	0 , 0 , 0 , 0 , 1/Zc , G7 , -(G7+(1/Zc)) , 1 , 0]
+
+F =[0;
+	0;
+	0;
+	0;
+	0;
+	0;
+	0;
+	Vss;
+	0]
+
+G = E\F;
+
+printf("new_Complex_Amplitude_Tabel\n");
+printf("V1 = %.12f\n" , abs(G(1)));
+printf("V2 = %.12f\n" , abs(G(2)));
+printf("V3 = %.12f\n" , abs(G(3)));
+printf("V4 = 0.000000000000V\n");
+printf("V5 = %.12f\n" , abs(G(4)));
+printf("V6 = %.12f\n" , abs(G(5)));
+printf("V7 = %.12f\n" , abs(G(6)));
+printf("V8 = %.12f\n" , abs(G(7)));
+printf("end_Complex_Amplitude_Tabel\n");
+
+%%Forced solution
+
+
+V_ft = e.^(j*(w*t-(pi/2)));
+V6_ft = abs(G(5))*V_ft;
+
+
+%%Nodal analysis for forced solution (FRANCISCO, PRINTS CURRENTS)
 sym Vsf;
-syms Z1 Z2 Z3 Z4 Z5 Z6 Z7;
+sym Z1; 
+sym Z2;
+sym Z3;
+sym Z4;
+sym Z5;
+sym Z6;
+sym Z7;
 
-Vsf = e.^(i*(-pi/2));
+Vsf = 1;
+
 Z1 = R1;
 Z2 = R2;
 Z3 = R3;
@@ -213,7 +271,9 @@ Z4 = R4;
 Z5 = R5;
 Z6 = R6;
 Z7 = R7;
-Zc = (1/(Cf*2*pi*1E3))*e.^(-i*pi/2)
+
+Zc = (1/(Cf*2*pi*10e+3))*e.^(-j*pi/2);
+
 
 L =[1 , 0 , 0 , 0 , 0 , 0 , 0;
 	1/Z1 , -(1/Z1 + 1/Z2 + 1/Z3) , 1/Z2 , 1/Z3 , 0 , 0 , 0;
@@ -228,7 +288,8 @@ M = [Vsf;
 	0;
 	0;
 	0;
-	0;]
+	0;
+	0]
 
 N = L\M;
 
