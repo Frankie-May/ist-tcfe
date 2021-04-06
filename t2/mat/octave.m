@@ -91,7 +91,7 @@ A =[1 , 0 , 0 , 0 , 0 , 0 , 0;
 	0 , -Kb , 0 , (G5 + Kb) , -G5 , 0 , 0;
 	0 , 0 , 0 , 0 , 0 , (G6 + G7) , -G7;
 	0 , 0 , 0 , 1 , 0 , (Kd * G6) , -1;
-	0 , G3 , 0 , (G4 - G3 - G5) , G5 , G7 , -G7;]
+	0 , G3 , 0 , (-G4 - G3 - G5) , G5 , G7 , -G7;]
 
 D = [Vs;
 	0;
@@ -205,15 +205,15 @@ system("rm graf_nat.aux && rm graf_nat-inc.pdf && rm graf_nat.log && rm graf_nat
 sym Vsf;
 syms Z1 Z2 Z3 Z4 Z5 Z6 Z7;
 
-Vsf = e.^(i(2*pi*1E3*t-pi/2));
+Vsf = e.^(i*(-pi/2));
 Z1 = R1;
 Z2 = R2;
 Z3 = R3;
+Z4 = R4;
 Z5 = R5;
 Z6 = R6;
 Z7 = R7;
-Z8 = R8;
-Zc = Cf*e.^(-i*pi/2)
+Zc = (1/(Cf*2*pi*1E3))*e.^(-i*pi/2)
 
 L =[1 , 0 , 0 , 0 , 0 , 0 , 0;
 	1/Z1 , -(1/Z1 + 1/Z2 + 1/Z3) , 1/Z2 , 1/Z3 , 0 , 0 , 0;
