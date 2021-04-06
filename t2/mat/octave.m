@@ -248,6 +248,7 @@ printf("end_Complex_Amplitude_Tabel\n");
 
 %%Forced solution
 
+
 V_ft = e.^(j*(w*t-(pi/2)));
 V6_ft = abs(G(5))*V_ft;
 
@@ -263,6 +264,7 @@ sym Z6;
 sym Z7;
 
 Vsf = 1;
+
 Z1 = R1;
 Z2 = R2;
 Z3 = R3;
@@ -270,7 +272,9 @@ Z4 = R4;
 Z5 = R5;
 Z6 = R6;
 Z7 = R7;
+
 Zc = (1/(Cf*2*pi*10e+3))*e.^(-j*pi/2);
+
 
 L =[1 , 0 , 0 , 0 , 0 , 0 , 0;
 	1/Z1 , -(1/Z1 + 1/Z2 + 1/Z3) , 1/Z2 , 1/Z3 , 0 , 0 , 0;
