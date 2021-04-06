@@ -131,6 +131,8 @@ fprintf(tmen0 , "ib  & %.12e\\\\ \\hline\n" , Kb * (X(2)-X(4)));
 
 %%Closes file
 fclose(tmen0);
+system("cp tableinferior0.tex ../doc && rm tableinferior0.tex");
+
 %%
 %%
 %%Equivalent Resistor determination
@@ -163,6 +165,30 @@ J = [Vss;
 
 K = I\J;
 
+%%Printing results to file with content of table
+tnat = fopen("tnat.tex" , "w");
+fprintf(tnat , "V1 & %.12f\\\\ \\hline\n" , K(1));
+fprintf(tnat , "V2 & %.12f\\\\ \\hline\n" , K(2));
+fprintf(tnat , "V3 & %.12f\\\\ \\hline\n" , K(3));
+fprintf(tnat , "V4 & 0.000000000000\\\\ \\hline\n");
+fprintf(tnat , "V5 & %.12f\\\\ \\hline\n" , K(4));
+fprintf(tnat , "V6 & %.12f\\\\ \\hline\n" , K(5));
+fprintf(tnat , "V7 & %.12f\\\\ \\hline\n" , K(6));
+fprintf(tnat , "V8 & %.12f\\\\ \\hline\n" , K(7));
+fprintf(tnat , "i1 & %.12f\\\\ \\hline\n" , G1*(K(2)-K(1)));
+fprintf(tnat , "i2 & %.12f\\\\ \\hline\n" , G2*(K(3)-K(2)));
+fprintf(tnat , "i3 & %.12f\\\\ \\hline\n" , G3*(K(2)-K(4)));
+fprintf(tnat , "i4 & %.12f\\\\ \\hline\n" , G4*(-K(4)));
+fprintf(tnat , "i5 & %.12f\\\\ \\hline\n" , G5*(K(4)-K(5)));
+fprintf(tnat , "i6 & %.12f\\\\ \\hline\n" , G6*(K(6)));
+fprintf(tnat , "i7 & %.12f\\\\ \\hline\n" , G7*(K(7)-K(6)));
+fprintf(tnat , "iVx & %.12f\\\\ \\hline\n" , K(8));
+fprintf(tnat , "iVd & %.12f\\\\ \\hline\n" , K(9));
+
+%%export to file finished
+fclose(tnat);
+system("cp tnat.tex ../doc && rm tnat.tex");
+
 %%K = [V1;
 %	V2;
 %	V3
@@ -173,10 +199,10 @@ K = I\J;
 %	Ix;
 %	Iy]
 
-printf("Ix = %.12f \n", K(8));
 %%Equivalent Resistance and Time Constant determined
 sym Req;
 sym tau;
+sym V06;
 
 Req = Vx / abs(K(8));
 tau = Req * Cf;
@@ -200,57 +226,12 @@ print (graf_nat, "graf_nat.pdf", "-dpdflatexstandalone");
 
 %%creates pdf of graphic and deletes unused files
 system("pdflatex graf_nat");
-system("rm graf_nat.aux && rm graf_nat-inc.pdf && rm graf_nat.log && rm graf_nat.tex");
+system("cp graf_nat.pdf ../doc");
+system("rm graf_nat.pdf && rm graf_nat.aux && rm graf_nat-inc.pdf && rm graf_nat.log && rm graf_nat.tex");
+
+
 
 %%Complex amplitude determination. Nodal analysis for complete circuit when e^(t/tau) = 1: (DIOGO, PRINTS VOLTAGES)
-
-%%Additional Variables and new values assignment
-sym w;
-w = 2*pi*1e3;
-
-sym Zc;
-
-Zc = 1/(j*w*Cf);
-
-Vss = 1;
-E = [-G1 , (G1+G2+G3) , -G2 , -G3 , 0 , 0 , 0 , 0 , 0;
-	0 , -(G2+Kb) , G2 , Kb , 0 , 0 , 0 , 0 , 0;
-	0 , -Kb , 0 , (G5+Kb) , -(G5 + (1/Zc)) , 0 , (1/Zc) , 0 , 0;
-	0 , 0 , 0 , 0 , 0 , -(G6+G7) , G7 , 0 , 0;
-	0 , -G3 , 0 , (G3 + G4 + G5) , -G5 , 0 , 0 , 1 , 0;
-	0 , 0 , 0 , -1 , 0 , -Kd*G6 , 1 , 0 , 0;
-	-G1 , G1 , 0 , 0 , 0 , 0 , 0 , 0 , -1;
-	1 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0;
-	0 , 0 , 0 , 0 , 1/Zc , G7 , -(G7+(1/Zc)) , 1 , 0]
-
-F =[0;
-	0;
-	0;
-	0;
-	0;
-	0;
-	0;
-	Vss;
-	0]
-
-G = E\F;
-
-printf("new_Complex_Amplitude_Tabel\n");
-printf("V1 = %.12f\n" , abs(G(1)));
-printf("V2 = %.12f\n" , abs(G(2)));
-printf("V3 = %.12f\n" , abs(G(3)));
-printf("V4 = 0.000000000000V\n");
-printf("V5 = %.12f\n" , abs(G(4)));
-printf("V6 = %.12f\n" , abs(G(5)));
-printf("V7 = %.12f\n" , abs(G(6)));
-printf("V8 = %.12f\n" , abs(G(7)));
-printf("end_Complex_Amplitude_Tabel\n");
-
-%%Forced solution
-
-
-V_ft = e.^(j*(w*t-(pi/2)));
-V6_ft = abs(G(5))*V_ft;
 
 
 %%Nodal analysis for forced solution (FRANCISCO, PRINTS CURRENTS)
@@ -293,17 +274,22 @@ M = [Vsf;
 	0]
 
 N = L\M;
+%%Prints Complex Amplitude Table to a latex file to include in the report
+tcamp = fopen("tcamp.tex" , "w");
 
-%%Calculates and prints Current Values obtained through nodal analysis for forced solution
-printf("FS_TAB\n");
-printf("|i1 | %.12eA|\n" , ((N(2)-N(1))*G1));
-printf("|i2 | %.12eA|\n" , ((N(3)-N(2))*G2));
-printf("|i3 | %.12eA|\n" , ((N(2)-N(5))*G3));
-printf("|i4 | %.12eA|\n" , (N(4)*G4));
-printf("|i5 | %.12eA|\n" , ((N(4)-N(5))*G5));
-printf("|i6 | %.12eA|\n" , (N(6)*G6));
-printf("|i7 | %.12eA|\n" , ((N(6)-N(7))*G7));
-printf("|iVs| %.12eA|\n" , ((N(2)-N(1))*G1));
-printf("|iVd| %.12eA|\n" , ((N(7)-N(6))*G7));
-printf("|ib | %.12eA|\n" , Kb * (N(2)-N(5)));
-printf("FS_END\n");
+fprintf(tcamp , "V1 & %.12f\\\\ \\hline\n" , abs(N(1)));
+fprintf(tcamp , "V2 & %.12f\\\\ \\hline\n" , abs(N(2)));
+fprintf(tcamp , "V3 & %.12f\\\\ \\hline\n" , abs(N(3)));
+fprintf(tcamp , "V4 & 0.000000000000\\\\ \\hline\n");
+fprintf(tcamp , "V5 & %.12f\\\\ \\hline\n" , abs(N(4)));
+fprintf(tcamp , "V6 & %.12f\\\\ \\hline\n" , abs(N(5)));
+fprintf(tcamp , "V7 & %.12f\\\\ \\hline\n" , abs(N(6)));
+fprintf(tcamp , "V8 & %.12f\\\\ \\hline\n" , abs(N(7)));
+
+%%export to file finished
+fclose(tcamp);
+system("cp tcamp.tex ../doc && rm tcamp.tex");
+
+%%Forced Solution
+V_ft = e.^(j*(w*t-(pi/2)));
+V6_ft = abs(N(5))*V_ft;
