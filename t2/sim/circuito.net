@@ -1,1 +1,96 @@
 .include data.net
+*
+* Circuit simulator for t1
+*
+* NGSPICE simulation script
+* BJT amp with feedback
+*
+*CIRCUITO
+.options savecurrents
+
+* Boundary Conditions
+.ic V(6)=5.528929 V(9)=-2.77468
+
+* supply voltage
+Vs 1 0 Vss ac 0.0 sin(0 1 6283.185307)
+
+* Resistances
+R1 1 2 RR1
+R2 2 3 RR2
+R3 2 5 RR3
+R4 0 5 RR4
+R5 5 6 RR5
+R6 0 7 RR6
+R7 9 8 RR7
+
+* Voltage Sources
+Vee 7 9 0
+Hc 5 8 Vee Kd
+
+* Current Sources
+Gb 6 3 2 5 Kb
+
+* Capacitors
+C 6 8 Cc
+
+
+*Control commads
+.control
+
+*makes plots in color
+set hcopypscolor=0
+set color0=white
+set color1=black
+set color2=red
+set color3=blue
+set color4=violet
+set color5=rgb:3/8/0
+set color6=rgb:4/0/0
+
+op
+
+echo "********************************************"
+echo  "Operating point"
+echo "********************************************"
+
+print @R1[i]
+
+echo  "op_TAB"
+print all
+echo  "op_END"
+
+
+echo "********************************************"
+echo  "Transient analysis"
+echo "********************************************"
+tran 1e-5 20e-3
+
+hardcopy fs.ps v(6)
+echo fs_FIG
+
+echo "********************************************"
+echo  "Frequency analysis"
+echo "********************************************"
+
+*ac dec 10 10 100MEG
+
+hardcopy npfs.ps v(6)
+echo npfs_FIG
+
+*plot v(6)
+
+echo "********************************************"
+echo  "Frequency analysis"
+echo "********************************************"
+
+ac dec 10 1e-1 1MEG
+
+hardcopy fr.ps v(6) V(1)
+echo fr_FIG
+
+*plot v(6)
+
+quit
+.endc
+
+.end

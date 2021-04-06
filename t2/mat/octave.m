@@ -86,15 +86,14 @@ G7 = 1/R7;
 
 %%Nodal analysis for t<0
 A =[1 , 0 , 0 , 0 , 0 , 0 , 0;
-	G1 , -(G1 + G2 + G5) , G2 , G5 , 0 , 0 , 0;
+	G1 , -(G1 + G2 + G3) , G2 , G3 , 0 , 0 , 0;
 	0 , -(G2 + Kb) , G2 , Kb , 0 , 0 , 0;
 	0 , -Kb , 0 , (G5 + Kb) , -G5 , 0 , 0;
 	0 , 0 , 0 , 0 , 0 , (G6 + G7) , -G7;
 	0 , 0 , 0 , 1 , 0 , (Kd * G6) , -1;
-	0 , G3 , 0 , (G4 - G3 - G5) , G5 , G7 , -G7;]
+	0 , G3 , 0 , (-G4 - G3 - G5) , G5 , G7 , -G7;]
 
 D = [Vs;
-	0;
 	0;
 	0;
 	0;
@@ -141,13 +140,13 @@ Vx = X(5) - X(7);
 Vss = 0;
 
 I = [1 , 0 , 0 , 0 , 0 , 0 , 0 , 0 , 0;
-	G1 , -(G1 + G2 + G5) , G2 , G5 , 0 , 0 , 0 , 0 , 0;
+	G1 , -(G1 + G2 + G3) , G2 , G3 , 0 , 0 , 0 , 0 , 0;
 	0 , -(G2+Kb) , G2 , Kb , 0 , 0 , 0 , 0 , 0;
 	0 , 0 , 0 , 0 , 0 , (G6 + G7) , -G7 , 0 , 0;
 	0 , 0 , 0 , 0 , 1 , 0 , -1 , 0 , 0;
 	0 , 0 , 0 , 1 , 0 , (Kd * G6) , -1 , 0 , 0;
-	0 , Kb , 0 , (G5 - Kb) , -G5 , 0 , 0 , -1 , 0;
-	0 , G3 , 0 , (G4-G3-G5) , G6 , 0 , 0 , 0 , -1;
+	0 , Kb , 0 , -(G5 + Kb) , G5 , 0 , 0 , 1 , 0;
+	0 , G3 , 0 , (-G4-G3-G5) , G6 , 0 , 0 , 0 , -1;
 	0 , 0 , 0 , 0 , 0 , -G7 , G7 , -1 , -1]
 
 J = [Vss;
@@ -201,11 +200,11 @@ print (graf_nat, "graf_nat.pdf", "-dpdflatexstandalone");
 system("pdflatex graf_nat");
 system("rm graf_nat.aux && rm graf_nat-inc.pdf && rm graf_nat.log && rm graf_nat.tex");
 
-%%Complex amplitude determination. Nodal analysis for complete circuit when e^(t/tau) = 1:
+%%Complex amplitude determination. Nodal analysis for complete circuit when e^(t/tau) = 1: (DIOGO, PRINTS VOLTAGES)
 
 %%Additional Variables and new values assignment
 sym w;
-w = 2*pi*1;
+w = 2*pi*1e3;
 
 sym Zc;
 
@@ -250,5 +249,47 @@ V_ft = e.^(j*(w*tempo-(pi/2)));
 V6_ft = abs(G(5))*V_ft;
 
 
+%%Nodal analysis for forced solution (FRANCISCO, PRINTS CURRENTS)
+sym Vsf;
+syms Z1 Z2 Z3 Z4 Z5 Z6 Z7;
 
+Vsf = e.^(i(2*pi*1E3*t-pi/2));
+Z1 = R1;
+Z2 = R2;
+Z3 = R3;
+Z5 = R5;
+Z6 = R6;
+Z7 = R7;
+Z8 = R8;
+Zc = Cf*e.^(-i*pi/2)
 
+L =[1 , 0 , 0 , 0 , 0 , 0 , 0;
+	1/Z1 , -(1/Z1 + 1/Z2 + 1/Z3) , 1/Z2 , 1/Z3 , 0 , 0 , 0;
+	0 , -(1/Z2 + Kb) , 1/Z2 , Kb , 0 , 0 , 0;
+	0 , -Kb , 0 , (1/Z5 + Kb) , -(1/Z5+1/Zc) , 0 , 1/Zc;
+	0 , 0 , 0 , 0 , 0 , (1/Z6 + 1/Z7) , -1/Z7;
+	0 , 0 , 0 , 1 , 0 , (Kd * 1/Z6) , -1;
+	0 , 1/Z3 , 0 , -(1/Z4 + 1/Z3 + 1/Z5) , 1/Z5+1/Zc , 1/Z7 , -(1/Z7+1/Zc);]
+
+M = [Vsf;
+	0;
+	0;
+	0;
+	0;
+	0;]
+
+N = L\M;
+
+%%Calculates and prints Current Values obtained through nodal analysis for forced solution
+printf("FS_TAB\n");
+printf("|i1 | %.12eA|\n" , ((N(2)-N(1))*G1));
+printf("|i2 | %.12eA|\n" , ((N(3)-N(2))*G2));
+printf("|i3 | %.12eA|\n" , ((N(2)-N(5))*G3));
+printf("|i4 | %.12eA|\n" , (N(4)*G4));
+printf("|i5 | %.12eA|\n" , ((N(4)-N(5))*G5));
+printf("|i6 | %.12eA|\n" , (N(6)*G6));
+printf("|i7 | %.12eA|\n" , ((N(6)-N(7))*G7));
+printf("|iVs| %.12eA|\n" , ((N(2)-N(1))*G1));
+printf("|iVd| %.12eA|\n" , ((N(7)-N(6))*G7));
+printf("|ib | %.12eA|\n" , Kb * (N(2)-N(5)));
+printf("FS_END\n");
