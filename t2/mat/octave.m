@@ -103,35 +103,36 @@ D = [Vs;
 
 X = A\D;
 
+%%Creates file to print table with Potential Values obtained through nodal analysis for t<0
+tmen0 = fopen("tableinferior0.tex" , "w");
+
 %%Prints Potential Values obtained through nodal analysis for t<0
-printf("| t<0 Analysis |\n");
-printf("|Nodal Analysis|\n");
-printf("|V1| %.12fV |\n" , X(1));
-printf("|V2| %.12fV |\n" , X(2));
-printf("|V3| %.12fV |\n" , X(3));
-printf("|V4| 0.000000000000V |\n");
-printf("|V5| %.12fV |\n" , X(4));
-printf("|V6| %.12fV |\n" , X(5));
-printf("|V7| %.12fV |\n" , X(6));
-printf("|V8| %.12fV |\n" , X(7));
+fprintf(tmen0 , "V1 & %.12f\\\\ \\hline\n" , X(1));
+fprintf(tmen0 , "V2 & %.12f\\\\ \\hline\n" , X(2));
+fprintf(tmen0 , "V3 & %.12f\\\\ \\hline\n" , X(3));
+fprintf(tmen0 , "V4 & 0.000000000000\\\\ \\hline\n");
+fprintf(tmen0 , "V5 & %.12f\\\\ \\hline\n" , X(4));
+fprintf(tmen0 , "V6 & %.12f\\\\ \\hline\n" , X(5));
+fprintf(tmen0 , "V7 & %.12f\\\\ \\hline\n" , X(6));
+fprintf(tmen0 , "V8 & %.12f\\\\ \\hline\n" , X(7));
 
 %%Calculates and prints Current Values obtained through nodal analysis for t<0
-printf("NA_TAB\n");
-printf("|i1 | %.12eA|\n" , ((X(2)-X(1))*G1));
-printf("|i2 | %.12eA|\n" , ((X(3)-X(2))*G2));
-printf("|i3 | %.12eA|\n" , ((X(2)-X(5))*G3));
-printf("|i4 | %.12eA|\n" , (X(4)*G4));
-printf("|i5 | %.12eA|\n" , ((X(4)-X(5))*G5));
-printf("|i6 | %.12eA|\n" , (X(6)*G6));
-printf("|i7 | %.12eA|\n" , ((X(6)-X(7))*G7));
-printf("|iVs| %.12eA|\n" , ((X(2)-X(1))*G1));
-printf("|iVd| %.12eA|\n" , ((X(7)-X(6))*G7));
-printf("|ib | %.12eA|\n" , Kb * (X(2)-X(5)));
-printf("NA_END\n");
+fprintf(tmen0 , "i1  & %.12e\\\\ \\hline\n" , ((X(2)-X(1))*G1));
+fprintf(tmen0 , "i2  & %.12e\\\\ \\hline\n" , ((X(3)-X(2))*G2));
+fprintf(tmen0 , "i3  & %.12e\\\\ \\hline\n" , ((X(2)-X(4))*G3));
+fprintf(tmen0 , "i4  & %.12e\\\\ \\hline\n" , (X(4)*G4));
+fprintf(tmen0 , "i5  & %.12e\\\\ \\hline\n" , ((X(4)-X(5))*G5));
+fprintf(tmen0 , "i6  & %.12e\\\\ \\hline\n" , (X(6)*G6));
+fprintf(tmen0 , "i7  & %.12e\\\\ \\hline\n" , ((X(6)-X(7))*G7));
+fprintf(tmen0 , "iVs & %.12e\\\\ \\hline\n" , ((X(2)-X(1))*G1));
+fprintf(tmen0 , "iVd & %.12e\\\\ \\hline\n" , ((X(7)-X(6))*G7));
+fprintf(tmen0 , "ib  & %.12e\\\\ \\hline\n" , Kb * (X(2)-X(4)));
 
 
-
-
+%%Closes file
+fclose(tmen0);
+%%
+%%
 %%Equivalent Resistor determination
 %%Additional Variables
 sym Vx;
