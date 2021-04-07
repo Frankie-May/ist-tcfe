@@ -374,7 +374,7 @@ plot(log10(freq), arg(V6_freq)*180/pi);
 hold on;
 plot(log10(freq), arg(Vs_freq)*180/pi, "r");
 plot(log10(freq), arg(Vc_freq)*180/pi, "g");
-legend({"Phase of the frequency responce in voltages V6 in degrees." , "Phase of the frequency responce in voltages Vs in degrees." , "Phase of the frequency responce in voltages Vc in degrees."}, "location" , "north");
+legend({"Frequency responce in phase in voltage V6" , "Frequency responce in phase in voltage Vs" , "Frequency responce in phase in voltage Vc"}, "location" , "southwest");
 
 xlabel("f, Hz");
 ylabel("arg(V) , º");
