@@ -8,6 +8,6 @@ all: ../t2_datagen.py octave.m
 	@rm data.net
 	
 clean:
-	@rm ../sim/data.net
+	@rm ../sim/data.net ../sim/*.ps
 
 .PHONY: all clean
