@@ -307,10 +307,10 @@ graf_V6_t = figure();
 plot(t1*1e3 , v6_t);
 hold on;
 plot(t1*1e3 , Vs_t, "g");
+legend({"Total solution plot for node 6" , "Total solution plot for Vs"} , "location" , "north");
 xlabel("t, ms");
-ylabel("V6, V");
+ylabel("Voltage, V");
 title("V6(t) and Vs(t) total solution plot");
-legend("Total solution plot for node 6, (the effect of the natural solution and the forced solution) with t belonging to [-5, 20]ms and V6 plot" , "location" , "north");
 %%prints natural solution graphic prepared to be converted to pdf
 print (graf_V6_t, "graf_V6_t.pdf", "-dpdflatexstandalone");
 
@@ -356,17 +356,17 @@ plot(log10(freq), 20*log10(abs(V6_freq)));
 hold on;
 plot(log10(freq), 20*log10(abs(Vs_freq)), "r");
 plot(log10(freq), 20*log10(abs(Vc_freq)), "g");
+legend({"Magnitude of the frequency responce in voltage V6 in db." , "Magnitude of the frequency responce in voltage Vs in db." , "Magnitude of the frequency responce in voltage Vc in db."} , "location" , "south");
 xlabel("f, Hz");
 ylabel("$|V|$ , db");
 title("Frequency responce in magnitude");
-legend("Magnitude of the frequency responce in voltages V6, Vs and Vc in db." , "location" , "north");
 %%prints natural solution graphic prepared to be converted to pdf
 print (graf_mag, "graf_mag.pdf", "-dpdflatexstandalone");
 
 %%creates pdf of graphic and deletes unused files
 system("pdflatex graf_mag");
 system("cp graf_mag.pdf ../doc");
-system("rm graf_mag.aux && rm graf_mag-inc.pdf && rm graf_mag.log && rm graf_mag.tex");
+system("rm graf_mag.pdf && rm graf_mag.aux && rm graf_mag-inc.pdf && rm graf_mag.log && rm graf_mag.tex");
 
 graf_phase = figure();
 
@@ -374,14 +374,15 @@ plot(log10(freq), arg(V6_freq)*180/pi);
 hold on;
 plot(log10(freq), arg(Vs_freq)*180/pi, "r");
 plot(log10(freq), arg(Vc_freq)*180/pi, "g");
+legend({"Phase of the frequency responce in voltages V6 in degrees." , "Phase of the frequency responce in voltages Vs in degrees." , "Phase of the frequency responce in voltages Vc in degrees."}, "location" , "north");
+
 xlabel("f, Hz");
 ylabel("arg(V) , º");
 title("Frequency response in phase");
-legend("Phase of the frequency responce in voltages V6, Vs and Vc in degrees." , "location" , "north");
 %%prints natural solution graphic prepared to be converted to pdf
 print (graf_phase, "graf_phase.pdf", "-dpdflatexstandalone");
 
 %%creates pdf of graphic and deletes unused files
 system("pdflatex graf_phase");
 system("cp graf_phase.pdf ../doc");
-system("rm graf_phase.aux && rm graf_phase-inc.pdf && rm graf_phase.log && rm graf_phase.tex");
+system("rm graf_phase.pdf && rm graf_phase.aux && rm graf_phase-inc.pdf && rm graf_phase.log && rm graf_phase.tex");
