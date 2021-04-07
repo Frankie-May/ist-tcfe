@@ -105,15 +105,6 @@ X = A\D;
 %%Creates file to print table with Potential Values obtained through nodal analysis for t<0
 tmen0 = fopen("tableinferior0.tex" , "w");
 
-%%Prints Potential Values obtained through nodal analysis for t<0
-fprintf(tmen0 , "V1 & %.12f\\\\ \\hline\n" , X(1));
-fprintf(tmen0 , "V2 & %.12f\\\\ \\hline\n" , X(2));
-fprintf(tmen0 , "V3 & %.12f\\\\ \\hline\n" , X(3));
-fprintf(tmen0 , "V4 & 0.000000000000\\\\ \\hline\n");
-fprintf(tmen0 , "V5 & %.12f\\\\ \\hline\n" , X(4));
-fprintf(tmen0 , "V6 & %.12f\\\\ \\hline\n" , X(5));
-fprintf(tmen0 , "V7 & %.12f\\\\ \\hline\n" , X(6));
-fprintf(tmen0 , "V8 & %.12f\\\\ \\hline\n" , X(7));
 
 %%Calculates and prints Current Values obtained through nodal analysis for t<0
 fprintf(tmen0 , "i1  & %.12e\\\\ \\hline\n" , ((X(2)-X(1))*G1));
@@ -127,6 +118,15 @@ fprintf(tmen0 , "iVs & %.12e\\\\ \\hline\n" , ((X(2)-X(1))*G1));
 fprintf(tmen0 , "iVd & %.12e\\\\ \\hline\n" , ((X(7)-X(6))*G7));
 fprintf(tmen0 , "ib  & %.12e\\\\ \\hline\n" , Kb * (X(2)-X(4)));
 
+%%Prints Potential Values obtained through nodal analysis for t<0
+fprintf(tmen0 , "V1 & %.12f\\\\ \\hline\n" , X(1));
+fprintf(tmen0 , "V2 & %.12f\\\\ \\hline\n" , X(2));
+fprintf(tmen0 , "V3 & %.12f\\\\ \\hline\n" , X(3));
+fprintf(tmen0 , "V4 & 0.000000000000\\\\ \\hline\n");
+fprintf(tmen0 , "V5 & %.12f\\\\ \\hline\n" , X(4));
+fprintf(tmen0 , "V6 & %.12f\\\\ \\hline\n" , X(5));
+fprintf(tmen0 , "V7 & %.12f\\\\ \\hline\n" , X(6));
+fprintf(tmen0 , "V8 & %.12f\\\\ \\hline\n" , X(7));
 
 %%Closes file
 fclose(tmen0);
@@ -170,14 +170,7 @@ fclose(destiny);
 
 %%Printing results to file with content of table
 tnat = fopen("tnat.tex" , "w");
-fprintf(tnat , "V1 & %.12f\\\\ \\hline\n" , K(1));
-fprintf(tnat , "V2 & %.12f\\\\ \\hline\n" , K(2));
-fprintf(tnat , "V3 & %.12f\\\\ \\hline\n" , K(3));
-fprintf(tnat , "V4 & 0.000000000000\\\\ \\hline\n");
-fprintf(tnat , "V5 & %.12f\\\\ \\hline\n" , K(4));
-fprintf(tnat , "V6 & %.12f\\\\ \\hline\n" , K(5));
-fprintf(tnat , "V7 & %.12f\\\\ \\hline\n" , K(6));
-fprintf(tnat , "V8 & %.12f\\\\ \\hline\n" , K(7));
+
 fprintf(tnat , "i1 & %.12f\\\\ \\hline\n" , G1*(K(2)-K(1)));
 fprintf(tnat , "i2 & %.12f\\\\ \\hline\n" , G2*(K(3)-K(2)));
 fprintf(tnat , "i3 & %.12f\\\\ \\hline\n" , G3*(K(2)-K(4)));
@@ -187,6 +180,14 @@ fprintf(tnat , "i6 & %.12f\\\\ \\hline\n" , G6*(K(6)));
 fprintf(tnat , "i7 & %.12f\\\\ \\hline\n" , G7*(K(7)-K(6)));
 fprintf(tnat , "iVx & %.12f\\\\ \\hline\n" , K(8));
 fprintf(tnat , "iVd & %.12f\\\\ \\hline\n" , K(9));
+fprintf(tnat , "V1 & %.12f\\\\ \\hline\n" , K(1));
+fprintf(tnat , "V2 & %.12f\\\\ \\hline\n" , K(2));
+fprintf(tnat , "V3 & %.12f\\\\ \\hline\n" , K(3));
+fprintf(tnat , "V4 & 0.000000000000\\\\ \\hline\n");
+fprintf(tnat , "V5 & %.12f\\\\ \\hline\n" , K(4));
+fprintf(tnat , "V6 & %.12f\\\\ \\hline\n" , K(5));
+fprintf(tnat , "V7 & %.12f\\\\ \\hline\n" , K(6));
+fprintf(tnat , "V8 & %.12f\\\\ \\hline\n" , K(7));
 
 %%export to file finished
 fclose(tnat);
