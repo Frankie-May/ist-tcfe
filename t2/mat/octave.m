@@ -5,6 +5,7 @@ clear all
 pkg load symbolic
 
 output_precision (12);
+
 source = fopen ("data.log" , "r");
 
 destiny = fopen("data.net" , "w");
@@ -29,9 +30,7 @@ for i=1:11
 		fprintf(destiny , ".param Kd = %.12fk\n" ,C{1 , i});
 	endif
 endfor
-
 fclose(source);
-fclose(destiny);
 
 %%Resistance Variables
 sym R1;
@@ -164,6 +163,10 @@ J = [Vss;
 	0]
 
 K = I\J;
+
+
+fprintf(destiny, ".param Vxx = %.12f\n", Vx);
+fclose(destiny);
 
 %%Printing results to file with content of table
 tnat = fopen("tnat.tex" , "w");
