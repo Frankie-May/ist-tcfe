@@ -58,3 +58,81 @@ The above matrix is used in the Meshes' Method. These equations were obtained di
   \label{tab:NA}
 \end{table}
 
+
+\(
+\begin{bsmallmatrix}
+1  & 0  & 0  & 0  & 0  & 0  & 0\\
+G1  & -(G1 + G2 + G3)  & G2  & G3  & 0  & 0  & 0\\
+0  & -(G2 + Kb)  & G2  & Kb  & 0  & 0  & 0\\
+0  & -Kb  & 0  & (G5 + Kb)  & -G5  & 0  & 0\\
+0  & 0  & 0  & 0  & 0  & (G6 + G7)  & -G7\\
+0  & 0  & 0  & 1  & 0  & (Kd * G6)  & -1\\
+0  & G3  & 0  & (-G4 - G3 - G5)  & G5  & G7  & -G7
+\end{bsmallmatrix}
+*
+\begin{bsmallmatrix}
+V1\\
+V2\\
+V3\\
+V5\\
+V6\\
+V7\\
+V8
+\end{bsmallmatrix}
+=
+\begin{bsmallmatrix}
+Vs\\
+0\\
+0\\
+0\\
+0\\
+0\\
+0
+\end{bsmallmatrix}
+\)
+
+\vspace{20pt}
+
+\(
+\begin{bsmallmatrix}
+1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0\\
+G1 & -(G1 + G2 + G3) & G2 & G3 & 0 & 0 & 0 & 0 & 0\\
+0 & -(G2+Kb) & G2 & Kb & 0 & 0 & 0 & 0 & 0\\
+0 & 0 & 0 & 0 & 0 & (G6 + G7) & -G7 & 0 & 0\\
+0 & 0 & 0 & 0 & 1 & 0 & -1 & 0 & 0\\
+0 & 0 & 0 & 1 & 0 & (Kd * G6) & -1 & 0 & 0\\
+0 & Kb & 0 & -(G5 + Kb) & G5 & 0 & 0 & 1 & 0\\
+0 & G3 & 0 & (-G4-G3-G5) & G6 & 0 & 0 & 0 & -1\\
+0 & 0 & 0 & 0 & 0 & -G7 & G7 & -1 & -1
+\end{bsmallmatrix}
+*
+\begin{bsmallmatrix}
+V1\\V2\\V3\\V5\\V6\\V7\\V8\\Ix\\Iy
+\end{bsmallmatrix}
+=
+\begin{bsmallmatrix}
+Vss\\0\\0\\0\\Vx\\0\\0\\0\\0
+\end{bsmallmatrix}
+\)
+
+\vspace{20pt}
+
+\(
+\begin{bsmallmatrix}
+1 & 0 & 0 & 0 & 0 & 0 & 0\\
+1/Z1 & -(1/Z1 + 1/Z2 + 1/Z3) & 1/Z2 & 1/Z3 & 0 & 0 & 0\\
+0 & -(1/Z2 + Kb) & 1/Z2 & Kb & 0 & 0 & 0\\
+0 & -Kb & 0 & (1/Z5 + Kb) & -(1/Z5+1/Zc) & 0 & 1/Zc\\
+0 & 0 & 0 & 0 & 0 & (1/Z6 + 1/Z7) & -1/Z7\\
+0 & 0 & 0 & 1 & 0 & (Kd * 1/Z6) & -1\\
+0 & 1/Z3 & 0 & -(1/Z4 + 1/Z3 + 1/Z5) & 1/Z5+1/Zc & 1/Z7 & -(1/Z7+1/Zc)\\
+\end{bsmallmatrix}
+*
+\begin{bsmallmatrix}
+V1\\V2\\V3\\V5\\V6\\V7\\V8
+\end{bsmallmatrix}
+=
+\begin{bsmallmatrix}
+Vsf\\0\\0\\0\\0\\0\\0
+\end{bsmallmatrix}
+\)
