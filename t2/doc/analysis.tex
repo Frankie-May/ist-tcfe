@@ -112,6 +112,16 @@ V1\\V2\\V3\\V5\\V6\\V7\\V8
 Vsf\\0\\0\\0\\0\\0\\0
 \end{bsmallmatrix}
 \end{equation}
+\par
+\par
+\begin{table}
+\centering
+\caption{Complex Amplitudes for all Nodes}
+\begin{tabular}{|l|r|}
+\hline
+ {\bf Voltage} & {\bf Value [V]}
+ \input{tcamp.tex}
+\end{table}
 Fifth step consists in using the amplitudes determined in the previous step to write real time functions for nodes. This is done by sum of the forced solutions with the natural solutions, assuming a frequency $f=1kHz$. Both $V_s(t)$ and $V_6(t)$ are plotted in the $[-5, 20]ms$ interval.
 \begin{figure}[h] \centering
 \includegraphics[width=0.6\linewidth]{graf_V6_t.pdf}
@@ -127,3 +137,4 @@ In the final step, frequency responses are plotted for node $V_6$, for voltage s
 \includegraphics[width=0.6\linewidth]{graf_phase.pdf}
 \caption{Plot for phase frequency responde for $V_6$, $V_s$ and $V_c$}
 \end{figure}
+Tables are input after both simulation and analysis section for best comparison.
