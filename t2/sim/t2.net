@@ -1,16 +1,14 @@
+Circuit
+*
 .include data.net
 *
-* Circuit simulator for t1
+* Circuit simulator for t2
 *
 * NGSPICE simulation script
 * BJT amp with feedback
 *
 *CIRCUITO
 .options savecurrents
-.param Vxx = 8.303609
-
-* Boundary Conditions
-.ic V(6)=5.528929 V(9)=-1.83752
 
 * supply voltage
 Vs 1 0 0.0 ac 0.0 sin(0 1 6283.185307)
@@ -24,6 +22,8 @@ R5 5 6 RR5
 R6 0 7 RR6
 R7 9 8 RR7
 
+
+
 * Voltage Sources
 Vee 7 9 0
 Hc 5 8 Vee Kd
@@ -31,7 +31,7 @@ Hc 5 8 Vee Kd
 * Current Sources
 Gb 6 3 2 5 Kb
 
-* Capacitors turnd into a voltage source
+* Capacitors turned into a voltage source
 Vx 6 8 Vxx
 
 
@@ -42,11 +42,13 @@ Vx 6 8 Vxx
 
 op
 
+
 echo "********************************************"
 echo  "Operating point"
 echo "********************************************"
 
 print @R1[i]
+print Vs
 
 echo  "opV0_TAB"
 print all
