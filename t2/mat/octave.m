@@ -310,7 +310,7 @@ plot(t1*1e3 , Vs_t, "g");
 xlabel("t, ms");
 ylabel("V6, V");
 title("V6(t) and Vs(t) total solution plot");
-legend("Total solution plot for node 6, (the effect of the natural solution and the forced solution) with t belonging to [-5, 20]ms" , "location" , "north");
+legend("Total solution plot for node 6, (the effect of the natural solution and the forced solution) with t belonging to [-5, 20]ms and V6 plot" , "location" , "north");
 %%prints natural solution graphic prepared to be converted to pdf
 print (graf_V6_t, "graf_V6_t.pdf", "-dpdflatexstandalone");
 
