@@ -112,7 +112,7 @@ The following table shows the voltage in all nodes and current through voltage s
 \par
 \par
 The normal solution for node 6 is plotted in the third part of this analysis, using the values for $V_6(0)$ obtained in the previous step and the time constant obtained using the capacitor's $R_{eq}$. This is plotted in an interval of $[0, 20]ms$.
-\begin{figure}[h] \centering
+\begin{figure}[H] \centering
 \includegraphics[width=0.6\linewidth]{graf_nat.pdf}
 \caption{Plot for $V_6(t)$ natural solution}
 \end{figure}
@@ -159,17 +159,17 @@ The following table shows the Complex Amplitude for each node when in alternated
 \end{table}
 
 Fifth step consists in using the amplitudes determined in the previous step to write real time functions for nodes. This is done by sum of the forced solutions with the natural solutions, assuming a frequency $f=1kHz$. Both $V_s(t)$ and $V_6(t)$ are plotted in the $[-5, 20]ms$ interval.
-\begin{figure}[h] \centering
+\begin{figure}[H] \centering
 \includegraphics[width=0.6\linewidth]{graf_V6_t.pdf}
 \caption{Plot for $V_s(t)$ and $V_6(t)$ total solutions}
 \end{figure}
 
 In the final step, frequency responses are plotted for node $V_6$, for voltage source $V_s$ and for the capacitor's voltage $V_c=V_6+V_8$. 
-\begin{figure}[h] \centering
+\begin{figure}[H] \centering
 \includegraphics[width=0.6\linewidth]{graf_mag.pdf}
 \caption{Plot for magnitude frequency responde for $V_6$, $V_s$ and $V_c$}
 \end{figure}
-\begin{figure}[h] \centering
+\begin{figure}[H] \centering
 \includegraphics[width=0.6\linewidth]{graf_phase.pdf}
 \caption{Plot for phase frequency responde for $V_6$, $V_s$ and $V_c$}
 \end{figure}
