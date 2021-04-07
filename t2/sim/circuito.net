@@ -12,7 +12,7 @@
 .ic V(6)=5.528929 V(9)=-2.77468
 
 * supply voltage
-Vs 1 0 Vss ac 0.0 sin(0 1 6283.185307)
+Vs 1 0 Vss ac 1.0 sin(0 1.0 6283.185307)
 
 * Resistances
 R1 1 2 RR1
@@ -49,6 +49,7 @@ set color6=rgb:4/0/0
 
 op
 
+
 echo "********************************************"
 echo  "Operating point"
 echo "********************************************"
@@ -65,8 +66,8 @@ echo  "Transient analysis"
 echo "********************************************"
 tran 1e-5 20e-3
 
-hardcopy fs.ps v(6)
-echo fs_FIG
+hardcopy ns.ps v(6)
+echo ns_FIG
 
 echo "********************************************"
 echo  "Frequency analysis"
@@ -85,8 +86,13 @@ echo "********************************************"
 
 ac dec 10 1e-1 1MEG
 
-hardcopy fr.ps v(6) V(1)
-echo fr_FIG
+let Vc = V(6)-V(8)
+
+
+hardcopy mag.ps db(v(6)) db(v(1)) db(Vc)
+echo mag_FIG
+hardcopy phase.ps vp(6) vp(1) vp(Vc)
+echo phase_FIG
 
 *plot v(6)
 

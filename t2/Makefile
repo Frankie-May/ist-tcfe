@@ -6,6 +6,7 @@
 
 all:
 	@make -C mat
+	@make -C sim
 	@make -C doc
 	@cp doc/report.pdf .
 

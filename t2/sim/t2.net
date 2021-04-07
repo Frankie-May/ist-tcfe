@@ -7,6 +7,7 @@
 *
 *CIRCUITO
 .options savecurrents
+.param Vxx = 8.303609
 
 * Boundary Conditions
 .ic V(6)=5.528929 V(9)=-1.83752
@@ -35,6 +36,8 @@ Vx 6 8 Vxx
 
 
 *Control commads
+.op
+.end
 .control
 
 op
@@ -45,9 +48,9 @@ echo "********************************************"
 
 print @R1[i]
 
-echo  "op_V0_TAB"
+echo  "opV0_TAB"
 print all
-echo  "op_V0_END"
+echo  "opV0_END"
 
 
 
