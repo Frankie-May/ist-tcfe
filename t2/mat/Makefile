@@ -8,11 +8,12 @@ all: ../t2_datagen.py octave.m
 	@rm data.net
 	
 clean:
-
+	@rm *.log *.pdf
 	@rm ../sim/data.net
-	@rm ../doc/tableinferior0.tex
 	@rm ../doc/tnat.tex
+	@rm ../doc/tableinferior0.tex
 	@rm ../doc/tcamp.tex
 	@rm ../doc/graf_nat.pdf
+	
 
 .PHONY: all clean
