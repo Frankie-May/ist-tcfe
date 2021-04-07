@@ -31,10 +31,6 @@ for i=1:11
 	endif
 endfor
 fclose(source);
-<<<<<<< HEAD
-
-=======
->>>>>>> c3775bf9409db202ba82e0660135f1f1855c6448
 
 %%Resistance Variables
 sym R1;
