@@ -299,11 +299,14 @@ t3 = 0:(25*10^-3+5*10^-3)/1000:20*10^-3;
 
 v6_t = [Vs+(0*t2) , V06*e.^(-(t3/tau)+N(6)*e.^(-j*(2*pi*1e3*t3-pi/2)))];
 
+Vs_t = [Vs+(0*t2) , 1*e.^(j*(2*pi*1e3*t3-pi/2))]
+
 
 graf_V6_t = figure();
 
 plot(t1*1e3 , v6_t);
 hold on;
+plot(t1*1e3 , Vs_t, "g");
 xlabel("t, ms");
 ylabel("V6, V");
 title("V6(t) and Vs(t) total solution plot");
