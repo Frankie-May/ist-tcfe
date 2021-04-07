@@ -293,11 +293,11 @@ system("cp tcamp.tex ../doc && rm tcamp.tex");
 
 
 %%Total Solution v6(t)
-t1 = -5:(20*10^-3+5)/1000:20*10^-3;
-t2 = -5:(20*10^-3+5)/1000:0;
-t3 = 0:(20*10^-3+5)/1000:20*10^-3;
+t1 = -5*10^-3:(25*10^-3+5*10^-3)/1000:20*10^-3;
+t2 = -5*10^-3:(25*10^-3+5*10^-3)/1000:0;
+t3 = 0:(25*10^-3+5*10^-3)/1000:20*10^-3;
 
-v6_t = [Vss+(0*t2) , V06*e.^(-(t3/tau)+N(6)*e.^(-j*(2*pi*1e3*t3-pi/2)))];
+v6_t = [Vs+(0*t2) , V06*e.^(-(t3/tau)+N(6)*e.^(-j*(2*pi*1e3*t3-pi/2)))];
 
 
 graf_V6_t = figure();
@@ -362,6 +362,7 @@ print (graf_mag, "graf_mag.pdf", "-dpdflatexstandalone");
 
 %%creates pdf of graphic and deletes unused files
 system("pdflatex graf_mag");
+system("cp graf_mag.pdf ../doc");
 system("rm graf_mag.aux && rm graf_mag-inc.pdf && rm graf_mag.log && rm graf_mag.tex");
 
 graf_phase = figure();
@@ -379,4 +380,5 @@ print (graf_phase, "graf_phase.pdf", "-dpdflatexstandalone");
 
 %%creates pdf of graphic and deletes unused files
 system("pdflatex graf_phase");
+system("cp graf_phase.pdf ../doc");
 system("rm graf_phase.aux && rm graf_phase-inc.pdf && rm graf_phase.log && rm graf_phase.tex");
