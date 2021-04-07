@@ -319,9 +319,9 @@ system("pdflatex graf_V6_t");
 system("cp graf_V6_t.pdf ../doc");
 system("rm graf_V6_t.pdf && rm graf_V6_t.aux && rm graf_V6_t-inc.pdf && rm graf_V6_t.log && rm graf_V6_t.tex");
 
-freq = 0.1:(-0.1+1*10^6)/1000:1*10^6;
+freq = 0.1:(-0.1+1*10^6)/600:1*10^6;
 
-for in1 = 1:1:1001
+for in1 = 1:1:601
 
 	Zc1 = (1/(Cf*2*pi*freq(in1)))*e.^(-j*pi/2);
 

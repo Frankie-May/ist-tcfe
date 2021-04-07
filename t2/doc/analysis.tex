@@ -41,7 +41,7 @@ The second analysis point consists in the determination of the equivalent resist
 \begin{equation}
 V_x=V_6-V_8
 \end{equation}
-After this we the determine the currrent ($I_x) flowing through the $V_x$ voltage source (the voltage source which we traded the capacitor with) and find the $R_{eq}$ through the following equation:
+After this we the determine the currrent ($I_x$) flowing through the $V_x$ voltage source (the voltage source which we traded the capacitor with) and find the $R_{eq}$ through the following equation:
 \begin{equation}
 R_eq=V_x/I_x
 \end{equation}
@@ -71,7 +71,7 @@ Vs\\0\\0\\0\\Vx\\0\\0\\0\\0
 \end{equation}
 
 \vspace{20pt}
-This is a needed procedure in order to determine the time constant for the circuit, \tau. The following expression is valid only for the time constant of a RC constant
+This is a needed procedure in order to determine the time constant for the circuit, $\tau$. The following expression is valid only for the time constant of a RC constant
 \begin{equation}
 \tau=R*C
 \end{equation}
@@ -81,7 +81,7 @@ V(t)=V(0)*e^(-(t/\tau))
 \end{equation}
 
 
-The normal solution for node 6 is plotted in the third part of this analysis, using the values for V_6(0) obtained in the previous step and the time constant obtained using the capacitor's R_{eq}. This is plotted in an interval of $[0, 20]ms$.
+The normal solution for node 6 is plotted in the third part of this analysis, using the values for $V_6(0)$ obtained in the previous step and the time constant obtained using the capacitor's $R_{eq}$. This is plotted in an interval of $[0, 20]ms$.
 \begin{figure}[h] \centering
 \includegraphics[width=0.6\linewidth]{graf_nat.pdf}
 \caption{Plot for $V_6(t)$ natural solution}
@@ -91,7 +91,7 @@ Fourth step consists in determining the forced solution for node 6 in the same i
 \begin{equation}
 Z_c=1/(j*\omega*C)
 \end{equation}
-Where $Z_c$ is the capacitors impedance, j is the imaginary unit, \omega is the angular speed given by $\omega=2*\pi*f$ and C is the capacitor's capacity which was given in the data. Frequency f in this step is equal to $f=1kHz$.
+Where $Z_c$ is the capacitors impedance, j is the imaginary unit, $\omega$ is the angular speed given by $\omega=2*\pi*f$ and C is the capacitor's capacity which was given in the data. Frequency f in this step is equal to $f=1kHz$.
 Then we run nodal analysis in the circuit in order to find the complex amplitudes for each node. The following matrix describes the equations used to perform this. The equations used are given by the application of the regular nodal analysis, using equations from nodes not connected to voltage source, the $V_d$ voltage relationship with nodes $V_8$ and $V_5$ and the super-node equation from the 5-8 super-node.
 \begin{equation}
 \begin{bsmallmatrix}
@@ -114,14 +114,18 @@ Vsf\\0\\0\\0\\0\\0\\0
 \end{equation}
 \par
 \par
-\begin{table}
-\centering
-\caption{Complex Amplitudes for all Nodes}
-\begin{tabular}{|l|r|}
-\hline
- {\bf Voltage} & {\bf Value [V]}
- \input{tcamp.tex}
+
+\begin{table}[h]
+  \centering
+  \begin{tabular}{|l|r|}
+    \hline    
+    {\bf Voltage} & {\bf Value [V]} \\ \hline
+    \input{tcamp.tex}
+  \end{tabular}
+  \caption{Complex Amplitudes for all Nodes}
+  \label{tab:tcamp}
 \end{table}
+
 Fifth step consists in using the amplitudes determined in the previous step to write real time functions for nodes. This is done by sum of the forced solutions with the natural solutions, assuming a frequency $f=1kHz$. Both $V_s(t)$ and $V_6(t)$ are plotted in the $[-5, 20]ms$ interval.
 \begin{figure}[h] \centering
 \includegraphics[width=0.6\linewidth]{graf_V6_t.pdf}
