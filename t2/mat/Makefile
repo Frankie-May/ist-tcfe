@@ -5,6 +5,7 @@ all: ../t2_datagen.py octave.m
 	@octave octave.m > octave.log
 	@cp data.net ../sim
 	@rm data.log
+	@rm octave.log
 	@rm data.net
 	
 clean:
