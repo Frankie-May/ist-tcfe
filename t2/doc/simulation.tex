@@ -1,20 +1,59 @@
 \section{Simulation Analysis}
 \label{sec:simulation}
 
-The circuit that we have analysed through the mesh and the node method is going to be simulated using a circuit simulation platform, Ngspice. This program allows you to use simple notation to represent the circuit components and through the indication of the nodes that the components are connected to, it's able to compute the voltages and the currents that characterise the circuit.
+The circuit that we have analysed is going to be simulated using a circuit simulation platform, Ngspice. The circuit is was discribed using ngspice notation and the operating point analysis was done were the values of the paramiters of the circuit are persented in the bable below.
 
-\begin{table}[h]
+\begin{table}[ht]
   \centering
   \begin{tabular}{|l|r|}
     \hline    
     {\bf Name} & {\bf Value [A or V]} \\ \hline
     \input{op_tab}
   \end{tabular}
-  \caption{Voltage and current values obtained through simulation. gb is the current produced by the voltage controled current source. ib is the current produced by the independent current source. $r_j[i]$ for $1<=j<=7$ is the current flowing through resistor $r_j$. Every other letter refers to the voltage in the respective same letter node.}
+  \caption{Voltage and current values obtained through simulation.}
   \label{tab:op}
 \end{table}
 
 
-As noticeable in the tables shown above, the current and voltage values obtained through theoretical analysis are similar to those obtained by the Ngspice simulation. This happens because Ngspice uses the Nodes' Method to solve circuits, therefore the values obtained through the theoretical Nodes' method is equal to those values obtained in the simulation. Concerning the Meshes' Method, this method has a similar degree of precision to that of the Nodes' Method, so it is expected that the results are also very similar.
+The equivilent risister is calculated conseduring the voltge souces iqual to zero (witch is the same as replacing it with a short circuit), and by substatuting the capaciter by a voltage source with nodal voltages that have the same conditions as the previous circuit calculations. The equivilent resister is computed, because it is used for calculating the natural solution of the circuit. The values of the paramiters of the circuit in thise conditions are presented in the table below.
 
-The error calculation in this case is proved to be unnecessary due to the close similarity between simulation results and theoretical results.
+\begin{table}[ht]
+  \centering
+  \begin{tabular}{|l|r|}
+    \hline    
+    {\bf Name} & {\bf Value [A or V]} \\ \hline
+    \input{opV0_tab}
+  \end{tabular}
+  \caption{Voltage and current values obtained through simulation.}
+  \label{tab:op}
+\end{table}
+
+Next the natural solution of the circuit was obtain by aplaing trasient analysis to the circuit using the boudery conditions of the previus analysis, this resolt is ploted in the figure below.
+
+\begin{figure}[ht] \centering
+\includegraphics[width=0.6\linewidth]{ns.pdf}
+\caption{Natural Solution.}
+\label{Fig1: ns}
+\end{figure}
+
+The total the response os node V6 witch is the sobreposition of the natural solution and the forced solution is also ploted in the next figure, this was possible by aplaing a frequency analysis with frequency equal to 1kHz.
+
+\begin{figure}[ht] \centering
+\includegraphics[width=0.6\linewidth]{npfs.pdf}
+\caption{Total Solution.}
+\label{Fig1: npfs}
+\end{figure}
+
+Finaly the frequency analysis of the circuit within the frequency of 0.1Hz and 1MHz is ploted below using a logarithmic scal, were the magnitude is represented in decibels and the phase in presented in degrees. the voltages ploted are the voltage at node 6, the voltage at voltage source and the voltage Vc, that represents the voltage diference of node 6 and 8. The plot of the voltage in the voltage source (Vs) and the voltage in node 6 (V6) difere because of the presence of the capaciter that if charging and discharging witch produces the observed diference.
+
+\begin{figure}[ht] \centering
+\includegraphics[width=0.6\linewidth]{mag.pdf}
+\caption{Magnitude of frequency analysis.}
+\label{Fig1: mag}
+\end{figure}
+
+\begin{figure}[ht] \centering
+\includegraphics[width=0.6\linewidth]{phase.pdf}
+\caption{Phase of frequency analysis.}
+\label{Fig1: phase}
+\end{figure}
