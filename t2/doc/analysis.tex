@@ -34,7 +34,21 @@ Vs\\
 0
 \end{bsmallmatrix}
 \end{equation}
-
+\par
+\par
+The following table prints the voltage and currents for each node and branch, respectively, when $t<0$
+\par
+\par
+\begin{table}[h]
+  \centering
+  \begin{tabular}{|l|r|}
+    \hline    
+    {\bf Name} & {\bf Value [V or A]} \\ \hline
+    \input{tableinferior0.tex}
+  \end{tabular}
+  \caption{Voltage and current values when $t<0$}
+  \label{tab:tcamp}
+\end{table}
 \vspace{20pt}
 
 The second analysis point consists in the determination of the equivalent resistance ($R_{eq}$) of the circuit when seen from the capacitor's branch. This is done with resource to two substitutions. Firstly we trade $V_s(t)$ voltage source for a 0V source, creating a short circuit between nodes GND and 1. Then we trade the capacitor for a voltage source whose voltage given ($V_x$) is equal to the voltage between nodes $V_6$ and $V_8$ determined in the previous step. $V_x$ is therefore determined with the following equation:
@@ -79,8 +93,24 @@ This is a needed procedure in order to determine the time constant for the circu
 \begin{equation}
 V(t)=V(0)*e^(-(t/\tau))
 \end{equation}
-
-
+\par
+\par
+The following table shows the voltage in all nodes and current through voltage source $V_x$ ($I_x$), the voltage source replacing the capacitor and the current through voltage source $V_d$ ($I_y$)
+\par
+\par
+\begin{table}[h]
+  \centering
+  \begin{tabular}{|l|r|}
+    \hline    
+    {\bf Name} & {\bf Value [V or A]} \\ \hline
+    \input{tnat.tex}
+  \end{tabular}
+  \caption{Voltage and current values when $t=0$}
+  \label{tab:tcamp}
+\end{table}
+\vspace{20pt}
+\par
+\par
 The normal solution for node 6 is plotted in the third part of this analysis, using the values for $V_6(0)$ obtained in the previous step and the time constant obtained using the capacitor's $R_{eq}$. This is plotted in an interval of $[0, 20]ms$.
 \begin{figure}[h] \centering
 \includegraphics[width=0.6\linewidth]{graf_nat.pdf}
@@ -114,7 +144,9 @@ Vsf\\0\\0\\0\\0\\0\\0
 \end{equation}
 \par
 \par
-
+The following table shows the Complex Amplitude for each node when in alternated current regime.
+\par
+\par
 \begin{table}[h]
   \centering
   \begin{tabular}{|l|r|}
