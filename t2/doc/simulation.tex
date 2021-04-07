@@ -1,7 +1,7 @@
 \section{Simulation Analysis}
 \label{sec:simulation}
 
-The circuit that we have analysed is going to be simulated using a circuit simulation platform, Ngspice. The circuit is was discribed using ngspice notation and the operating point analysis was done were the values of the paramiters of the circuit are persented in the bable below.
+The circuit that we have analysed is going to be simulated using a circuit simulation platform, Ngspice. The circuit is described using ngspice notation and the operating point analysis was done. The values of the parameters of the circuit are presented in the table below.
 
 \begin{table}[ht]
   \centering
@@ -15,7 +15,7 @@ The circuit that we have analysed is going to be simulated using a circuit simul
 \end{table}
 
 
-The equivilent risister is calculated conseduring the voltge souces iqual to zero (witch is the same as replacing it with a short circuit), and by substatuting the capaciter by a voltage source with nodal voltages that have the same conditions as the previous circuit calculations. The equivilent resister is computed, because it is used for calculating the natural solution of the circuit. The values of the paramiters of the circuit in thise conditions are presented in the table below.
+The equivalent resistor is calculated considering the voltage souces equal to zero (which is the same as replacing it with a short circuit), and by substituting the capaciter by a voltage source with nodal voltages that have the same conditions as the previous circuit calculations. The equivalent resistor is computed, because it is used for calculating the natural solution of the circuit. The values of the parameters of the circuit in these conditions are presented in the table below.
 
 \begin{table}[ht]
   \centering
@@ -28,7 +28,7 @@ The equivilent risister is calculated conseduring the voltge souces iqual to zer
   \label{tab:op}
 \end{table}
 
-Next the natural solution of the circuit was obtain by aplaing trasient analysis to the circuit using the boudery conditions of the previus analysis, this resolt is ploted in the figure below.
+Next the natural solution of the circuit was obtained by aplying trasient analysis to the circuit using the boundery conditions of the previous analysis, this result is plotted in the figure below.
 
 \begin{figure}[ht] \centering
 \includegraphics[width=0.6\linewidth]{ns.pdf}
@@ -36,7 +36,7 @@ Next the natural solution of the circuit was obtain by aplaing trasient analysis
 \label{Fig1: ns}
 \end{figure}
 
-The total the response os node V6 witch is the sobreposition of the natural solution and the forced solution is also ploted in the next figure, this was possible by aplaing a frequency analysis with frequency equal to 1kHz.
+The total response in node V6, which is the sobreposition of the natural solution and the forced solution, is also plotted in the next figure, this was possible by aplying a frequency analysis with frequency equal to 1kHz.
 
 \begin{figure}[ht] \centering
 \includegraphics[width=0.6\linewidth]{npfs.pdf}
@@ -44,7 +44,7 @@ The total the response os node V6 witch is the sobreposition of the natural solu
 \label{Fig1: npfs}
 \end{figure}
 
-Finaly the frequency analysis of the circuit within the frequency of 0.1Hz and 1MHz is ploted below using a logarithmic scal, were the magnitude is represented in decibels and the phase in presented in degrees. the voltages ploted are the voltage at node 6, the voltage at voltage source and the voltage Vc, that represents the voltage diference of node 6 and 8. The plot of the voltage in the voltage source (Vs) and the voltage in node 6 (V6) difere because of the presence of the capaciter that if charging and discharging witch produces the observed diference.
+Finaly the frequency analysis of the circuit within the frequency of 0.1Hz and 1MHz is plotted below using a logarithmic scale, where the magnitude is represented in decibels and the phase in presented in degrees. The voltages plotted are the voltage at node 6, the voltage at voltage source $V_s$ and the voltage $V_c$, that represents the voltage diference of node 6 and 8. The plot of the voltage in the voltage source (Vs) and the voltage in node 6 (V6) difere because of the presence of the capacitor that is charging and discharging, which produces the observed diference.
 
 \begin{figure}[ht] \centering
 \includegraphics[width=0.6\linewidth]{mag.pdf}
