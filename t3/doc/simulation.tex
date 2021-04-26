@@ -1,0 +1,64 @@
+\section{Simulation Analysis}
+\label{sec:simulation}
+
+The circuit that we have analysed is going to be simulated using a circuit simulation platform, Ngspice. The circuit is described using ngspice notation and the operating point analysis was done. The values of the parameters of the circuit are presented in the table \ref{tab:op}.
+
+
+The equivalent resistor is calculated considering the voltage souces equal to zero (which is the same as replacing it with a short circuit), and by substituting the capaciter by a voltage source with nodal voltages that have the same conditions as the previous circuit calculations. The equivalent resistor is computed, because it is used for calculating the natural solution of the circuit. The values of the parameters of the circuit in these conditions are presented in the table \ref{tab:opV0}.
+
+
+\begin{table}[H]
+  \centering
+  \begin{tabular}{|l|r|}
+    \hline    
+    {\bf Name} & {\bf Value [A or V]} \\ \hline
+    \input{op_tab}
+  \end{tabular}
+  \caption{Voltage and current values obtained through simulation.}
+  \label{tab:op}
+\end{table}
+
+
+\begin{table}[H]
+  \centering
+  \begin{tabular}{|l|r|}
+    \hline    
+    {\bf Name} & {\bf Value [A or V]} \\ \hline
+    \input{opV0_tab}
+  \end{tabular}
+  \caption{Voltage and current values obtained through simulation.}
+  \label{tab:opV0}
+\end{table}
+
+
+Next the natural solution of the circuit was obtained by aplying trasient analysis to the circuit using the boundery conditions of the previous analysis, this result is plotted in the figure \ref{Fig1:ns}.
+
+
+\begin{figure}[H] \centering
+\includegraphics[width=0.3\linewidth]{ns.pdf}
+\caption{Natural Solution.}
+\label{Fig1:ns}
+\end{figure}
+
+
+The total response in node V6, which is the sobreposition of the natural solution and the forced solution, is also plotted in figure \ref{Fig1:npfs}, this was possible by aplying a frequency analysis with frequency equal to 1kHz.
+
+\begin{figure}[H] \centering
+\includegraphics[width=0.3\linewidth]{npfs.pdf}
+\caption{Total Solution.}
+\label{Fig1:npfs}
+\end{figure}
+
+Finaly the frequency analysis of the circuit within the frequency of 0.1Hz and 1MHz is plotted below using a logarithmic scale, where the magnitude is represented in decibels and the phase in presented in degrees. The voltages plotted are the voltage at node 6, the voltage at voltage source $V_s$ and the voltage $V_c$, that represents the voltage diference of node 6 and 8. The plot of the voltage in the voltage source (Vs) and the voltage in node 6 (V6) difere because of the presence of the capacitor that is charging and discharging, which produces the observed diference.
+
+\begin{figure}[H] \centering
+\includegraphics[width=0.3\linewidth]{mag.pdf}
+\caption{Magnitude of frequency analysis. $V_s(f)$ (blue), $V_6$ (red) and $V_c$ (orange)}
+\label{Fig1:mag}
+\end{figure}
+
+\begin{figure}[H] \centering
+\includegraphics[width=0.3\linewidth]{phase.pdf}
+\caption{Phase of frequency analysis.$V_s(f)$ (blue), $V_6$ (red) and $V_c$ (orange)}
+\label{Fig1:phase}
+\end{figure}
