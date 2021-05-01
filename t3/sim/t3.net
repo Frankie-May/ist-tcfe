@@ -65,21 +65,13 @@ set color6=rgb:4/0/0
 * analise no tempo
 tran 1e-4 220e-3
 
-*print 'mean(v(4))'
-
 print 'length(v(4))'
 
-*print 'minimum(v(4))'
-
-*print 'maximum(v(4))'
-
-*print  v(4)
-
-*plot  v(1) v(2)
 plot  v(2,3) v(4)
 plot 'v(4)-12'
 
 hardcopy vospice50.ps v(2,3) v(4)
+hardcopy voripple.ps 'v(4)-12'
 * hardcopy vospice400.ps v(1) v(2)
 
 *quit
