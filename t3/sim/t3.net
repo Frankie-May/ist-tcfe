@@ -44,8 +44,8 @@ Ra 4 0 14k
 
 
 .measure tran y4avg AVG v(4) from=20m to=220m
-.measure tran y5avg MAX v(4) from=20m to=220m
-.measure tran y6avg MIN v(4) from=20m to=220m
+.measure tran y4max MAX v(4) from=20m to=220m
+.measure tran y4min MIN v(4) from=20m to=220m
 
 .model Default D
 .op
@@ -54,11 +54,23 @@ Ra 4 0 14k
 
 .control
 
+*makes plots in color
+set hcopypscolor=0
+set color0=white
+set color1=black
+set color2=red
+set color3=blue
+set color4=violet
+set color5=rgb:3/8/0
+set color6=rgb:4/0/0
+
 ******************************************
 * analise no tempo
-tran 5e-4 220e-3
+tran 1e-4 220e-3
 
 *print 'mean(v(4))'
+
+print 'length(v(4))'
 
 *print 'minimum(v(4))'
 
