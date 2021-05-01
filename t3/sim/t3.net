@@ -22,9 +22,9 @@ Dd2 2 4 Default
 Dd3 0 3 Default
 Dd4 3 4 Default
 *Ca 2 0 1u
-Ci 4 0 14u
+Ci 4 0 20u
 *Cb 3 0 1u
-Ra 4 0 14k
+Ra 4 0 20k
 *Ri 1 2 1k
 
 
@@ -45,7 +45,10 @@ Ra 4 0 14k
 
 .measure tran y4avg AVG v(4) from=20m to=220m
 .measure tran y4max MAX v(4) from=20m to=220m
-.measure tran y4min MIN v(4) from=20m to=220m
+.measure tran y4min MIN v(4) min from=20m to=220m
+let ripple = y4max - y4min
+
+print ripple
 
 .model Default D
 .op
