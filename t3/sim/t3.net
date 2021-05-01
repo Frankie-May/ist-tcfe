@@ -45,10 +45,9 @@ Ra 4 0 20k
 
 .measure tran y4avg AVG v(4) from=20m to=220m
 .measure tran y4max MAX v(4) from=20m to=220m
-.measure tran y4min MIN v(4) min from=20m to=220m
-let ripple = y4max - y4min
+.measure tran y4min MIN v(4) from=20m to=220m
+.measure tran ripp param='y4max - y4min'
 
-print ripple
 
 .model Default D
 .op
