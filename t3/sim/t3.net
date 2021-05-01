@@ -8,7 +8,7 @@
 ******************************************
 
 .param pi = 3.14159265359
-.param n = '24'
+.param n = '23.8'
 *.param n = '(sqrt(2)*230/12)'
 
 * input voltage source
@@ -24,31 +24,25 @@ Dd4 3 4 Default
 *Ca 2 0 1u
 Ci 4 0 20u
 *Cb 3 0 1u
-Ra 4 0 20k
-*Ri 1 2 1k
-
-
-*Dd1 1 2 Default
-*Ca 2 0 1u
-*Ra 2 0 1k
+Ra 4 0 10k
+Ri 4 9 30k
 
 * positive limiter
-*Dp1 2 3 Default
-*Dp2 3 4 Default
-*Dp3 4 0 Default
+Dp1 9 5 Default
+Dp2 5 6 Default
+Dp3 6 0 Default
 
 * negative limiter
-*Dn1 0 5 Default
-*Dn2 5 6 Default
-*Dn3 6 2 Default
+*Dn1 0 7 Default
+*Dn2 7 8 Default
+*Dn3 8 9 Default
 
 
 .measure tran y4avg AVG v(4) from=20m to=220m
 .measure tran y4max MAX v(4) from=20m to=220m
-.measure tran y4min MIN v(4) min from=20m to=220m
-let ripple = y4max - y4min
+.measure tran y4min MIN v(4) from=20m to=220m
+.measure tran param='y4max - y4min'
 
-print ripple
 
 .model Default D
 .op
@@ -86,7 +80,6 @@ plot  v(2,3) v(4)
 plot 'v(4)-12'
 
 hardcopy vospice50.ps v(2,3) v(4)
-hardcopy vospice-12.ps 'v(4)-12'
 * hardcopy vospice400.ps v(1) v(2)
 
 *quit
