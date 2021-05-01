@@ -86,6 +86,7 @@ plot  v(2,3) v(4)
 plot 'v(4)-12'
 
 hardcopy vospice50.ps v(2,3) v(4)
+hardcopy vospice-12.ps 'v(4)-12'
 * hardcopy vospice400.ps v(1) v(2)
 
 *quit
