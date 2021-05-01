@@ -8,7 +8,7 @@
 ******************************************
 
 .param pi = 3.14159265359
-.param n = '23.8'
+.param n = '24'
 *.param n = '(sqrt(2)*230/12)'
 
 * input voltage source
@@ -24,8 +24,8 @@ Dd4 3 4 Default
 *Ca 2 0 1u
 Ci 4 0 20u
 *Cb 3 0 1u
-Ra 4 0 10k
-Ri 4 9 30k
+Ra 4 0 20k
+Ri 4 9 1k
 
 * positive limiter
 Dp1 9 5 Default
@@ -76,7 +76,7 @@ print 'length(v(4))'
 *print  v(4)
 
 *plot  v(1) v(2)
-plot  v(2,3) v(4)
+plot  v(2,3) v(4) v(9)
 plot 'v(4)-12'
 
 hardcopy vospice50.ps v(2,3) v(4)
