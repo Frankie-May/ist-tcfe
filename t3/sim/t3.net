@@ -41,7 +41,7 @@ Dp3 6 0 Default
 .measure tran y4avg AVG v(4) from=20m to=220m
 .measure tran y4max MAX v(4) from=20m to=220m
 .measure tran y4min MIN v(4) from=20m to=220m
-.measure tran param='y4max - y4min'
+.measure tran ripp param='y4max - y4min'
 
 
 .model Default D
