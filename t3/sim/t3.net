@@ -8,27 +8,29 @@
 ******************************************
 
 .param pi = 3.14159265359
+.param n = '24'
+*.param n = '(sqrt(2)*230/12)'
 
 * input voltage source
 *vS 1 0 0 sin(0 'sqrt(2)*230' '2*pi*50')
-vS 1 0 0 sin(0 'sqrt(2)*230' 50)
+vS 2 3 0 sin(0 'sqrt(2)*230/n' 50)
 *vS 1 0 0 sin(0 5 400)
 
-* passa-alto ordem 1 a entrada 
-Dd1 2 1 Default
-Dd2 1 3 Default
-Dd3 2 0 Default
-Dd4 0 3 Default
+* Full-Wave bridge rectifier 
+Dd1 0 2 Default
+Dd2 2 4 Default
+Dd3 0 3 Default
+Dd4 3 4 Default
 *Ca 2 0 1u
-Ci 3 2 14u
+Ci 4 0 14u
 *Cb 3 0 1u
-Ra 2 3 14k
+Ra 4 0 14k
 *Ri 1 2 1k
 
 
 *Dd1 1 2 Default
 *Ca 2 0 1u
-*Ra 2 0 20k
+*Ra 2 0 1k
 
 * positive limiter
 *Dp1 2 3 Default
@@ -41,22 +43,36 @@ Ra 2 3 14k
 *Dn3 6 2 Default
 
 
+.measure tran y4avg AVG v(4) from=20m to=220m
+.measure tran y5avg MAX v(4) from=20m to=220m
+.measure tran y6avg MIN v(4) from=20m to=220m
+
 .model Default D
 .op
+
 .end
 
 .control
 
 ******************************************
 * analise no tempo
-tran 5e-4 50e-3
+tran 5e-4 220e-3
+*tran 5e-4 50e-3
 * tran 1e-5 10e-3
 
+*print 'mean(v(4))'
+
+*print 'minimum(v(4))'
+
+*print 'maximum(v(4))'
+
+*print  v(4)
+
 *plot  v(1) v(2)
-plot  v(1) v(3,2)
+plot  v(2,3) v(4)
 
 ******************************************
-hardcopy vospice50.ps v(1)
+hardcopy vospice50.ps v(2,3) v(4)
 * hardcopy vospice400.ps v(1) v(2)
 
 *quit
