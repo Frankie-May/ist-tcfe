@@ -57,8 +57,6 @@ Ra 4 0 14k
 ******************************************
 * analise no tempo
 tran 5e-4 220e-3
-*tran 5e-4 50e-3
-* tran 1e-5 10e-3
 
 *print 'mean(v(4))'
 
@@ -71,7 +69,6 @@ tran 5e-4 220e-3
 *plot  v(1) v(2)
 plot  v(2,3) v(4)
 
-******************************************
 hardcopy vospice50.ps v(2,3) v(4)
 * hardcopy vospice400.ps v(1) v(2)
 
