@@ -1,0 +1,65 @@
+*
+* Low-Pass Filter + Limiter
+*
+
+* forces current values to be saved
+.options savecurrents
+
+******************************************
+
+.param pi = 3.14159265359
+
+* input voltage source
+*vS 1 0 0 sin(0 'sqrt(2)*230' '2*pi*50')
+vS 1 0 0 sin(0 'sqrt(2)*230' 50)
+*vS 1 0 0 sin(0 5 400)
+
+* passa-alto ordem 1 a entrada 
+Dd1 2 1 Default
+Dd2 1 3 Default
+Dd3 2 0 Default
+Dd4 0 3 Default
+*Ca 2 0 1u
+Ci 3 2 14u
+*Cb 3 0 1u
+Ra 2 3 14k
+*Ri 1 2 1k
+
+
+*Dd1 1 2 Default
+*Ca 2 0 1u
+*Ra 2 0 20k
+
+* positive limiter
+*Dp1 2 3 Default
+*Dp2 3 4 Default
+*Dp3 4 0 Default
+
+* negative limiter
+*Dn1 0 5 Default
+*Dn2 5 6 Default
+*Dn3 6 2 Default
+
+
+.model Default D
+.op
+.end
+
+.control
+
+******************************************
+* analise no tempo
+tran 5e-4 50e-3
+* tran 1e-5 10e-3
+
+*plot  v(1) v(2)
+plot  v(1) v(3,2)
+
+******************************************
+hardcopy vospice50.ps v(1)
+* hardcopy vospice400.ps v(1) v(2)
+
+*quit
+.endc
+
+.end
