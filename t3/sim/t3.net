@@ -27,7 +27,7 @@ Ci 4 0 14u
 Ra 4 0 14k
 Ri 4 9 5k
 
-* positive limiter
+* Voltage Regulator
 Dp1 9 5 Default
 Dp2 5 6 Default
 Dp3 6 7 Default
@@ -46,21 +46,15 @@ Dp15 19 20 Default
 Dp16 20 21 Default
 Dp17 21 0 Default
 
-* negative limiter
-*Dn1 0 7 Default
-*Dn2 7 8 Default
-*Dn3 8 9 Default
+.measure tran OutFullWaveBridgeAVG AVG v(4) from=20m to=220m
+.measure tran OutFullWaveBridgeMAX MAX v(4) from=20m to=220m
+.measure tran OutFullWaveBridgeMIN MIN v(4) from=20m to=220m
+.measure tran OutFullWaveBridgeRipple param='OutFullWaveBridgeMAX - OutFullWaveBridgeMIN'
 
-
-.measure tran y4avg AVG v(4) from=20m to=220m
-.measure tran y4max MAX v(4) from=20m to=220m
-.measure tran y4min MIN v(4) from=20m to=220m
-.measure tran ripp param='y4max - y4min'
-
-.measure tran y9avg AVG v(9) from=20m to=220m
-.measure tran y9max MAX v(9) from=20m to=220m
-.measure tran y9min MIN v(9) from=20m to=220m
-.measure tran ripp9 param='y9max - y9min'
+.measure tran OutVoltRegAVG AVG v(9) from=20m to=220m
+.measure tran OutVoltRegMAX MAX v(9) from=20m to=220m
+.measure tran OutVoltRegMIN MIN v(9) from=20m to=220m
+.measure tran OutVoltRegRipple param='OutVoltRegMAX - OutVoltRegMIN'
 
 
 .model Default D
@@ -88,8 +82,8 @@ tran 1e-4 220e-3
 plot  v(2,3) v(4) v(9)
 plot 'v(9)-12'
 
-hardcopy vospice50.ps v(2,3) v(4)
-hardcopy voripple.ps 'v(4)-12'
+*hardcopy vospice50.ps v(2,3) v(4)
+*hardcopy voripple.ps 'v(4)-12'
 * hardcopy vospice400.ps v(1) v(2)
 
 *quit
