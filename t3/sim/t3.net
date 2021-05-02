@@ -8,7 +8,7 @@
 ******************************************
 
 .param pi = 3.14159265359
-.param n = '24'
+.param n = '6'
 *.param n = '(sqrt(2)*230/12)'
 
 * input voltage source
@@ -22,15 +22,29 @@ Dd2 2 4 Default
 Dd3 0 3 Default
 Dd4 3 4 Default
 *Ca 2 0 1u
-Ci 4 0 20u
+Ci 4 0 14u
 *Cb 3 0 1u
-Ra 4 0 20k
-Ri 4 9 1k
+Ra 4 0 14k
+Ri 4 9 5k
 
 * positive limiter
 Dp1 9 5 Default
 Dp2 5 6 Default
-Dp3 6 0 Default
+Dp3 6 7 Default
+Dp4 7 8 Default
+Dp5 8 10 Default
+Dp6 10 11 Default
+Dp7 11 12 Default
+Dp8 12 13 Default
+Dp9 13 14 Default
+Dp10 14 15 Default
+Dp11 15 16 Default
+Dp12 16 17 Default
+Dp13 17 18 Default
+Dp14 18 19 Default
+Dp15 19 20 Default
+Dp16 20 21 Default
+Dp17 21 0 Default
 
 * negative limiter
 *Dn1 0 7 Default
@@ -42,6 +56,11 @@ Dp3 6 0 Default
 .measure tran y4max MAX v(4) from=20m to=220m
 .measure tran y4min MIN v(4) from=20m to=220m
 .measure tran ripp param='y4max - y4min'
+
+.measure tran y9avg AVG v(9) from=20m to=220m
+.measure tran y9max MAX v(9) from=20m to=220m
+.measure tran y9min MIN v(9) from=20m to=220m
+.measure tran ripp9 param='y9max - y9min'
 
 
 .model Default D
@@ -66,8 +85,8 @@ set color6=rgb:4/0/0
 tran 1e-4 220e-3
 
 
-plot  v(2,3) v(4)
-plot 'v(4)-12'
+plot  v(2,3) v(4) v(9)
+plot 'v(9)-12'
 
 hardcopy vospice50.ps v(2,3) v(4)
 hardcopy voripple.ps 'v(4)-12'
