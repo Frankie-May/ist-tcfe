@@ -56,6 +56,7 @@ for i=1:length(t)
 endfor
 
 hf1 = figure ();
+
 for i=1:length(t)
   if (vS(i) > 0)
     vOhr(i) = vS(i);
@@ -155,14 +156,14 @@ fprintf(fp , "minimum (vout) = %f\n", min(vD));
 fprintf(fp , "Ripple (vout) = %f\n", max(vD)-min(vD));
 fprintf(fp , "Average (vout) = %f\n", mean(vD));
 
-plot(t*1000, vD, "g");
+
 plot(t*1000, vO);
-plot(t*1000, vOnexp);
+plot(t*1000, vD, "g");
 
 title("Output voltage");
 xlabel ("t[ms]");
 ylabel ("Voltage [V]");
-legend("Rectified","Envelope");
+legend("Rectified","Envelope" ,"Regulated");
 print (hf1, "envldetc.eps", "-depsc");
 
 hf2 = figure ();
