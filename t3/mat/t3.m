@@ -169,7 +169,7 @@ print (hf1, "envldetc.eps", "-depsc");
 hf2 = figure ();
 plot(t*1000, vD-12);
 title("Output voltage - 12");
-axis([0 250 -1 1])
+axis([0 250 -1 10])
 xlabel ("t[ms]");
 ylabel ("Voltage [V]");
 legend("Vout-12");

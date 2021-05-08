@@ -21,7 +21,7 @@ $(FILE).pdf: $(wildcard *.tex) $(LODFIGS) ngspice
 clean:
 	@rm -rf *.aux *.bbl *.blg *.glg *.glo *.gls *.ilg *.ist *.lof
 	@rm -rf *.log *.lot *.nlo *.nls *.out *.toc *~ *.*% ./*.pdf ./*.ps
-	@rm -rf *_tab.tex octave-workspace *.eps  
+	@rm -rf *_tab.tex octave-workspace *.eps octave_results.tex 
 
 .PHONY: all clean ngspice octave
 

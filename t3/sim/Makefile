@@ -1,13 +1,11 @@
 #MAKEFILE FOR SIM
-all:
-	#mv ngspicecircuito.log poscircuito.log
-	#mv ngspicet2.log post2.log
+all: t3.net
+	ngspice -b t3.net
 	soffice --headless --convert-to pdf *.ps
 	cp *.pdf ../doc
-	@rm *.ps *.pdf *.log
+	@rm *.ps *.pdf
 
-ngspicet3.log: t3.net
-	@ngspice -b $< -o $@
+
 
 
 
