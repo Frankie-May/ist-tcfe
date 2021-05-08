@@ -178,21 +178,21 @@ j = 1;
 n = 0;
 for i=1:length(t)
   if t(i) < tOFF
-    vO(i) = vS(i);
+    vO(i) = vOhr(i);
   elseif t(i) >= (j-1)*(1/(2*f))+tON && t(i) < j*(1/(2*f))+tOFF
     vO(i) = vOhr(i);
     if n == 0
       n=1;
     %printf("%f\n", j);
     endif
-  elseif vOexp(i) > vOhr(i)
+  elseif vOexp(i) >= vOhr(i)
     vO(i) = vOexp(i);
     if n == 1
       j=j+1;
       n=0;
     endif
   else 
-    vO(i) = vS(i);
+    vO(i) = vOhr(i);
   endif
 endfor
 
