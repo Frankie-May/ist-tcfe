@@ -209,11 +209,13 @@ endfunction
 
 function vD_root = solve_vD (vS)
   delta = 1e-6;
-  x_next = 1;
+  x_next = 20;
 
 
   do 
     x=x_next;
+    printf("-->%f\n", x_next);
+    printf("(;.;)%f\n", x);
     x_next = x  - fvr(x, vS)/fvrd(x, vS);
     printf("%f\n", x_next);
     printf("(-.-)%f\n", x);
