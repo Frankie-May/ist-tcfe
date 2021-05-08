@@ -46,6 +46,8 @@ Dp15 19 20 Default
 Dp16 20 21 Default
 Dp17 21 0 Default
 
+
+.measure tran _TAB param='1'
 .measure tran OutFullWaveBridgeAVG AVG v(4) from=20m to=220m
 .measure tran OutFullWaveBridgeMAX MAX v(4) from=20m to=220m
 .measure tran OutFullWaveBridgeMIN MIN v(4) from=20m to=220m
@@ -55,6 +57,8 @@ Dp17 21 0 Default
 .measure tran OutVoltRegMAX MAX v(9) from=20m to=220m
 .measure tran OutVoltRegMIN MIN v(9) from=20m to=220m
 .measure tran OutVoltRegRipple param='OutVoltRegMAX - OutVoltRegMIN'
+.measure tran _END param='1'
+
 
 
 .model Default D
@@ -79,8 +83,8 @@ set color6=rgb:4/0/0
 tran 1e-4 220e-3
 
 
-plot  v(2,3) v(4) v(9)
-plot 'v(9)-12'
+hardcopy envldetc_ng.ps  v(2,3) v(4) v(9)
+hardcopy volregd_ng.ps 'v(9)-12'
 
 *hardcopy vospice50.ps v(2,3) v(4)
 *hardcopy voripple.ps 'v(4)-12'
