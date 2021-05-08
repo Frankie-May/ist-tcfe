@@ -32,80 +32,6 @@ A=sqrt(2)*230/n;
 vS=A*sin(w*t);
 vO = zeros(1,length(t));
 
-%{
-for i=1:length(t)
-  vD = solve_vD  (vO(i));
-  vO(i) = vS(i)-vD;
-endfor
-
-%solve circuit with ideal diode + vON + RON model
-vO_ivr = zeros(1,length(t));
-vON = 0.6;
-RON = 80;
-
-for i=1:length(t)
-  if(vS(i) - vON >=0)
-    iD = (vS(i) - vON)/(RON+R);
-    vO_ivr(i) = R*iD;
-  else
-    iD = (vS(i) - vON)/(RON+R);
-    vO_ivr(i) = -R*iD;
-  endif 
-endfor
-
-figure
-plot(t*1000, vO)
-hold
-plot(t*1000, vO_ivr)
-title("Output voltage with ideal and accurate diode model")
-xlabel ("t[ms]")
-ylabel ("vO[V]")
-legend("Accurate", "Ideal");
-print ("vo_i.eps", "-depsc");
-
-%envelope detector
-vOhr = zeros(1, length(t));
-vO1 = zeros(1, length(t));
-
-tOFF = 1/w * atan(1/w/R/C);
-
-vOnexp = A*sin(w*tOFF)*exp(-(t-tOFF)/R/C);
-
-figure
-for i=1:length(t)
-  if (vS(i) > 0)
-    vOhr(i) = vS(i);
-  else
-    vOhr(i) = 0;
-  endif
-endfor
-
-plot(t*1000, vOhr)
-hold
-
-for i=1:length(t)
-  if t(i) < tOFF
-    vO1(i) = vS(i);
-  elseif vOnexp(i) > vOhr(i)
-    vO1(i) = vOnexp(i);
-  else 
-    vO1(i) = vS(i);
-  endif
-endfor
-
-%printf("%g\n", vO1);
-%printf("Separação\n");
-%printf("%g\n", vOnexp);
-
-
-plot(t*1000, vO1)
-title("Output voltage v_o(t)")
-xlabel ("t[ms]")
-legend("rectified","envelope")
-print ("venvlope.eps", "-depsc");
-
-%}
-
 %envelope detector
 ne=6;
 A=sqrt(2)*230/ne;
@@ -158,8 +84,6 @@ while i < length(t)
   endif
 endwhile
 
-%printf("tOFF = %f\n", tOFF);
-%printf("tON = %f\n", tON);
 
 plot(t*1000, vOhr)
 hold
@@ -173,7 +97,6 @@ for i=1:length(t)
     vO(i) = vOhr(i);
     if n == 0
       n=1;
-    %printf("%f\n", j);
     endif
   elseif vOexp(i) >= vOhr(i)
     vO(i) = vOexp(i);
@@ -194,7 +117,6 @@ VT=25e-3;
 eta=1;
 R=1e3;
 n=17;
-%fvr = n*vD-(n*Is*exp(vD/(VT*eta)))/(n*Is*exp(vD/(VT*eta))+R)*vO;
 fvr = -n*vD+(((n*VT*eta)/(Is))*(exp((-vD/(VT*eta)))))/(((n*VT*eta)/Is)*exp(-vD/(VT*eta))+R);
 
 endfunction
@@ -205,7 +127,6 @@ VT=25e-3;
 eta=1;
 R=1e3;
 n=17;
-%fvrd = n - (((n^2*Is^2*exp(2*vD/VT))/(VT)+(n*Is*R*exp(vD/VT))/(VT)-n^2*Is^2*exp((2*vD/VT)/VT))/(n*Is*exp(vD/VT)+R)^2)*vO;
 fvrd = -n+((-n)/(Is*exp(vD/(eta*VT)))*(n*(eta*VT)/((Is*exp(vD/(eta*VT)))+R))+(((n*(eta*VT))/(Is*exp(vD/(eta*VT))))*((n)/(Is*exp(vD/VT)))))/((n*VT)/((Is*exp(vD/VT)+R)^2));
 
 endfunction
@@ -217,11 +138,8 @@ function vD_root = solve_vD (vS)
   delta = 1e-6;
   x_next = 0.70;
 
-
   do 
     x=x_next;
-    %printf("-->%f\n", x_next);
-    %printf("(;.;)%f\n", x);
     x_next = x  - f(x, vS)/fd(x);
   until (abs(x_next-x) < delta)
 
@@ -237,12 +155,9 @@ endfor
 
 vD = 17*vD;
 
-printf("%g\n", vD);
-
 plot(t*1000, vD, "g");
 plot(t*1000, vO);
 plot(t*1000, vOnexp);
-%plot(t*1000, vOexp)
 
 title("Output voltage v_o(t)");
 xlabel ("t[ms]");
