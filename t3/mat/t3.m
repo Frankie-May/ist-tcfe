@@ -191,7 +191,8 @@ eta=1;
 R=1e3;
 n=17;
 %fvr = n*vD-(n*Is*exp(vD/(VT*eta)))/(n*Is*exp(vD/(VT*eta))+R)*vO;
-fvr = -n*vD+((n*(VT*eta)/(Is*exp(vD/(VT*eta))))/(n*(VT*eta)/(Is*exp(vD/(VT*eta)))+R))*vO;
+fvr = -n*vD+(((n*VT*eta)/(Is))*(exp((-vD/(VT*eta)))))/(((n*VT*eta)/Is)*exp(-vD/(VT*eta))+R);
+
 endfunction
 
 function fvrd = fvrd(vD, vO)
@@ -201,7 +202,8 @@ eta=1;
 R=1e3;
 n=17;
 %fvrd = n - (((n^2*Is^2*exp(2*vD/VT))/(VT)+(n*Is*R*exp(vD/VT))/(VT)-n^2*Is^2*exp((2*vD/VT)/VT))/(n*Is*exp(vD/VT)+R)^2)*vO;
-fvrd = -n+(-n*(1)/(Is*exp(vD/(eta*VT)))*(n*(eta*VT)/(Is*exp(vD/(eta*VT)))+R)+n*(eta*VT)/(Is*exp(vD/(eta*VT)))*(1)/(Is*exp(vD/(eta*VT))))/((n*(eta*VT)/(Is*exp(vD/(eta*VT)))+R)^(2));
+fvrd = -n+((-n)/(Is*exp(vD/(eta*VT)))*(n*(eta*VT)/((Is*exp(vD/(eta*VT)))+R))+(((n*(eta*VT))/(Is*exp(vD/(eta*VT))))*((n)/(Is*exp(vD/VT)))))/((n*VT)/((Is*exp(vD/VT)+R)^2));
+
 endfunction
 
 
@@ -217,8 +219,6 @@ function vD_root = solve_vD (vS)
     printf("-->%f\n", x_next);
     printf("(;.;)%f\n", x);
     x_next = x  - fvr(x, vS)/fvrd(x, vS);
-    printf("%f\n", x_next);
-    printf("(-.-)%f\n", x);
   until (abs(x_next-x) < delta)
 
   vD_root = x_next;
