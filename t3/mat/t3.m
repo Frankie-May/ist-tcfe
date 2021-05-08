@@ -10,33 +10,17 @@ function f = f(vD,vS,R)
 Is = 1e-9;
 VT=25e-3;
 eta=1;
-f = 2*vD+R*Is * (exp(vD/VT/eta)-1) - vS;
+f = 17*vD+R*Is * (exp(vD/VT/eta)-1) - vS;
 endfunction
 
 function fd = fd(vD,R)
 Is = 1e-9;
 VT=25e-3;
 eta=1;
-fd = 2 + R*Is/eta/VT * (exp(vD/VT/eta)-1);
-endfunction
-
-%%Newton Raphsons iterative method
-
-function vD_root = solve_vD (vS, R)
-  delta = 1e-6;
-  x_next = 0.65;
-
-  do 
-    x=x_next;
-    x_next = x  - f(x, vS, R)/fd(x, R);
-  until (abs(x_next-x) < delta)
-
-  vD_root = x_next;
+fd = 17 + R*Is/eta/VT * (exp(vD/VT/eta)-1);
 endfunction
 
 n=0.01;
-R=1e3;
-C=1e-6;
 f=50;
 w=2*pi*f;
 t=0:1e-6: 100e-3;
@@ -46,7 +30,7 @@ vO = zeros(1,length(t));
 
 %{
 for i=1:length(t)
-  vD = solve_vD  (vS(i), R);
+  vD = solve_vD  (vO(i));
   vO(i) = vS(i)-vD;
 endfor
 
@@ -119,19 +103,21 @@ print ("venvlope.eps", "-depsc");
 %}
 
 %envelope detector
-A=5;
-t=linspace(0, 5e-3, 100e2);
-f=1000;
+ne=6;
+A=sqrt(2)*230/ne;
+R=14e3;
+C=14e-6;
+t=linspace(0, 225e-3, 100e2);
+f=50;
 w=2*pi*f;
 vS = A * cos(w*t);
 vOhr = zeros(1, length(t));
 vO = zeros(1, length(t));
+vOexp = zeros(1, length(t));
 
-tOFF = 1/w * atan(1/w/R/C);
+tOFF = 1/w * atan(1/(w*R*C));
 
 vOnexp = A*cos(w*tOFF)*exp(-(t-tOFF)/R/C);
-
-vOexp = zeros(1, length(t));
 
 j=1;
 n=1;
@@ -195,6 +181,47 @@ for i=1:length(t)
     vO(i) = vOhr(i);
   endif
 endfor
+
+%%Voltage Regulator
+
+function fvr = fvr(vD, vO)
+Is = 1e-9;
+VT=25e-3;
+eta=1;
+R=1e3;
+fvr = 17*vD-(17*Is*exp(vD/(VT*eta)))/(17*Is*exp(vD/(VT*eta))+R)*vO;
+endfunction
+
+function fvrd = fvrd(vD, vO)
+Is = 1e-9;
+VT=25e-3;
+eta=1;
+R=1e3;
+fvrd = 17 - (((17^2*Is^2*exp(2*vD/VT))/(VT)+(17*Is*R*exp(vD/VT))/(VT)-17^2*Is^2*exp((2*vD/VT)/VT))/(17*Is*exp(vD/VT)+R)^2)*vO;
+endfunction
+
+
+%%Newton Raphsons iterative method
+
+function vD_root = solve_vD (vS)
+  delta = 1e-6;
+  x_next = 12/17;
+
+  do 
+    x=x_next;
+    x_next = x  - fvr(x, vS)/fvrd(x, vS);
+  until (abs(x_next-x) < delta)
+
+  vD_root = x_next;
+endfunction
+
+
+for i=1:length(t)
+  vD = solve_vD  (vO(i));
+endfor
+
+plot(t*1000, vD, "g")
+
 
 plot(t*1000, vO)
 plot(t*1000, vOnexp)
