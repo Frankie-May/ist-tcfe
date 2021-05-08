@@ -55,7 +55,7 @@ for i=1:length(t)
   endif
 endfor
 
-figure
+hf1 = figure ();
 for i=1:length(t)
   if (vS(i) > 0)
     vOhr(i) = vS(i);
@@ -162,13 +162,13 @@ title("Output voltage v_o(t)");
 xlabel ("t[ms]");
 ylabel ("Voltage [V]");
 legend("rectified","envelope");
-print ("envldetc.eps", "-depsc");
+print (hf1, "envldetc.eps", "-depsc");
 
-figure
+hf2 = figure ();
 plot(t*1000, vD-12);
 title("Output voltage v_o(t)");
 axis([0 250 0 1])
 xlabel ("t[ms]");
 ylabel ("Voltage [V]");
 legend("vout-12");
-print ("volregd.eps", "-depsc");
+print (hf2, "volregd.eps", "-depsc");
