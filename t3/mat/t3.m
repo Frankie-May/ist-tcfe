@@ -211,6 +211,7 @@ function vD_root = solve_vD (vS)
   delta = 1e-6;
   x_next = 1;
 
+
   do 
     x=x_next;
     x_next = x  - fvr(x, vS)/fvrd(x, vS);
@@ -221,24 +222,22 @@ function vD_root = solve_vD (vS)
   vD_root = x_next;
 endfunction
 
-vD = zeros(1, length(t));
-vout = zeros(1, length(t));
 
-for i=1:length(t)
-  n=17;
+%%Newton Raphson Start
+for i=1:length(vO)
   vD(i) = solve_vD  (vO(i));
-  vout(i) = n*vD(i);
-  printf("vout = %f\n", vout(i));
 endfor
+%%Newton Raphson End
 
-%printf("vout = %g\n", vout);
+vD = 17*vD;
 
-plot(t*1000, vO)
-plot(t*1000, vOnexp)
+plot(t*1000, vD, "g");
+plot(t*1000, vO);
+plot(t*1000, vOnexp);
 %plot(t*1000, vOexp)
-plot(t*1000, vout, "g")
-title("Output voltage v_o(t)")
-xlabel ("t[ms]")
-ylabel ("vO[V]")
-legend("rectified","envelope")
+
+title("Output voltage v_o(t)");
+xlabel ("t[ms]");
+ylabel ("Voltage [V]");
+legend("rectified","envelope");
 print ("envldetc.eps", "-depsc");
