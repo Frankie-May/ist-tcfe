@@ -191,7 +191,7 @@ eta=1;
 R=1e3;
 n=17;
 %fvr = n*vD-(n*Is*exp(vD/(VT*eta)))/(n*Is*exp(vD/(VT*eta))+R)*vO;
-fvr = -n*vD+(((n*VT)/(Is))*(exp((-vD/VT))))/(((n*VT)/Is)*exp(-vD/VT)+R);
+fvr = -n*vD+(((n*VT*eta)/(Is))*(exp((-vD/(VT*eta)))))/(((n*VT*eta)/Is)*exp(-vD/(VT*eta))+R);
 
 endfunction
 
