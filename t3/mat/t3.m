@@ -175,13 +175,22 @@ plot(t*1000, vOhr)
 hold
 
 j = 1;
+n = 0;
 for i=1:length(t)
   if t(i) < tOFF
     vO(i) = vS(i);
   elseif t(i) > (j-1)*(1/f)+tON && t(i) < j*(1/f)+tOFF
     vO(i) = vS(i);
+    if n == 0
+      n=1;
+    %printf("%f\n", j);
+    endif
   elseif vOexp(i) > vOhr(i)
     vO(i) = vOexp(i);
+    if n == 1
+      j=j+1;
+      n=0;
+    endif
   else 
     vO(i) = vS(i);
   endif
