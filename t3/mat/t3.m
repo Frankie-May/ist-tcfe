@@ -136,7 +136,7 @@ vOexp = zeros(1, length(t));
 j=1;
 n=1;
 for i=1:length(t)
-  if  (t(i) <= n*(1/f))
+  if  (t(i) <= n*(1/(2*f)))
     vOexp(i) = vOnexp(j);
   j=j+1;
   else
@@ -151,7 +151,7 @@ for i=1:length(t)
   if (vS(i) > 0)
     vOhr(i) = vS(i);
   else
-    vOhr(i) = 0;
+    vOhr(i) = -vS(i);
   endif
 endfor
 
@@ -179,8 +179,8 @@ n = 0;
 for i=1:length(t)
   if t(i) < tOFF
     vO(i) = vS(i);
-  elseif t(i) > (j-1)*(1/f)+tON && t(i) < j*(1/f)+tOFF
-    vO(i) = vS(i);
+  elseif t(i) >= (j-1)*(1/(2*f))+tON && t(i) < j*(1/(2*f))+tOFF
+    vO(i) = vOhr(i);
     if n == 0
       n=1;
     %printf("%f\n", j);
