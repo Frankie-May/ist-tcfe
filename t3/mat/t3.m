@@ -10,101 +10,20 @@ function f = f(vD,vS)
 Is = 1e-9;
 VT=25e-3;
 eta=1;
-R=3e-3;
+R=5e-3;
 n=17;
-f = n*vD+R*Is * (exp(vD/VT/eta)-1) - vS;
+f = n*vD+R*Is * (exp(vD/(VT*eta))-1) - vS;
 endfunction
 
 function fd = fd(vD)
 Is = 1e-9;
 VT=25e-3;
 eta=1;
-R=3e-3;
+R=5e-3;
 n=17;
-fd = n + R*Is/eta/VT * (exp(vD/VT/eta)-1);
+fd = n + R*Is/(eta*VT) * (exp(vD/(VT*eta))-1);
 endfunction
 
-n=0.01;
-f=50;
-w=2*pi*f;
-t=0:1e-6: 100e-3;
-A=sqrt(2)*230/n;
-vS=A*sin(w*t);
-vO = zeros(1,length(t));
-
-%{
-for i=1:length(t)
-  vD = solve_vD  (vO(i));
-  vO(i) = vS(i)-vD;
-endfor
-
-%solve circuit with ideal diode + vON + RON model
-vO_ivr = zeros(1,length(t));
-vON = 0.6;
-RON = 80;
-
-for i=1:length(t)
-  if(vS(i) - vON >=0)
-    iD = (vS(i) - vON)/(RON+R);
-    vO_ivr(i) = R*iD;
-  else
-    iD = (vS(i) - vON)/(RON+R);
-    vO_ivr(i) = -R*iD;
-  endif 
-endfor
-
-figure
-plot(t*1000, vO)
-hold
-plot(t*1000, vO_ivr)
-title("Output voltage with ideal and accurate diode model")
-xlabel ("t[ms]")
-ylabel ("vO[V]")
-legend("Accurate", "Ideal");
-print ("vo_i.eps", "-depsc");
-
-%envelope detector
-vOhr = zeros(1, length(t));
-vO1 = zeros(1, length(t));
-
-tOFF = 1/w * atan(1/w/R/C);
-
-vOnexp = A*sin(w*tOFF)*exp(-(t-tOFF)/R/C);
-
-figure
-for i=1:length(t)
-  if (vS(i) > 0)
-    vOhr(i) = vS(i);
-  else
-    vOhr(i) = 0;
-  endif
-endfor
-
-plot(t*1000, vOhr)
-hold
-
-for i=1:length(t)
-  if t(i) < tOFF
-    vO1(i) = vS(i);
-  elseif vOnexp(i) > vOhr(i)
-    vO1(i) = vOnexp(i);
-  else 
-    vO1(i) = vS(i);
-  endif
-endfor
-
-%printf("%g\n", vO1);
-%printf("Separação\n");
-%printf("%g\n", vOnexp);
-
-
-plot(t*1000, vO1)
-title("Output voltage v_o(t)")
-xlabel ("t[ms]")
-legend("rectified","envelope")
-print ("venvlope.eps", "-depsc");
-
-%}
 
 %envelope detector
 ne=6;
@@ -237,15 +156,29 @@ endfor
 
 vD = 17*vD;
 
-printf("%g\n", vD);
+%printf("%g\n", vD);
+
+printf("Maximum (vout) = %f\n", max(vD));
+printf("minimum (vout) = %f\n", min(vD));
+printf("Ripple (vout) = %f\n", max(vD)-min(vD));
+printf("(vout)_average = %f\n", mean(vD));
 
 plot(t*1000, vD, "g");
 plot(t*1000, vO);
 plot(t*1000, vOnexp);
-%plot(t*1000, vOexp)
+%plot(t*1000, vOexp);
 
 title("Output voltage v_o(t)");
 xlabel ("t[ms]");
 ylabel ("Voltage [V]");
 legend("rectified","envelope");
 print ("envldetc.eps", "-depsc");
+
+figure
+plot(t*1000, vD-12);
+title("Output voltage v_o(t)");
+axis([0 250 0 1])
+xlabel ("t[ms]");
+ylabel ("Voltage [V]");
+legend("vout-12");
+print ("volregd.eps", "-depsc");
