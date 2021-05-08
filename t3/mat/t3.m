@@ -189,7 +189,9 @@ Is = 1e-9;
 VT=25e-3;
 eta=1;
 R=1e3;
-fvr = 17*vD-(17*Is*exp(vD/(VT*eta)))/(17*Is*exp(vD/(VT*eta))+R)*vO;
+n=17;
+%fvr = n*vD-(n*Is*exp(vD/(VT*eta)))/(n*Is*exp(vD/(VT*eta))+R)*vO;
+fvr = -n*vD+((n*(VT*eta)/(Is*exp(vD/(VT*eta))))/(n*(VT*eta)/(Is*exp(vD/(VT*eta))+R)))*vO;
 endfunction
 
 function fvrd = fvrd(vD, vO)
@@ -197,7 +199,9 @@ Is = 1e-9;
 VT=25e-3;
 eta=1;
 R=1e3;
-fvrd = 17 - (((17^2*Is^2*exp(2*vD/VT))/(VT)+(17*Is*R*exp(vD/VT))/(VT)-17^2*Is^2*exp((2*vD/VT)/VT))/(17*Is*exp(vD/VT)+R)^2)*vO;
+n=17;
+%fvrd = n - (((n^2*Is^2*exp(2*vD/VT))/(VT)+(n*Is*R*exp(vD/VT))/(VT)-n^2*Is^2*exp((2*vD/VT)/VT))/(n*Is*exp(vD/VT)+R)^2)*vO;
+fvrd = -n+(-n*(exp(vD/(eta*VT)))/(Is*exp(2*vD/(eta*VT)))*(n*(eta*VT)/(Is*exp(vD/(eta*VT)))+R)+n*(eta*VT)/(Is*exp(vD/(eta*VT)))*(exp(vD/(eta*VT)))/(Is*exp(2*vD/(eta*VT))))/((n*(eta*VT)/(Is*exp(vD/(eta*VT)))+R)^2);
 endfunction
 
 
@@ -205,7 +209,7 @@ endfunction
 
 function vD_root = solve_vD (vS)
   delta = 1e-6;
-  x_next = 12/17;
+  x_next = 0.6;
 
   do 
     x=x_next;
@@ -215,18 +219,24 @@ function vD_root = solve_vD (vS)
   vD_root = x_next;
 endfunction
 
+vD = zeros(1, length(t));
+vout = zeros(1, length(t));
 
 for i=1:length(t)
-  vD = solve_vD  (vO(i));
+  n=17;
+  vD(i) = solve_vD  (vO(i));
+  vout(i) = n*vD(i);
+  printf("vout = %f\n", vout(i));
 endfor
 
-plot(t*1000, vD, "g")
-
+%printf("vout = %g\n", vout);
 
 plot(t*1000, vO)
 plot(t*1000, vOnexp)
 %plot(t*1000, vOexp)
+plot(t*1000, vout, "g")
 title("Output voltage v_o(t)")
 xlabel ("t[ms]")
+ylabel ("vO[V]")
 legend("rectified","envelope")
-print ("venvlope.eps", "-depsc");
+print ("envldetc.eps", "-depsc");
