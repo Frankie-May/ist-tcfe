@@ -159,17 +159,17 @@ plot(t*1000, vD, "g");
 plot(t*1000, vO);
 plot(t*1000, vOnexp);
 
-title("Output voltage v_o(t)");
+title("Output voltage");
 xlabel ("t[ms]");
 ylabel ("Voltage [V]");
-legend("rectified","envelope");
+legend("Rectified","Envelope");
 print (hf1, "envldetc.eps", "-depsc");
 
 hf2 = figure ();
 plot(t*1000, vD-12);
-title("Output voltage v_o(t)");
-axis([0 250 0 1])
+title("Output voltage - 12");
+axis([0 250 -1 1])
 xlabel ("t[ms]");
 ylabel ("Voltage [V]");
-legend("vout-12");
+legend("Vout-12");
 print (hf2, "volregd.eps", "-depsc");

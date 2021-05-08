@@ -16,9 +16,8 @@ $(FILE).pdf: $(wildcard *.tex) $(LODFIGS) ngspice
 
 
 #convert libreoffice draw figures to pdf
-%.pdf: %.odg
+%.pdf: %.odg 
 	soffice --headless --convert-to pdf $<
-
 clean:
 	@rm -rf *.aux *.bbl *.blg *.glg *.glo *.gls *.ilg *.ist *.lof
 	@rm -rf *.log *.lot *.nlo *.nls *.out *.toc *~ *.*% ./*.pdf ./*.ps
