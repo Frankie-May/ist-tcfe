@@ -77,8 +77,6 @@ while i < length(t)
   endif
 endwhile
 
-%printf("tOFF = %f\n", tOFF);
-%printf("tON = %f\n", tON);
 
 plot(t*1000, vOhr)
 hold
@@ -92,7 +90,6 @@ for i=1:length(t)
     vO(i) = vOhr(i);
     if n == 0
       n=1;
-    %printf("%f\n", j);
     endif
   elseif vOexp(i) >= vOhr(i)
     vO(i) = vOexp(i);
@@ -113,7 +110,6 @@ VT=25e-3;
 eta=1;
 R=1e3;
 n=17;
-%fvr = n*vD-(n*Is*exp(vD/(VT*eta)))/(n*Is*exp(vD/(VT*eta))+R)*vO;
 fvr = -n*vD+(((n*VT*eta)/(Is))*(exp((-vD/(VT*eta)))))/(((n*VT*eta)/Is)*exp(-vD/(VT*eta))+R);
 
 endfunction
@@ -124,7 +120,6 @@ VT=25e-3;
 eta=1;
 R=1e3;
 n=17;
-%fvrd = n - (((n^2*Is^2*exp(2*vD/VT))/(VT)+(n*Is*R*exp(vD/VT))/(VT)-n^2*Is^2*exp((2*vD/VT)/VT))/(n*Is*exp(vD/VT)+R)^2)*vO;
 fvrd = -n+((-n)/(Is*exp(vD/(eta*VT)))*(n*(eta*VT)/((Is*exp(vD/(eta*VT)))+R))+(((n*(eta*VT))/(Is*exp(vD/(eta*VT))))*((n)/(Is*exp(vD/VT)))))/((n*VT)/((Is*exp(vD/VT)+R)^2));
 
 endfunction
@@ -136,11 +131,8 @@ function vD_root = solve_vD (vS)
   delta = 1e-6;
   x_next = 0.70;
 
-
   do 
     x=x_next;
-    %printf("-->%f\n", x_next);
-    %printf("(;.;)%f\n", x);
     x_next = x  - f(x, vS)/fd(x);
   until (abs(x_next-x) < delta)
 
@@ -156,7 +148,6 @@ endfor
 
 vD = 17*vD;
 
-%printf("%g\n", vD);
 
 printf("Maximum (vout) = %f\n", max(vD));
 printf("minimum (vout) = %f\n", min(vD));
@@ -166,7 +157,6 @@ printf("(vout)_average = %f\n", mean(vD));
 plot(t*1000, vD, "g");
 plot(t*1000, vO);
 plot(t*1000, vOnexp);
-%plot(t*1000, vOexp);
 
 title("Output voltage v_o(t)");
 xlabel ("t[ms]");
