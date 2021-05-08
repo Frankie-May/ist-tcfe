@@ -1,97 +1,35 @@
 \section{Tables}
 \label{sec:tables}
-\begin{table}[H]
-\caption{Voltages and Currents for t<0}
-\begin{minipage}{.5\linewidth}
-\begin{tabular}{|l|r|}
-    \hline    
-    {\bf Name} & {\bf Value [A or V]} \\ \hline
-    \input{tableinferior0.tex}
-  \end{tabular}
-\end{minipage}%
-\begin{minipage}{.5\linewidth}
-\begin{tabular}{|l|r|}
-    \hline    
-    {\bf Name} & {\bf Value [A or V]} \\ \hline
-    \input{op_tab.tex}
-  \end{tabular}
-\end{minipage}
-\end{table}
-
-\begin{table}[H]
-\caption{Voltages and Currents for t=0}
-\begin{minipage}{.5\linewidth}
-\begin{tabular}{|l|r|}
-    \hline    
-    {\bf Name} & {\bf Value [A or V]} \\ \hline
-    \input{tnat.tex}
-  \end{tabular}
-\end{minipage}%
-\begin{minipage}{.5\linewidth}
-\begin{tabular}{|l|r|}
-    \hline    
-    {\bf Name} & {\bf Value [A or V]} \\ \hline
-    \input{opV0_tab.tex}
-  \end{tabular}
-\end{minipage}
-\end{table}
 
 \begin{figure}[H]
 \centering
-\caption{Natural solution for $V_6(t)$}
+\caption{Plots from theoretical and simulation analysis}
 \begin{subfigure}{\textwidth}
 \centering
-\includegraphics[width=.4\linewidth]{graf_nat.pdf}
+\includegraphics[width=.4\linewidth]{envldetc.eps}
 \caption{Theoretical Solution}
 \end{subfigure}
 \begin{subfigure}{\textwidth}
 \centering
-\includegraphics[width=.4\linewidth]{ns.pdf}
+\includegraphics[width=.4\linewidth]{}
 \caption{Simulation Solution}
 \end{subfigure}
 \end{figure}
 
 \begin{figure}[H]
 \centering
-\caption{Total solution for $V_6(t)$}
+\caption{Solution - 12}
 \begin{subfigure}{\textwidth}
 \centering
-\includegraphics[width=.4\linewidth]{graf_V6_t.pdf}
-\caption{Theoretical Solution. $V_6(t)$ (blue) and $V_s(t)$ (green)}
+\includegraphics[width=.4\linewidth]{Volregd.eps}
+\caption{Theoretical Solution}
 \end{subfigure}
 \begin{subfigure}{\textwidth}
 \centering
-\includegraphics[width=.4\linewidth]{npfs.pdf}
+\includegraphics[width=.4\linewidth]{}
 \caption{Simulation Solution}
 \end{subfigure}
 \end{figure}
 
-\begin{figure}[H]
-\centering
-\caption{Frequency response in magnitude for $V_6(t)$, $V_s(t)$ and $V_c(t)$}
-\begin{subfigure}{\textwidth}
-\centering
-\includegraphics[width=.4\linewidth]{graf_mag.pdf}
-\caption{Theoretical Solution. $V_6$ (blue), $V_s$ (red) and $V_c$ (green)}
-\end{subfigure}
-\begin{subfigure}{\textwidth}
-\centering
-\includegraphics[width=.4\linewidth]{mag.pdf}
-\caption{Simulation Solution. $V_s(f)$ (blue), $V_6$ (red) and $V_c$ (orange)}
-\end{subfigure}
-\end{figure}
-
-\begin{figure}[H]
-\centering
-\caption{Frequency response in phase for $V_6(t)$, $V_s(t)$ and $V_c(t)$}
-\begin{subfigure}{\textwidth}
-\centering
-\includegraphics[width=.4\linewidth]{graf_phase.pdf}
-\caption{Theoretical Solution. $V_6$ (blue), $V_s$ (red) and $V_c$ (green)}
-\end{subfigure}
-\begin{subfigure}{\textwidth}
-\centering
-\includegraphics[width=.4\linewidth]{phase.pdf}
-\caption{Simulation Solution. $V_s(f)$ (blue), $V_6$ (red) and $V_c$ (orange)}
-\end{subfigure}
-\end{figure}
+Plot measures are as follows:
+\include{octave_results.tex}
