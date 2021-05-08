@@ -148,11 +148,12 @@ endfor
 
 vD = 17*vD;
 
+fp = fopen("octave_results.tex" , "w");
 
-printf("Maximum (vout) = %f\n", max(vD));
-printf("minimum (vout) = %f\n", min(vD));
-printf("Ripple (vout) = %f\n", max(vD)-min(vD));
-printf("(vout)_average = %f\n", mean(vD));
+fprintf(fp , "Maximum (vout) = %f\n", max(vD));
+fprintf(fp , "minimum (vout) = %f\n", min(vD));
+fprintf(fp , "Ripple (vout) = %f\n", max(vD)-min(vD));
+fprintf(fp , "Average (vout) = %f\n", mean(vD));
 
 plot(t*1000, vD, "g");
 plot(t*1000, vO);
