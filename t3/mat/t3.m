@@ -204,7 +204,7 @@ endfunction
 %%Newton Raphsons iterative method
 
 function vD_root = solve_vD (vS)
-  delta = 1e-6;
+  delta = 1e-2;
   x_next = 12/17;
 
   do 
@@ -215,18 +215,22 @@ function vD_root = solve_vD (vS)
   vD_root = x_next;
 endfunction
 
+printf("Inicio Newton Raphson");
 
-for i=1:length(t)
-  vD = solve_vD  (vO(i));
+for i=1:length(vO)
+  vD(i) = solve_vD  (vO(i));
 endfor
 
-plot(t*1000, vD, "g")
+printf("Fim Newton Raphson");
 
+vD = 17*vD;
 
-plot(t*1000, vO)
-plot(t*1000, vOnexp)
+plot(t*1000, vD, "g");
+plot(t*1000, vO);
+plot(t*1000, vOnexp);
 %plot(t*1000, vOexp)
-title("Output voltage v_o(t)")
-xlabel ("t[ms]")
-legend("rectified","envelope")
+title("Output voltage v_o(t)");
+xlabel ("t[ms]");
+ylabel ("Voltage [V]");
+legend("rectified","envelope");
 print ("venvlope.eps", "-depsc");
