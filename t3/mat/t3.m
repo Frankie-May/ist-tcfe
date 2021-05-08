@@ -189,7 +189,9 @@ Is = 1e-9;
 VT=25e-3;
 eta=1;
 R=1e3;
-fvr = 17*vD-(17*Is*exp(vD/(VT*eta)))/(17*Is*exp(vD/(VT*eta))+R)*vO;
+n=17;
+%fvr = n*vD-(n*Is*exp(vD/(VT*eta)))/(n*Is*exp(vD/(VT*eta))+R)*vO;
+fvr = -n*vD+((n*(VT*eta)/(Is*exp(vD/(VT*eta))))/(n*(VT*eta)/(Is*exp(vD/(VT*eta))+R)))*vO;
 endfunction
 
 function fvrd = fvrd(vD, vO)
@@ -197,15 +199,18 @@ Is = 1e-9;
 VT=25e-3;
 eta=1;
 R=1e3;
-fvrd = 17 - (((17^2*Is^2*exp(2*vD/VT))/(VT)+(17*Is*R*exp(vD/VT))/(VT)-17^2*Is^2*exp((2*vD/VT)/VT))/(17*Is*exp(vD/VT)+R)^2)*vO;
+n=17;
+%fvrd = n - (((n^2*Is^2*exp(2*vD/VT))/(VT)+(n*Is*R*exp(vD/VT))/(VT)-n^2*Is^2*exp((2*vD/VT)/VT))/(n*Is*exp(vD/VT)+R)^2)*vO;
+fvrd = -n+(-n*(exp(vD/(eta*VT)))/(Is*exp(2*vD/(eta*VT)))*(n*(eta*VT)/(Is*exp(vD/(eta*VT)))+R)+n*(eta*VT)/(Is*exp(vD/(eta*VT)))*(exp(vD/(eta*VT)))/(Is*exp(2*vD/(eta*VT))))/((n*(eta*VT)/(Is*exp(vD/(eta*VT)))+R)^2);
 endfunction
 
 
 %%Newton Raphsons iterative method
 
 function vD_root = solve_vD (vS)
-  delta = 1e-2;
-  x_next = 12/17;
+  delta = 1e-6;
+  x_next = 0.6;
+
 
   do 
     x=x_next;
@@ -215,13 +220,12 @@ function vD_root = solve_vD (vS)
   vD_root = x_next;
 endfunction
 
-printf("Inicio Newton Raphson");
 
+%%Newton Raphson Start
 for i=1:length(vO)
   vD(i) = solve_vD  (vO(i));
 endfor
-
-printf("Fim Newton Raphson");
+%%Newton Raphson End
 
 vD = 17*vD;
 
@@ -229,8 +233,9 @@ plot(t*1000, vD, "g");
 plot(t*1000, vO);
 plot(t*1000, vOnexp);
 %plot(t*1000, vOexp)
+
 title("Output voltage v_o(t)");
 xlabel ("t[ms]");
 ylabel ("Voltage [V]");
 legend("rectified","envelope");
-print ("venvlope.eps", "-depsc");
+print ("envldetc.eps", "-depsc");
