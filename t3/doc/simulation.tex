@@ -1,12 +1,10 @@
 \section{Simulation Analysis}
 \label{sec:simulation}
 
-The circuit that we have created is going to be simulated using a circuit simulation platform, Ngspice. The circuit is described using ngspice notation and the operating point analysis was done. The values of the parameters of the circuit are presented in the table \ref{tab:op}.
-
-We firstly started by writing the script to simulate the AC/DC converter for 10 periods, using the defeault diode model. Then, the output voltage level is measured \ref{gráf?}, as well as the voltage output ripple \ref[something}.
-
-The voltages at the output of the envelope detector and voltage regulator circuits were then plotted, as shown in \ref{umplotqq}
-
-%%referenciar plot do V_o - 12, seja o q for
-
+To simulate the AC/DC converter we use two sub-circuits, an envelope detector and a voltage regulator.
+The transformer is simulated solely by dividing the input voltage amplitude by the value of turns in the transformer. We then use a voltage source connected to the main circuit which has an amplitude of $V_in/n$ and the same frequency.
+The envelope detector used consists in a full wave bridge rectifier in series with a capacitor and a resistance, in order to reduce ripple and control the voltage drops. This creates a less rippled wave, although its DC value is still very high.
+To further reduce ripple and the DC component value, we use a voltage regulator circuit, consisting in a resistance in series with 17 diodes.
+This not only reduces the envelop detector output voltage's DC component to approximately $12V$ but also greatly reduces ripple.
+The voltage regulator output is now approximately only direct current.
 
