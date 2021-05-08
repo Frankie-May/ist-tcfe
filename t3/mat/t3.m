@@ -163,7 +163,7 @@ plot(t*1000, vD, "g");
 title("Output voltage");
 xlabel ("t[ms]");
 ylabel ("Voltage [V]");
-legend("Rectified","Envelope" ,"Regulated");
+legend("Rectifier","Envelope" ,"Regulated");
 print (hf1, "envldetc.eps", "-depsc");
 
 hf2 = figure ();
