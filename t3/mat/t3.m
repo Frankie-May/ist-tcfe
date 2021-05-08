@@ -6,18 +6,22 @@ eta=1;
 
 %%solve circuit with accurate model
 
-function f = f(vD,vS,R)
+function f = f(vD,vS)
 Is = 1e-9;
 VT=25e-3;
 eta=1;
-f = 17*vD+R*Is * (exp(vD/VT/eta)-1) - vS;
+R=3e-3;
+n=17;
+f = n*vD+R*Is * (exp(vD/VT/eta)-1) - vS;
 endfunction
 
-function fd = fd(vD,R)
+function fd = fd(vD)
 Is = 1e-9;
 VT=25e-3;
 eta=1;
-fd = 17 + R*Is/eta/VT * (exp(vD/VT/eta)-1);
+R=3e-3;
+n=17;
+fd = n + R*Is/eta/VT * (exp(vD/VT/eta)-1);
 endfunction
 
 n=0.01;
@@ -211,14 +215,14 @@ endfunction
 
 function vD_root = solve_vD (vS)
   delta = 1e-6;
-  x_next = 20;
+  x_next = 0.70;
 
 
   do 
     x=x_next;
-    printf("-->%f\n", x_next);
-    printf("(;.;)%f\n", x);
-    x_next = x  - fvr(x, vS)/fvrd(x, vS);
+    %printf("-->%f\n", x_next);
+    %printf("(;.;)%f\n", x);
+    x_next = x  - f(x, vS)/fd(x);
   until (abs(x_next-x) < delta)
 
   vD_root = x_next;
@@ -232,6 +236,8 @@ endfor
 %%Newton Raphson End
 
 vD = 17*vD;
+
+printf("%g\n", vD);
 
 plot(t*1000, vD, "g");
 plot(t*1000, vO);
