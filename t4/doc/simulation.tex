@@ -1,0 +1,10 @@
+\section{Simulation Analysis}
+\label{sec:simulation}
+
+To simulate the AC/DC converter we use two sub-circuits, an envelope detector and a voltage regulator.
+The transformer is simulated solely by dividing the input voltage amplitude by the value of turns in the transformer. We then use a voltage source connected to the main circuit which has an amplitude of $V_in/n$ and the same frequency.
+The envelope detector used consists in a full wave bridge rectifier in series with a capacitor and a resistance, in order to reduce ripple and control the voltage drops. This creates a less rippled wave, although its DC value is still very high.
+To further reduce ripple and the DC component value, we use a voltage regulator circuit, consisting in a resistance in series with 17 diodes.
+This not only reduces the envelop detector output voltage's DC component to approximately $12V$ but also greatly reduces ripple.
+The voltage regulator output is now approximately only direct current.
+Due to errors made during the theoretical analysis, namely the Newton- Raphson's method or the capacitor discharging to the resistor, the values obtained through theoretical analysis differ from those obtained from the simulation. This was expected and the data either from simulation and theoretical analysis is still consistent. The value obtained from the simulation is nevertheless closer to the 12V.

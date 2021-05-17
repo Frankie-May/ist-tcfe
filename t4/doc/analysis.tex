@@ -1,0 +1,11 @@
+\section{Theoretical Analysis}
+\label{sec:analysis}
+
+To theoretically analyse this AC/DC converter the following steps were made:
+
+First we simulated the transformer, dividing the voltage input by $n=6$, as we did in the ngspice script. This way we can work with only one voltage connected to the circuit, using a more viable voltage input.
+
+Then, we theoretically wrote the envelop detector in two parts. Applying the module of this wave, we can simulate the four diodes effect on the AC wave. After the module we have to simulate the capacitor and resistance's effect. This is made by approximating the new curve, the envelop detector output. This curve will be the union of two curves, the capacitor's discharge in the resistance curve, until $t_ON$, and the absolute value of the input. $t_ON$ is the point where the discharge curve meets the absolute value of the input again. This is repeated for every study cycle.
+
+After the envelop detector effect, we get an output of a wave which is still very rippled and has a DC component much bigger than the $12V$ we ought to obtain.
+To do this, we use a voltage regulator circuit. This consists in a resistor in series with diodes (in our case 17 diodes). To calculate this we write Kirchhoff's voltage Law for this circuit, assuming the enveloper detector output as a voltage source in series with the resistance and the diodes. This why, through Newton-Raphson's method we can approximate the output value and reduce the ripple.
