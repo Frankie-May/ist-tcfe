@@ -113,8 +113,8 @@ echo "SIM_RESULTS_TAB"
 print LowerCutOffF;
 print HigherCutOffF;
 print Bandwidth;
-print Amplitude;
 print AmplitudedB;
+print Amplitude;
 echo "SIM_RESULTS_END"
 
 

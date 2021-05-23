@@ -11,9 +11,32 @@
 \end{subfigure}
 \begin{subfigure}{\textwidth}
 \centering
-\includegraphics[width=.8\linewidth]{vdbout.eps}
-\caption{Simulated analysis obtained with octave. The graph shows the evolution of the amplifier's gain with the frequency.}
+\includegraphics[width=.7\linewidth]{vdbout.eps}
+\caption{Simulated analysis obtained with octave. The graph shows the evolution of the amplifier's gain with the frequency. The curve in red is the gain and the line in blue is the auxiliar line used to calculate the low and high cutoff frequencies.}
 \end{subfigure}
 \end{figure}
 
 
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|}
+\hline
+{\bf Name} & {\bf Value} \\ \hline
+    \input{SIM_RESULTS_TAB}
+    \input{ZI_TAB}
+    \input{ZO_TAB}
+\end{tabular}
+\caption{\textbf{Simulation results, input and Output Impedance (in Ohm) }}
+\end{table}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|}
+\hline
+{\bf Name} & {\bf Value} \\ \hline
+    \input{total}
+\end{tabular}
+\caption{\textbf{Circuit Theoretical Gain, Output Impedance and Input Impedance.}}
+\end{table}
+
+Due to reasons explained before, we did not compute the cutoff frequencies in the theoretical analysis so we are not able to compute the theoretical bandwith.
