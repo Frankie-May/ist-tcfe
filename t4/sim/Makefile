@@ -1,6 +1,7 @@
 all: t4simb.log outimpb.log
 	@cp *.ps *.tex ../doc
 	@rm -f *.log *.ps *.tex
+	
 t4sima.log:t4.net
 	@ngspice -b $< -o $@
 

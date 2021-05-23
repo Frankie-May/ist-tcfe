@@ -77,10 +77,6 @@ echo "FAR_END"
 *plot v(in) 
 *plot v(out) 
 
-
-*let gain = vecmax(v(out))/vecmax(v(in));
-*print vecmax(gain);
-
 * frequency analysis
 ac dec 10 10 100MEG
 
@@ -126,7 +122,6 @@ echo "MERIT_TAB"
 print Cost;
 print Merit;
 echo "MERIT_END"
-
 
 *need a different setup to measure output impedance
 
