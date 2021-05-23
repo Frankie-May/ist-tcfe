@@ -1,11 +1,10 @@
 \section{Theoretical Analysis}
 \label{sec:analysis}
 
-To theoretically analyse this AC/DC converter the following steps were made:
+To theoretically analyse this Audio Amplifier Circuit the following steps were made:
 
-First we simulated the transformer, dividing the voltage input by $n=6$, as we did in the ngspice script. This way we can work with only one voltage connected to the circuit, using a more viable voltage input.
+First, it was necessary to create a gain stage circuit to amplify the signal produced by the input, this circuit is composed of a transistor. The base of the transistor is connected to two transistors in parallel and the third one is in series with a capacitor. The collector of the transistor is connected to the resistor Rc and the emitter is connected to the parallel of resistor Re and capacitor Cb.
 
-Then, we theoretically wrote the envelop detector in two parts. Applying the module of this wave, we can simulate the four diodes effect on the AC wave. After the module we have to simulate the capacitor and resistance's effect. This is made by approximating the new curve, the envelop detector output. This curve will be the union of two curves, the capacitor's discharge in the resistance curve, until $t_ON$, and the absolute value of the input. $t_ON$ is the point where the discharge curve meets the absolute value of the input again. This is repeated for every study cycle.
+By utilizing the circuit stated above the amplifier had a flaw, because the gain that is obtained by that circuit is decreased by almost the same amount when we connect the circuit to the speaker. This happens because the speaker has an impedance of 8 \omega and the output impedance of the gain stage is 886.284816 \omega, which indicates that the Voltage drop at the output is smaller than the one in the output impedance. To resolve this problem we used an output stage circuit that maintains the gain but decreases the output impedance of the circuit. 
 
-After the envelop detector effect, we get an output of a wave which is still very rippled and has a DC component much bigger than the $12V$ we ought to obtain.
-To do this, we use a voltage regulator circuit. This consists in a resistor in series with diodes (in our case 17 diodes). To calculate this we write Kirchhoff's voltage Law for this circuit, assuming the enveloper detector output as a voltage source in series with the resistance and the diodes. This why, through Newton-Raphson's method we can approximate the output value and reduce the ripple.
+The output stage circuit is composed of a PNP transistor with a resistor connected to the emitter and a resistor in series with a capacitor that connects the emitter and the collector. This circuit creates a low output impedance and therefore the output voltage is present almost fully in the capacitor. This amplifies the input signal to the output.
