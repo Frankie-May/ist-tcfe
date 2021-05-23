@@ -1,10 +1,45 @@
+
 \section{Theoretical Analysis}
 \label{sec:analysis}
 
 To theoretically analyse this Audio Amplifier Circuit the following steps were made:
+\par
+\par
+First, it was necessary to create a gain stage circuit to amplify the signal produced by the input, this circuit is composed of a transistor. The base of the transistor is connected to two transistors in parallel and the third one is in series with a capacitor. The collector of the transistor is connected to the resistor Rc and the emitter is connected in parallel to resistor Re and capacitor Cb. The first two transistors are connected respectively to a node with $12V$ and to the ground. They make up the Bias Circuit which ensures, with the Capacitor connected to the base, that the voltage in the Transistor's base is different from zero. The Capacitor blocks the $0V$ DC component from the input signal while the Bias Circuit ensures that the transistor is on.
+The Gain Stage has a bypass circuit connected to its emitter. This is used in order to reduce temperature effect through the resistance and the capacitor ensures that the gain is not lowered.
+\par
+\par
+By using the circuit stated above the amplifier had a flaw, because the gain that is obtained by that circuit is decreased by almost the same amount when we connect the circuit to the speaker. This happens because the speaker has an impedance of 8 $\Omega$ and the output impedance of the gain stage is approximately 886.284816 $\Omega$, which indicates that the Voltage drop at the output is smaller than the one in the output impedance. To solve this problem we used an output stage circuit that maintains the gain but decreases the output impedance of the circuit. 
 
-First, it was necessary to create a gain stage circuit to amplify the signal produced by the input, this circuit is composed of a transistor. The base of the transistor is connected to two transistors in parallel and the third one is in series with a capacitor. The collector of the transistor is connected to the resistor Rc and the emitter is connected to the parallel of resistor Re and capacitor Cb.
+The output stage circuit is composed of by a PNP transistor with a resistor connected to the emitter and a resistor in series with a capacitor that connects the emitter and the collector. This circuit creates a low output impedance and therefore the output voltage is present almost fully in the capacitor. This amplifies the input signal to the output, not reducing the gain from the gain stage.
 
-By utilizing the circuit stated above the amplifier had a flaw, because the gain that is obtained by that circuit is decreased by almost the same amount when we connect the circuit to the speaker. This happens because the speaker has an impedance of 8 \omega and the output impedance of the gain stage is 886.284816 \omega, which indicates that the Voltage drop at the output is smaller than the one in the output impedance. To resolve this problem we used an output stage circuit that maintains the gain but decreases the output impedance of the circuit. 
+Through octave, we were able to predict some simulation results. Because with octave we used transistor models, the values and plots obtained through mathematical analysis differ from those obtained in the $\ref{sec:simulation}^{rd}$ section.
 
-The output stage circuit is composed of a PNP transistor with a resistor connected to the emitter and a resistor in series with a capacitor that connects the emitter and the collector. This circuit creates a low output impedance and therefore the output voltage is present almost fully in the capacitor. This amplifies the input signal to the output.
+The results are as follow:
+
+\begin{figure}[h] 
+\centering
+\includegraphics[width=0.6\linewidth]{gain.pdf}
+\caption{Theoretical Gain in dB.}
+\label{Fig2: TheoGaindB}
+\end{figure}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|}
+\hline
+{\bf Name} & {\bf Value} \\ \hline
+    \input{gainstg}
+\end{tabular}
+\caption{\textbf{Gain Stage Theoretical Gain, Output Impedance and Input Impedance.}}
+\end{table}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|}
+\hline
+{\bf Name} & {\bf Value} \\ \hline
+    \input{outputstg}
+\end{tabular}
+\caption{\textbf{Output Stage Theoretical Gain, Output Impedance and Input Impedance.}}
+\end{table}
