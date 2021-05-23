@@ -73,22 +73,16 @@ print 'v(emit2) - v(coll)'
 echo "FAR_END"
 
 * time analysis
-*tran 1e-5 1e-2
-*plot v(in) 
-*plot v(out) 
+tran 1e-5 1e-2
 
-
-*let gain = vecmax(v(out))/vecmax(v(in));
-*print vecmax(gain);
+hardcopy vin-vout.ps v(in) v(out)
 
 * frequency analysis
 ac dec 10 10 100MEG
 
-plot vdb(coll)
 hardcopy vdbcoll.ps vdb(coll)
 
-plot vdb(out) vecmax(vdb(out))-3; 
-hardcopy vdbout.ps vdb(out)
+hardcopy vdbout.ps vdb(out) vecmax(vdb(out))-3;
 
 
 let bond = vecmax(vdb(out))-3;
@@ -126,7 +120,6 @@ echo "MERIT_TAB"
 print Cost;
 print Merit;
 echo "MERIT_END"
-
 
 *need a different setup to measure output impedance
 
