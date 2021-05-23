@@ -1,10 +1,8 @@
 \section{Simulation Analysis}
 \label{sec:simulation}
 
-To simulate the AC/DC converter we use two sub-circuits, an envelope detector and a voltage regulator.
-The transformer is simulated solely by dividing the input voltage amplitude by the value of turns in the transformer. We then use a voltage source connected to the main circuit which has an amplitude of $V_in/n$ and the same frequency.
-The envelope detector used consists in a full wave bridge rectifier in series with a capacitor and a resistance, in order to reduce ripple and control the voltage drops. This creates a less rippled wave, although its DC value is still very high.
-To further reduce ripple and the DC component value, we use a voltage regulator circuit, consisting in a resistance in series with 17 diodes.
-This not only reduces the envelop detector output voltage's DC component to approximately $12V$ but also greatly reduces ripple.
-The voltage regulator output is now approximately only direct current.
-Due to errors made during the theoretical analysis, namely the Newton- Raphson's method or the capacitor discharging to the resistor, the values obtained through theoretical analysis differ from those obtained from the simulation. This was expected and the data either from simulation and theoretical analysis is still consistent. The value obtained from the simulation is nevertheless closer to the 12V.
+To simulate the Audio Amplifier Circuit we used two sub-circuits, the gain stage circuit, and the output stage circuit.
+To amplify the voltage measured at the input it is necessary to use a gain stage circuit that adds a gain to the input voltage and it is also necessary to decrease the output impedance because the speaker has an impedance of 8 \omega and the output impedance should be much smaller than the impedance of the speaker. To do that we use an output stage circuit that maintains the gain (approximately) and decreases the output impedance.
+
+The output voltage measured by the theoretical analysis and simulated in ngspice are represented below and there is a visible difference between them. The theoretical analysis does not have a higher cutoff frequency that is present in the simulated data, this is due to the fact that the theoretical circuit does not consider the presence of two capacitor that simulate the higher cutoff frequency. It is also visible that the gain of the theoretical analysis is lower than the one obtained by ngspice, this is due to the fact that the modal of the transistor used by ngspice considers much more parameters than the model that was used in the theoretical simulation. This causes the current in the collector to be greater in the simulation than in the theoretical analysis which causes the transconductance to be smaller and this parameter is related to the gain.
+If it had been considered that Ro in the equivalent circuit then the calculated gain would be bigger than the theoretical gain.
