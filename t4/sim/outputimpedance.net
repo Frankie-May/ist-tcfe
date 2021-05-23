@@ -38,8 +38,11 @@ Vaux out 0 0 ac 1.0 sin(0 10m 1k)
 .end
 
 .control
+
 ac dec 10 10 100MEG
 let Zo = -v(out)[40]/vaux#branch[40]
+echo "ZO_TAB"
 print Zo;
+echo "ZO_END"
 
 .endc

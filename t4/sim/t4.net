@@ -1,4 +1,27 @@
+CIRCUIT
 .options savecurrents
+
+.param Rin_val = 100
+.param Ci_val = 1m
+.param R1_val = 80k
+.param R2_val = 20k
+.param Rc_val = 1k
+.param Re_val = 100
+.param Cb_val = 1m
+.param Rout_val = 100
+.param Co_val = 1u
+.param RL_val = 8
+
+.csparam Rin_val = {Rin_val}
+.csparam Ci_val = {Ci_val}
+.csparam R1_val = {R1_val}
+.csparam R2_val = {R2_val}
+.csparam Rc_val = {Rc_val}
+.csparam Re_val = {Re_val}
+.csparam Cb_val = {Cb_val}
+.csparam Rout_val = {Rout_val}
+.csparam Co_val = {Co_val}
+.csparam RL_val = {RL_val}
 
 * PHILIPS BJT'S
 .MODEL BC557A PNP(IS=2.059E-14 ISE=2.971f ISC=1.339E-14 XTI=3 BF=227.3 BR=7.69 IKF=0.08719 IKR=0.07646 XTB=1.5 VAF=37.2 VAR=11.42 VJE=0.5912 VJC=0.1 RE=0.688 RC=0.6437 RB=1 RBM=1 IRB=1E-06 CJE=1.4E-11 CJC=1.113E-11 XCJC=0.6288 FC=0.7947 NF=1.003 NR=1.007 NE=1.316 NC=1.15 MJE=0.3572 MJC=0.3414 TF=7.046E-10 TR=1m2 ITF=0.1947 VTF=5.367 XTF=4.217 EG=1.11)
@@ -6,35 +29,33 @@
 
 Vcc vcc 0 12.0
 Vin in 0 0 ac 1.0 sin(0 10m 1k)
-Rin in in2 100
+Rin in in2 {Rin_val}
 
 * input coupling capacitor
-Ci in2 base 1m
+Ci in2 base {Ci_val}
 
 * bias circuit
-R1 vcc base 80k
-R2 base 0 20k
+R1 vcc base {R1_val}
+R2 base 0 {R2_val}
 
 * gain stage
 Q1 coll base emit BC547A
-Rc vcc coll 1k
-Re emit 0 100
+Rc vcc coll {Rc_val}
+Re emit 0 {Re_val}
 
 * bypass capacitor
-Cb emit 0 1m
+Cb emit 0 {Cb_val}
 
 
 * output stage
 Q2 0 coll emit2 BC557A
-Rout emit2 vcc 100
+Rout emit2 vcc {Rout_val}
 
 * output coupling capacitor
-Co emit2 out 1u
+Co emit2 out {Co_val}
 
 * load
-RL out 0 8
-
-
+RL out 0 {RL_val}
 
 .op
 .end
@@ -43,42 +64,70 @@ RL out 0 8
 
 .control
 
-* time analysis
-tran 1e-5 1e-2
-plot v(in) 
-*hardcopy vo1.ps vdb(coll) Gain stage output voltage in db
-plot v(out) 
+op
+echo "FAR_TAB"
+print 'v(coll) - v(emit)'
+print 'v(base) - v(emit)'
+print 'v(emit2)'
+print 'v(emit2) - v(coll)'
+echo "FAR_END"
 
-let gain = vecmax(v(out))/vecmax(v(in));
-print vecmax(gain);
+* time analysis
+*tran 1e-5 1e-2
+*plot v(in) 
+*plot v(out) 
+
+
+*let gain = vecmax(v(out))/vecmax(v(in));
+*print vecmax(gain);
 
 * frequency analysis
 ac dec 10 10 100MEG
+
 plot vdb(coll)
-plot vp(coll)
-*hardcopy vo1f.ps vdb(coll)
+hardcopy vdbcoll.ps vdb(coll)
 
+plot vdb(out) vecmax(vdb(out))-3; 
+hardcopy vdbout.ps vdb(out)
 
-plot vdb(out) vecmax(vdb(out))-3;
-plot vp(out);
-
-*hardcopy vo2f.ps vdb(out)
 
 let bond = vecmax(vdb(out))-3;
 
 meas ac lowf WHEN vdb(out)=bond CROSS=1;
 meas ac highf WHEN vdb(out)=bond CROSS=LAST;
 
-let bandwidth = 'highf-lowf'
-print bandwidth;
+let Bandwidth = 'highf-lowf';
+let Amplitude = abs(vecmax(v(out)));
+let Amplitude_dB = abs(vecmax(vdb(out)));
+let Lower_Cut_Off_f = lowf;
+let Higher_Cut_Off_f = highf;
 
-*input impedance in Ohm
-*print all
+echo "SIM_RESULTS_TAB"
+print Lower_Cut_Off_f;
+print Higher_Cut_Off_f;
+print Bandwidth;
+print Amplitude;
+print Amplitude_dB;
+echo "SIM_RESULTS_END"
+
 
 let Zi = abs(v(in2)[40]/vin#branch[40])
-print Zi;
+echo "ZI_TAB"
+print Zi
+echo "ZI_END"
+
+let resist = '(Rin_val + R1_val + R2_val + Rc_val + Re_val + Rout_val + RL_val)/1000'
+let capacit = '(Ci_val + Cb_val + Co_val)*1000000'
+let transist = '2*0.1'
+let Cost = resist + capacit + transist
+let Merit = '(Amplitude * Bandwidth)/(Cost * Lower_Cut_Off_f)'
+
+echo "MERIT_TAB"
+print Cost;
+print Merit;
+echo "MERIT_END"
+
 
 *need a different setup to measure output impedance
 
-.endc 
-
+.endc
