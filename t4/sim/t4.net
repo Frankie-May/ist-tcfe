@@ -64,6 +64,16 @@ RL out 0 {RL_val}
 
 .control
 
+*makes plots in color
+set hcopypscolor=0
+set color0=white
+set color1=black
+set color2=red
+set color3=blue
+set color4=violet
+set color5=rgb:3/8/0
+set color6=rgb:4/0/0
+
 op
 echo "FAR_TAB"
 print 'v(coll) - v(emit)'
@@ -75,15 +85,18 @@ echo "FAR_END"
 * time analysis
 tran 1e-5 1e-2
 
+
 hardcopy vin-vout.ps v(in) v(out)
+echo "vin-vout_FIG"
 
 * frequency analysis
 ac dec 10 10 100MEG
 
 hardcopy vdbcoll.ps vdb(coll)
 
+echo "vdbcoll_FIG"
 hardcopy vdbout.ps vdb(out) vecmax(vdb(out))-3;
-
+echo "vdbout_FIG"
 
 let bond = vecmax(vdb(out))-3;
 
@@ -92,16 +105,16 @@ meas ac highf WHEN vdb(out)=bond CROSS=LAST;
 
 let Bandwidth = 'highf-lowf';
 let Amplitude = abs(vecmax(v(out)));
-let Amplitude_dB = abs(vecmax(vdb(out)));
-let Lower_Cut_Off_f = lowf;
-let Higher_Cut_Off_f = highf;
+let AmplitudedB = abs(vecmax(vdb(out)));
+let LowerCutOffF = lowf;
+let HigherCutOffF = highf;
 
 echo "SIM_RESULTS_TAB"
-print Lower_Cut_Off_f;
-print Higher_Cut_Off_f;
+print LowerCutOffF;
+print HigherCutOffF;
 print Bandwidth;
 print Amplitude;
-print Amplitude_dB;
+print AmplitudedB;
 echo "SIM_RESULTS_END"
 
 
@@ -114,7 +127,7 @@ let resist = '(Rin_val + R1_val + R2_val + Rc_val + Re_val + Rout_val + RL_val)/
 let capacit = '(Ci_val + Cb_val + Co_val)*1000000'
 let transist = '2*0.1'
 let Cost = resist + capacit + transist
-let Merit = '(Amplitude * Bandwidth)/(Cost * Lower_Cut_Off_f)'
+let Merit = '(Amplitude * Bandwidth)/(Cost * LowerCutOffF)'
 
 echo "MERIT_TAB"
 print Cost;
