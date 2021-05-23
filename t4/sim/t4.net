@@ -1,13 +1,13 @@
 CIRCUIT
 .options savecurrents
 
-.param Rin_val = 100
-.param Ci_val = 1m
+.param Rin_val = 30
+.param Ci_val = 0.01m
 .param R1_val = 80k
-.param R2_val = 20k
+.param R2_val = 25k
 .param Rc_val = 1k
-.param Re_val = 100
-.param Cb_val = 1m
+.param Re_val = 300
+.param Cb_val = 0.01m
 .param Rout_val = 100
 .param Co_val = 1u
 .param RL_val = 8

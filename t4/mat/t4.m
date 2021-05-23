@@ -3,15 +3,15 @@
 VT=25e-3;
 BFN=178.7;
 VAFN=69.7;
-RE1=100;
+RE1=300;
 RC1=1000;
 RB1=80000;
-RB2=20000;
+RB2=25000;
 VBEON=0.7;
 VCC=12;
-RS=100;
-Ci = 1e-3;
-Cb = 1e-3;
+RS=30;
+Ci = 0.01e-3;
+Cb = 0.01e-3;
 Co = 1e-6;
 RL = 8;
 Vin = 10e-3;
@@ -43,7 +43,7 @@ AV1_DB = 20*log10(abs(AV1));
 AV1simple =  - RSB/RS * gm1*RC1/(1+gm1*RE1);
 AVIsimple_DB = 20*log10(abs(AV1simple));
 
-RE1=100;
+RE1=300;
 ZI1 = 1/(1/RB+1/(((ro1+RC1+RE1)*(rpi1+RE1)+gm1*RE1*ro1*rpi1 - RE1^2)/(ro1+RC1+RE1)));
 ZX = ro1*(   1/RE1+1/(rpi1+RSB)+1/ro1+gm1*rpi1/(rpi1+RSB)  )/(   1/RE1+1/(rpi1+RSB) );
 ZO1 = 1/(1/ZX+1/RC1);
@@ -92,7 +92,7 @@ fclose (fileoutp);
 
 %total
 gB = 1/(1/gpi2+ZO1);
-AV = (gB+gm2/gpi2*gB)/(gB+ge2+go2+gm2/gpi2*gB)*AV1;
+AV = abs((gB+gm2/gpi2*gB)/(gB+ge2+go2+gm2/gpi2*gB)*AV1);
 AV_DB = 20*log10(abs(AV));
 ZI=ZI1;
 ZO=1/(go2+gm2/gpi2*gB+ge2+gB);
@@ -108,7 +108,7 @@ fclose (filetotal);
 
 
 %frequency response
-RE1=100;
+RE1=300;
 rpi2 = 1/gpi2;
 ro2 = 1/go2;
 Af = [];
