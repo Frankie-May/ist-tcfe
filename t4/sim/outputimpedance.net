@@ -8,19 +8,19 @@ Vcc vcc 0 12.0
 Vin in 0 0 
 
 * input coupling capacitor
-Ci in base 1m
+Ci in base 0.01m
 
 * bias circuit
 R1 vcc base 80k
-R2 base 0 20k
+R2 base 0 25k
 
 * gain stage
 Q1 coll base emit BC547A
 Rc vcc coll 1k
-Re emit 0 100
+Re emit 0 300
 
 * bypass capacitor
-Cb emit 0 1m
+Cb emit 0 0.01m
 
 
 * output stage
