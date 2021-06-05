@@ -65,7 +65,7 @@ CIRCUIT
 
 Vcc vcc 0 5.0
 Vee vee 0 -5.0
-Vin in 0 0 ac 1.0 sin(0 10m 1k)
+Vin in 0 0 
 
 
 X1 ninv_in inv_in vcc vee out uA741
@@ -85,74 +85,18 @@ R3 out inv_in R3_val
 Ro out outr Ro_val
 Co outr 0 Co_val
 
-.op
-.end
+*Auxiliar Voltage Source
+Vaux outr 0 0 ac 1.0 sin(0 10m 1k)
 
 .control
 
-*time analysis
-tran 1e-5 1e-2
-plot v(outr) v(in)
-
-*frequency analysis
 ac dec 10 .01 100MEG
-plot vdb(outr)
-plot vp(outr)
+let Zo = v(outr)[40]/vaux#branch[40]/1000;
+let Module_Zo = 'abs(Zo)';
 
-*Frequency Analysis Measurements
-let bond = vecmax(vdb(out))-3;
-
-meas ac lowf WHEN vdb(outr)=bond CROSS=1;
-meas ac highf WHEN vdb(outr)=bond CROSS=LAST;
-meas ac vout_t FIND v(outr) AT=1000;
-
-let Bandwidth = 'highf-lowf';
-let LowerCutOffF = lowf;
-let HigherCutOffF = highf;
-let MeanFreq = 'sqrt(lowf*highf)';
-let FreqDeviation = 'abs(MeanFreq - 1000)'
-let OutputVoltage = vout_t;
-let Gain = 'OutputVoltage/(10m)';
-let GaindB = '20*log10(Gain)';
-let GainDeviation = abs(GaindB-40);
-
-echo "SIM_RESULTS_TAB"
-print LowerCutOffF;
-print HigherCutOffF;
-print Bandwidth;
-print MeanFreq;
-print Gain;
-print GaindB;
-echo "SIM_RESULTS_END"
-
-let OPAMP_cost = '(8.661E-12 + 30.00E-12)*1000000 + 5*0.1 + 2*0.1 + (100E3 + 5.305E3 + 5.305E3 + 1.836E3 + 1.863E3 + 13.19E6 + 50 + 100 + 18.16E3)/(1000)' 
-
-*OPAMP_cost = capacitors + diodes + transistors + resistors
-
-let resist = '(Ri_val + R4_val + R3_val + Ro_val)/1000';
-let capacit = '(Ci_val + Co_val)*1000000'
-let Cost = 'OPAMP_cost + resist + capacit'
-
-
-
-let Merit = '1/(Cost * GainDeviation * FreqDeviation + 10E-6)'
-
-echo "MERIT_TAB"
-print OPAMP_cost;
-print Cost;
-print Merit;
-print FreqDeviation;
-print GainDeviation;
-echo "MERIT_END"
-
-*Input Impedance
-let Zi = 'v(in)[40]/(-vin#branch[40])/1000';
-let Module_Zi = 'abs(Zi)'
-echo "Zi_TAB"
-print Zi;
-print Module_Zi;
-echo "Zi_END"
+echo "ZO_TAB"
+print Zo;
+print Module_Zo;
+echo "ZO_END"
 
 .endc
-
-
