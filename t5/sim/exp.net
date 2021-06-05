@@ -113,7 +113,7 @@ let MeanFreq = 'sqrt(lowf*highf)';
 let FreqDeviation = 'abs(MeanFreq - 1000)'
 let OutputVoltage = vout_t;
 let Gain = 'OutputVoltage/(10m)';
-let GaindB = '20log10(OutputVoltage)';
+let GaindB = '20*log10(Gain)';
 let GainDeviation = abs(GaindB-40);
 
 echo "SIM_RESULTS_TAB"
