@@ -133,9 +133,7 @@ let resist = '(Ri_val + R4_val + R3_val + Ro_val)/1000';
 let capacit = '(Ci_val + Co_val)*1000000'
 let Cost = 'OPAMP_cost + resist + capacit'
 
-
-
-let Merit = '1/(Cost * GainDeviation * FreqDeviation + 10E-6)'
+let Merit = '1/(Cost * (GainDeviation + FreqDeviation + 10E-6))'
 
 echo "MERIT_TAB"
 print OPAMP_cost;
