@@ -1,3 +1,12 @@
+%Variables
+
+Ci = 0.3u;
+Ri = 1000;
+R4 = 1k;
+R3 = 10k;
+Ro = 100;
+Co = 8E-7;
+
 %Gain Stage
 
 Vcc=5.0;
@@ -203,3 +212,4 @@ legend("Gain");
 xlabel ("log_{10} (f) [Hz]");
 ylabel ("Gain [dB]");
 print (gain, "gain.eps", "-depsc");
+

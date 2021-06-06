@@ -1,3 +1,4 @@
+CIRCUIT
 *-----------------------------------------------------------------------------
 *
 * To use a subcircuit, the name must begin with 'X'.  For example:
@@ -46,62 +47,56 @@
 .ends
 
 
+.param Ci_val = 0.3u;
+.param Ri_val = 1000;
+.param R4_val = 1k;
+.param R3_val = 10k;
+.param Ro_val = 100;
+.param Co_val = 8E-7;
+
+.csparam Ci_val = {Ci_val};
+.csparam Ri_val = {Ri_val};
+.csparam R4_val = {R4_val};
+.csparam R3_val = {R3_val};
+.csparam Ro_val = {Ro_val};
+.csparam Co_val = {Co_val};
 
 .options savecurrents
 
 Vcc vcc 0 5.0
 Vee vee 0 -5.0
-Vin in 0 0 ac 1.0 sin(0 10m 1k)
+Vin in 0 0 
 
-X1 in_1 inv_in vcc vee out uA741
 
-R1 0 inv_in 1k
-R2 inv_in out 100k
+X1 ninv_in inv_in vcc vee out uA741
 
-*Low frequency cut
-Rlcut in_1 0 1k
-Clcut in in_1 1u
+*Input filter
 
-*High frequency cut
-Rhcut out out_1 1k
-Chcut out_1 0 1u
+Ci ninv_in in Ci_val
+Ri ninv_in 0 Ri_val
 
-* load
-RL out_1 0 8
+*Coupling resistances
 
-.op
-.end
+R4 inv_in 0 R4_val
+R3 out inv_in R3_val
+
+*Output filter
+
+Ro out outr Ro_val
+Co outr 0 Co_val
+
+*Auxiliar Voltage Source
+Vaux outr 0 0 ac 1.0 sin(0 10m 1k)
 
 .control
 
-*makes plots in color
-set hcopypscolor=0
-set color0=white
-set color1=black
-set color2=red
-set color3=blue
-set color4=violet
-set color5=rgb:3/8/0
-set color6=rgb:4/0/0
+ac dec 10 .01 100MEG
+let Zo = v(outr)[40]/vaux#branch[40]/1000;
+let Module_Zo = 'abs(Zo)';
 
-print all
+echo "ZO_TAB"
+print Zo;
+print Module_Zo;
+echo "ZO_END"
 
-* time analysis
-tran 1e-5 1e-2
-plot v(out) v(in)
-hardcopy vo1.ps vdb(out)
-
-
-* frequency analysis
-ac dec 10 10 100MEG
-plot vdb(out)
-plot vp(out)
-*hardcopy vo1f.ps vdb(out)
-
-*input impedance in kohm, current in vin is the same in R1, but has opposite direction
-print 'v(in)[40]/(-vin#branch[40])/1000';
-
-*need a different setup to measure output impedance
-
-.endc 
-
+.endc

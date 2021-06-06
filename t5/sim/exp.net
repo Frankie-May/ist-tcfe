@@ -1,0 +1,156 @@
+CIRCUIT
+*-----------------------------------------------------------------------------
+*
+* To use a subcircuit, the name must begin with 'X'.  For example:
+* X1 1 2 3 4 5 uA741
+*
+* connections:   non-inverting input
+*                |  inverting input
+*                |  |  positive power supply
+*                |  |  |  negative power supply
+*                |  |  |  |  output
+*                |  |  |  |  |
+.subckt uA741    1  2  3  4  5
+*
+  c1   11 12 8.661E-12
+  c2    6  7 30.00E-12
+  dc    5 53 dx
+  de   54  5 dx
+  dlp  90 91 dx
+  dln  92 90 dx
+  dp    4  3 dx
+  egnd 99  0 poly(2) (3,0) (4,0) 0 .5 .5
+  fb    7 99 poly(5) vb vc ve vlp vln 0 10.61E6 -10E6 10E6 10E6 -10E6
+  ga    6  0 11 12 188.5E-6
+  gcm   0  6 10 99 5.961E-9
+  iee  10  4 dc 15.16E-6
+  hlim 90  0 vlim 1K
+  q1   11  2 13 qx
+  q2   12  1 14 qx
+  r2    6  9 100.0E3
+  rc1   3 11 5.305E3
+  rc2   3 12 5.305E3
+  re1  13 10 1.836E3
+  re2  14 10 1.836E3
+  ree  10 99 13.19E6
+  ro1   8  5 50
+  ro2   7 99 100
+  rp    3  4 18.16E3
+  vb    9  0 dc 0
+  vc    3 53 dc 1
+  ve   54  4 dc 1
+  vlim  7  8 dc 0
+  vlp  91  0 dc 40
+  vln   0 92 dc 40
+.model dx D(Is=800.0E-18 Rs=1)
+.model qx NPN(Is=800.0E-18 Bf=93.75)
+.ends
+
+
+.param Ci_val = 0.3u;
+.param Ri_val = 1000;
+.param R4_val = 1k;
+.param R3_val = 10k;
+.param Ro_val = 100;
+.param Co_val = 8E-7;
+
+.csparam Ci_val = {Ci_val};
+.csparam Ri_val = {Ri_val};
+.csparam R4_val = {R4_val};
+.csparam R3_val = {R3_val};
+.csparam Ro_val = {Ro_val};
+.csparam Co_val = {Co_val};
+
+.options savecurrents
+
+Vcc vcc 0 5.0
+Vee vee 0 -5.0
+Vin in 0 0 ac 1.0 sin(0 10m 1k)
+
+
+X1 ninv_in inv_in vcc vee out uA741
+
+*Input filter
+
+Ci ninv_in in Ci_val
+Ri ninv_in 0 Ri_val
+
+*Coupling resistances
+
+R4 inv_in 0 R4_val
+R3 out inv_in R3_val
+
+*Output filter
+
+Ro out outr Ro_val
+Co outr 0 Co_val
+
+.op
+.end
+
+.control
+
+*time analysis
+tran 1e-5 1e-2
+plot v(outr) v(in)
+
+*frequency analysis
+ac dec 10 .01 100MEG
+plot vdb(outr)
+plot vp(outr)
+
+*Frequency Analysis Measurements
+let bond = vecmax(vdb(out))-3;
+
+meas ac lowf WHEN vdb(outr)=bond CROSS=1;
+meas ac highf WHEN vdb(outr)=bond CROSS=LAST;
+meas ac vout_t FIND v(outr) AT=1000;
+
+let Bandwidth = 'highf-lowf';
+let LowerCutOffF = lowf;
+let HigherCutOffF = highf;
+let MeanFreq = 'sqrt(lowf*highf)';
+let FreqDeviation = 'abs(MeanFreq - 1000)'
+let OutputVoltage = vout_t;
+let Gain = 'OutputVoltage/(10m)';
+let GaindB = '20*log10(Gain)';
+let GainDeviation = abs(GaindB-40);
+
+echo "SIM_RESULTS_TAB"
+print LowerCutOffF;
+print HigherCutOffF;
+print Bandwidth;
+print MeanFreq;
+print Gain;
+print GaindB;
+echo "SIM_RESULTS_END"
+
+let OPAMP_cost = '(8.661E-12 + 30.00E-12)*1000000 + 5*0.1 + 2*0.1 + (100E3 + 5.305E3 + 5.305E3 + 1.836E3 + 1.863E3 + 13.19E6 + 50 + 100 + 18.16E3)/(1000)' 
+
+*OPAMP_cost = capacitors + diodes + transistors + resistors
+
+let resist = '(Ri_val + R4_val + R3_val + Ro_val)/1000';
+let capacit = '(Ci_val + Co_val)*1000000'
+let Cost = 'OPAMP_cost + resist + capacit'
+
+let Merit = '1/(Cost * (GainDeviation + FreqDeviation + 10E-6))'
+
+echo "MERIT_TAB"
+print OPAMP_cost;
+print Cost;
+print Merit;
+print FreqDeviation;
+print GainDeviation;
+echo "MERIT_END"
+
+*Input Impedance
+let Zi = 'v(in)[40]/(-vin#branch[40])/1000';
+let Module_Zi = 'abs(Zi)'
+echo "Zi_TAB"
+print Zi;
+print Module_Zi;
+echo "Zi_END"
+
+.endc
+
+
