@@ -53,24 +53,42 @@ Vcc vcc 0 5.0
 Vee vee 0 -5.0
 Vin in 0 0 ac 1.0 sin(0 10m 1k)
 
-X1 0 inv_in vcc vee out uA741
+X1 in_1 inv_in vcc vee out uA741
 
-R1 in inv_in 1000
-R2 inv_in out 10000
+R1 0 inv_in 1k
+R2 inv_in out 100k
+
+*Low frequency cut
+Rlcut in_1 0 1k
+Clcut in in_1 1u
+
+*High frequency cut
+Rhcut out out_1 1k
+Chcut out_1 0 1u
 
 * load
-RL out 0 8
+RL out_1 0 8
 
 .op
 .end
 
 .control
 
+*makes plots in color
+set hcopypscolor=0
+set color0=white
+set color1=black
+set color2=red
+set color3=blue
+set color4=violet
+set color5=rgb:3/8/0
+set color6=rgb:4/0/0
+
 print all
 
 * time analysis
 tran 1e-5 1e-2
-plot v(out)
+plot v(out) v(in)
 hardcopy vo1.ps vdb(out)
 
 
