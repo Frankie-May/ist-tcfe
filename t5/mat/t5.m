@@ -1,11 +1,11 @@
 %Variables
 
-Ci = 0.3u;
-Ri = 1000;
-R4 = 1k;
-R3 = 10k;
-Ro = 100;
-Co = 8E-7;
+%Ci = 0.3u;
+%Ri = 1000;
+%R4 = 1k;
+%R3 = 10k;
+%Ro = 100;
+%Co = 8E-7;
 
 %Gain Stage
 
@@ -33,26 +33,40 @@ omega_H = (1)/(Rhcut*Chcut);
 printf("omega_H = %f\n", omega_H);
 printf("omega_0 = %f\n", sqrt(omega_L*omega_H));
 
-function transf (s)
-  ((Rlcut*Clcut*s)/(1+Rlcut*Clcut*s))*(1+(R2)/(R1))*((1)/(1+Rhcut*Chcut))
+retval = 0;
+
+function retval = transf (s)
+	Rlcut=1e3;
+	Clcut=1e-6;
+	Rhcut=1e3;
+	Chcut=1e-6;
+	R1=1e3;
+	R2=100e3;
+  retval = ((Rlcut*Clcut*s)/(1+Rlcut*Clcut*s))*(1+(R2)/(R1))*((1)/(1+Rhcut*Chcut));
+  return;
 endfunction
 
 w = [];
 f = [];
-Af = [];
+Af = zeros(100);
 i = 1;
-
-for w=logspace(1, 8, 100)
-	Af(i) = 20*w(i);
-	i++;
-endfor;
-
 w=logspace(1, 8, 100);
 
-printf("%g", w);
+while (i <= 100)
+	Af(i) = 20*log (transf (w(i)));
+	i++;
+endwhile;
+
+printf("%g\n", Af);
 
 
-
+gain = figure();
+plot(w , Af , "g");
+title("Gain in decibels");
+legend("Gain");
+xlabel ("log_{10} (f) [Hz]");
+ylabel ("Gain [dB]");
+print (gain, "gain.eps", "-depsc");
 
 
 %gain stage
@@ -205,11 +219,5 @@ endfor;
 
 f=1:0.1:8;
 
-gain = figure();
-plot(f , Af_db , "r");
-title("Gain in decibels");
-legend("Gain");
-xlabel ("log_{10} (f) [Hz]");
-ylabel ("Gain [dB]");
-print (gain, "gain.eps", "-depsc");
+
 
