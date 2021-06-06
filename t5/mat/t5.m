@@ -11,7 +11,7 @@
 
 Vcc=5.0;
 Vee=-5.0;
-%Vin in 0 0 ac 1.0 sin(0 10m 1k);
+%Vin = 10e-3*sin(2*pi*1e3*t);
 R1=1e3;
 R2=100e3;
 
@@ -56,11 +56,20 @@ omega_0 = sqrt(omega_L*omega_H);
 printf("omega_0 = %f\n", omega_0);
 printf("Gain (omega_0) = %f [dB]\n", 20*log10 (abs(transf (omega_0*j))));
 
+%Imput Inpeadence for omega = omega_0
+
+printf("Zi = %f [Ohm]\n", (1)/(j*omega_0*Clcut)+Rlcut);
+
+%Output Inpeadence for omega = omega_0
+
+printf("Zout = %f [Ohm]\n", (1)/(j*omega_0*Chcut+(1)/(Rhcut)));
+
+
 while (i <= 100)
 	Af(i) = 20*log10 (abs(transf (w(i)*j)));
-	printf("w(%d) = %f\n", i, w(i));
-	printf("Af(%d) = %f\n", i, Af(i));
-	printf("\n");
+	%printf("w(%d) = %f\n", i, w(i));
+	%printf("Af(%d) = %f\n", i, Af(i));
+	%printf("\n");
 	i++;
 endwhile;
 
@@ -68,15 +77,38 @@ endwhile;
 
 
 gain = figure();
-loglog(w , Af , "y");
+semilogx(w , Af , "y");
 title("Gain in decibels");
 legend("Gain");
+grid on;
 xlabel ("log_{10} (f) [Hz]");
 ylabel ("Gain [dB]");
 print (gain, "gain.eps", "-depsc");
 
+t=0:0.05:10;
+vin = zeros(length(t));
+vout = zeros(length(t));
+Gain_0 = abs(transf (omega_0*j));
+i=1;
 
+while (i < length(t))
+	%printf("i= %f\n", i);
+	vin(i) = 10e-3*sin(2*pi*1e3*t(i)*10^-3);
+	vout(i) = Gain_0*vin(i);
+	i++;
+endwhile;
 
+inoutput = figure();
+p1 = plot(t , vin , "b");
+hold;
+p2 = plot(t , vout , "g");
+title("Input and Output");
+h = [p1(1); p2(1)];
+legend(h , "Input voltage" , "Output voltage");
+grid on;
+xlabel ("time [ms]");
+ylabel ("Volt [V]");
+print (inoutput, "inoutput.eps", "-depsc");
 
 
 

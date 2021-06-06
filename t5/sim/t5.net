@@ -89,14 +89,14 @@ print all
 * time analysis
 tran 1e-5 1e-2
 plot v(out) v(in)
-hardcopy vo1.ps vdb(out)
+hardcopy voin.ps v(out) v(in)
 
 
 * frequency analysis
 ac dec 10 10 100MEG
 plot vdb(out)
 plot vp(out)
-*hardcopy vo1f.ps vdb(out)
+hardcopy vo1.ps vdb(out)
 
 *input impedance in kohm, current in vin is the same in R1, but has opposite direction
 print 'v(in)[40]/(-vin#branch[40])/1000';
