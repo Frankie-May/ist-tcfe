@@ -17,7 +17,7 @@ R2=100e3;
 
 %Low Frequency Cut
 
-Rlcut=1e3;
+Rlcut=100e3;
 Clcut=1e-6;
 
 %High Frequency Cut
@@ -25,24 +25,17 @@ Clcut=1e-6;
 Rhcut=1e3;
 Chcut=1e-6;
 
-%The Gain of the Gain Stage
-printf("The Gain of the Gain Stage = %f\n", (1+(R2)/(R1)));
-omega_L = (1)/(Rlcut*Clcut);
-printf("omega_L = %f\n", omega_L);
-omega_H = (1)/(Rhcut*Chcut);
-printf("omega_H = %f\n", omega_H);
-printf("omega_0 = %f\n", sqrt(omega_L*omega_H));
 
 retval = 0;
 
 function retval = transf (s)
-	Rlcut=1e3;
+	Rlcut=100e3;
 	Clcut=1e-6;
 	Rhcut=1e3;
 	Chcut=1e-6;
 	R1=1e3;
 	R2=100e3;
-  retval = ((Rlcut*Clcut*s)/(1+Rlcut*Clcut*s))*(1+(R2)/(R1))*((1)/(1+Rhcut*Chcut));
+  retval = ((Rlcut*Clcut*s)/(1+Rlcut*Clcut*s))*(1+(R2)/(R1))*((1)/(1+Rhcut*Chcut*s));
   return;
 endfunction
 
@@ -50,23 +43,45 @@ w = [];
 f = [];
 Af = zeros(100);
 i = 1;
-w=logspace(1, 8, 100);
+w=logspace(0, 8, 100);
+j=sqrt(-1);
+
+%The Gain of the Gain Stage
+printf("The Gain of the Gain Stage = %f\n", (1+(R2)/(R1)));
+omega_L = (1)/(Rlcut*Clcut);
+printf("omega_L = %f\n", omega_L);
+omega_H = (1)/(Rhcut*Chcut);
+printf("omega_H = %f\n", omega_H);
+omega_0 = sqrt(omega_L*omega_H);
+printf("omega_0 = %f\n", omega_0);
+printf("Gain (omega_0) = %f [dB]\n", 20*log10 (abs(transf (omega_0*j))));
 
 while (i <= 100)
-	Af(i) = 20*log (transf (w(i)));
+	Af(i) = 20*log10 (abs(transf (w(i)*j)));
+	printf("w(%d) = %f\n", i, w(i));
+	printf("Af(%d) = %f\n", i, Af(i));
+	printf("\n");
 	i++;
 endwhile;
 
-printf("%g\n", Af);
+%printf("%g\n", Af);
 
 
 gain = figure();
-plot(w , Af , "g");
+loglog(w , Af , "y");
 title("Gain in decibels");
 legend("Gain");
 xlabel ("log_{10} (f) [Hz]");
 ylabel ("Gain [dB]");
 print (gain, "gain.eps", "-depsc");
+
+
+
+
+
+
+
+
 
 
 %gain stage
@@ -218,6 +233,3 @@ for f=1:0.1:8
 endfor;
 
 f=1:0.1:8;
-
-
-
