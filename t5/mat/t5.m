@@ -42,6 +42,7 @@ endfunction
 w = [];
 f = [];
 Af = zeros(100);
+PHf = zeros(100);
 i = 1;
 w=logspace(0, 8, 100);
 j=sqrt(-1);
@@ -67,6 +68,7 @@ printf("Zout = %f [Ohm]\n", (1)/(j*omega_0*Chcut+(1)/(Rhcut)));
 
 while (i <= 100)
 	Af(i) = 20*log10 (abs(transf (w(i)*j)));
+	PHf(i) = arg (transf (w(i)*j))*(180)/(pi);
 	%printf("w(%d) = %f\n", i, w(i));
 	%printf("Af(%d) = %f\n", i, Af(i));
 	%printf("\n");
@@ -81,9 +83,18 @@ semilogx(w , Af , "y");
 title("Gain in decibels");
 legend("Gain");
 grid on;
-xlabel ("log_{10} (f) [Hz]");
+xlabel ("log_{10} (w) [rad/s]");
 ylabel ("Gain [dB]");
 print (gain, "gain.eps", "-depsc");
+
+phase = figure();
+semilogx(w , PHf , "c");
+title("Phase in degrees");
+legend("Phase");
+grid on;
+xlabel ("log_{10} (w) [rad/s]");
+ylabel ("Phase [degrees]");
+print (phase, "phase.eps", "-depsc");
 
 t=0:0.05:10;
 vin = zeros(length(t));
