@@ -97,6 +97,10 @@ ac dec 10 10 100MEG
 plot vdb(out)
 plot vp(out)
 hardcopy vo1.ps vdb(out)
+hardcopy voph.ps vp(out)
+
+print v(in)[5]
+print -vin#branch[40]
 
 *input impedance in kohm, current in vin is the same in R1, but has opposite direction
 print 'v(in)[40]/(-vin#branch[40])/1000';

@@ -93,11 +93,14 @@ Co outr 0 Co_val
 *time analysis
 tran 1e-5 1e-2
 plot v(outr) v(in)
+hardcopy voin.ps v(outr) v(in)
 
 *frequency analysis
 ac dec 10 .01 100MEG
 plot vdb(outr)
 plot vp(outr)
+hardcopy vo1.ps vdb(outr)
+hardcopy voph.ps vp(outr)
 
 *Frequency Analysis Measurements
 let bond = vecmax(vdb(out))-3;
