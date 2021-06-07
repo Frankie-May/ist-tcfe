@@ -47,24 +47,29 @@ i = 1;
 w=logspace(0, 8, 100);
 j=sqrt(-1);
 
+gain = fopen("gain.tex" , "w");
+
 %The Gain of the Gain Stage
-printf("The Gain of the Gain Stage = %f\n", (1+(R2)/(R1)));
+fprintf(gain , "Gain from Gain Stage && %f\\\\\n", (1+(R2)/(R1)));
 omega_L = (1)/(Rlcut*Clcut);
-printf("omega_L = %f\n", omega_L);
+fprintf(gain , "$\\omega_L$ && %f\\\\\n", omega_L);
 omega_H = (1)/(Rhcut*Chcut);
-printf("omega_H = %f\n", omega_H);
+fprintf(gain , "$\\omega_H$ && %f\\\\\n", omega_H);
 omega_0 = sqrt(omega_L*omega_H);
-printf("omega_0 = %f\n", omega_0);
-printf("Gain (omega_0) = %f [dB]\n", 20*log10 (abs(transf (omega_0*j))));
+fprintf(gain , "$\\omega_0$ && %f\\\\\n", omega_0);
+fprintf(gain , "Gain ($\\omega_0$) && %f [dB]\\\\\n", 20*log10 (abs(transf (omega_0*j))));
+
+fclose (gain);
 
 %Imput Inpeadence for omega = omega_0
-
-printf("Zi = %f [Ohm]\n", (1)/(j*omega_0*Clcut)+Rlcut);
+theoZin = fopen("theoZin.tex" , "w");
+fprintf(theoZin , "$Z_in$ && %f [Ohm]\\\\\n", (1)/(j*omega_0*Clcut)+Rlcut);
+fclose(theoZin);
 
 %Output Inpeadence for omega = omega_0
-
-printf("Zout = %f [Ohm]\n", (1)/(j*omega_0*Chcut+(1)/(Rhcut)));
-
+theoZout = fopen("theoZout.tex" , "w");
+fprintf(theoZout , "$Z_out$ && %f [Ohm]\\\\\n", (1)/(j*omega_0*Chcut+(1)/(Rhcut)));
+fclose(theoZout);
 
 while (i <= 100)
 	Af(i) = 20*log10 (abs(transf (w(i)*j)));
