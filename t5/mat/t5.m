@@ -52,11 +52,11 @@ gain = fopen("gain.tex" , "w");
 %The Gain of the Gain Stage
 fprintf(gain , "Gain from Gain Stage && %f\\\\\n", (1+(R2)/(R1)));
 omega_L = (1)/(Rlcut*Clcut);
-fprintf(gain , "$\\omega_L$ && %f\\\\\n", omega_L);
+fprintf(gain , "$\\omega_L$ && %f [rad/s]\\\\\n", omega_L);
 omega_H = (1)/(Rhcut*Chcut);
-fprintf(gain , "$\\omega_H$ && %f\\\\\n", omega_H);
+fprintf(gain , "$\\omega_H$ && %f [rad/s]\\\\\n", omega_H);
 omega_0 = sqrt(omega_L*omega_H);
-fprintf(gain , "$\\omega_0$ && %f\\\\\n", omega_0);
+fprintf(gain , "$\\omega_0$ && %f [rad/s]\\\\\n", omega_0);
 fprintf(gain , "Gain ($\\omega_0$) && %f [dB]\\\\\n", 20*log10 (abs(transf (omega_0*j))));
 
 fclose (gain);
