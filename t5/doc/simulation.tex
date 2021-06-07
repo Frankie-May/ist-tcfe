@@ -1,12 +1,14 @@
 \section{Simulation Analysis}
 \label{sec:simulation}
-To simulate the Audio Amplifier Circuit we used two sub-circuits, the gain stage circuit, and the output stage circuit.
-To amplify the voltage measured at the input it is necessary to use a gain stage circuit that adds a gain to the input voltage and it is also necessary to decrease the output impedance because the speaker has an impedance of 8 $\Omega$ and the output impedance should be much smaller than the impedance of the speaker. To do that we use an output stage circuit that maintains the gain (approximately) and decreases the output impedance, as we have stated before.
+To simulate the Bandpass filter circuit it was used three parts, the low-frequency cut, the gain stage, and the high-frequency cut.
+To amplify the voltage measured at the input it is necessary to use a gain stage circuit that adds gain throw the use of an OP-AMP (Operational Amplifier) and applying reverse feedback to ensure that the voltages at the positive and negative inputs of the OP-AMP have the same voltage. This reverse feedback is done by connecting a resistor from the output to the negative input of the OP-AMP, and the negative input is also connected to the ground through a resistor.
+To isolate a frequency of 1 kHz it was used a high pass filter and a low pass filter with cut high and low frequencies.
 
-The output voltage gain measured by the theoretical analysis \ref{Fig2: TheoGaindB} and the one simulated in ngspice,  represented below have a visible difference between them. The theoretical analysis does not have a higher cutoff frequency which is present in the simulated data. This is due to the fact that the theoretical circuit does not consider the presence of two capacitors in the transistor model, which are considered in the ngspice simulation and simulate the higher cutoff frequency. It is also visible that the gain of the theoretical analysis is lower than the one obtained by ngspice, this is due to the fact that the model of the transistor used by ngspice considers much more parameters than the model that was used in the theoretical simulation. This causes the current in the collector to be greater in the simulation than in the theoretical analysis which causes the transconductance to be smaller and this parameter is related to the gain.
-If it had been considered that Ro in the equivalent circuit then the calculated gain would be bigger than the theoretical gain.
+We also computed for the same frequency the input and the output impedance, and the output voltage. The input impedance was calculated by the quotient of the input voltage and the input current, and the output impedance was calculated by the quotient of the output voltage and the output current.
 
-In order to obtain the circuit's output impedance, we had to create a new script which allowed us to compute this value. For this we removed the input from the circuit and created a new voltage source in the output terminal, computing the impedance with the values of our auxiliar voltage source and the current flowing through it.
+In order to obtain the circuit's output impedance, we had to create a new script that allowed us to compute this value. For this we removed the input from the circuit and created a new voltage source in the output terminal, computing the impedance with the values of our auxiliary voltage source and the current flowing through it.
+
+We also plotted the input and the output voltages and the gain and the phase of the OP-AMP.
 The data obtained through Ngspice is as follows:
 
 \begin{figure}[h] 

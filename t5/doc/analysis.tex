@@ -2,18 +2,33 @@
 \section{Theoretical Analysis}
 \label{sec:analysis}
 
-To theoretically analyse this Audio Amplifier Circuit the following steps were made:
+To theoretically analyze this Bandpass filter circuit the following steps were made:
 \par
 \par
-First, it was necessary to create a gain stage circuit to amplify the signal produced by the input, this circuit is composed of a transistor. The base of the transistor is connected to two transistors in parallel and the third one is in series with a capacitor. The collector of the transistor is connected to the resistor Rc and the emitter is connected in parallel to resistor Re and capacitor Cb. The first two transistors are connected respectively to a node with $12V$ and to the ground. They make up the Bias Circuit which ensures, with the Capacitor connected to the base, that the voltage in the Transistor's base is different from zero. The Capacitor blocks the $0V$ DC component from the input signal while the Bias Circuit ensures that the transistor is on.
-The Gain Stage has a bypass circuit connected to its emitter. This is used in order to reduce temperature effect through the resistance and the capacitor ensures that the gain is not lowered.
+It is known that with the circuit connected as stated previously, (with a low and high pass filter and a gain stage created by the Operational Amplifier OP-AMP) the transfer function is the following:
+\begin{equation}
+    \dfrac{V_0(s)}{V_I(s)} = \dfrac{R_{lcut} C_{lcut} s}{1+R_{lcut} C_{lcut} s}\times \left( 1+\dfrac{R_2}{R_1} \right) \times \dfrac{1}{1+R_{hcut} C_{hcut} s}
+\end{equation}
+This makes it possible to plot the gain of the circuit with respect to the frequency. It is also possible to represent the phase with respect to the same variable.
 \par
 \par
-By using the circuit stated above the amplifier had a flaw, because the gain that is obtained by that circuit is decreased by almost the same amount when we connect the circuit to the speaker. This happens because the speaker has an impedance of 8 $\Omega$ and the output impedance of the gain stage is approximately 929.536158 $\Omega$, which indicates that the Voltage drop at the output is smaller than the one in the output impedance. To solve this problem we used an output stage circuit that maintains the gain but decreases the output impedance of the circuit. 
 
-The output stage circuit is composed of by a PNP transistor with a resistor connected to the emitter and a resistor in series with a capacitor that connects the emitter and the collector. This circuit creates a low output impedance and therefore the output voltage is present almost fully in the capacitor. This amplifies the input signal to the output, not reducing the gain from the gain stage.
+We calculated the low cut-off frequency and the high cut-off frequency that is given by the following expressions:
+\begin{equation}
+    \omega_{low} = \dfrac{1}{R_{lcut} C_{lcut}}
+\end{equation}
 
-Through octave, we were able to predict some simulation results. Because with octave we used transistor models, the values and plots obtained through mathematical analysis differ from those obtained in the $\ref{sec:simulation}^{rd}$ section.
+\begin{equation}
+    \omega_{high} = \dfrac{1}{R_{hcut} C_{hcut}}
+\end{equation}
+Which then allowed to calculate the central frequency thas is calculated as follows:
+\begin{equation}
+    \omega_{0} = \sqrt{\omega_{low} \omega_{high}}
+\end{equation}
+
+We also calculated the output voltage for that frequency and plotted the input and output voltage to allow comparison.
+
+Through octave, we were able to predict some simulation results. Because with octave we used OP-AMP (Operational Amplifier)  models, the values and plots obtained through mathematical analysis differ from those obtained in the $\ref{sec:simulation}^{rd}$ section.
 
 The results are as follow:
 
