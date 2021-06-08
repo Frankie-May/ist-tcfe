@@ -47,24 +47,23 @@ i = 1;
 w=logspace(0, 8, 100);
 j=sqrt(-1);
 
-gain = fopen("gain.tex" , "w");
 
 %The Gain of the Gain Stage
-fprintf(gain , "Gain from Gain Stage && %f\\\\\n", (1+(R2)/(R1)));
+fprintf( "Gain from Gain Stage && %f\\\\\n", (1+(R2)/(R1)));
 omega_L = (1)/(Rlcut*Clcut);
-fprintf(gain , "$\\omega_L$ && %f [rad/s]\\\\\n", omega_L);
+fprintf( "$\\omega_L$ && %f [rad/s]\\\\\n", omega_L);
 omega_H = (1)/(Rhcut*Chcut);
-fprintf(gain , "$\\omega_H$ && %f [rad/s]\\\\\n", omega_H);
+fprintf( "$\\omega_H$ && %f [rad/s]\\\\\n", omega_H);
 omega_0 = sqrt(omega_L*omega_H);
-fprintf(gain , "$\\omega_0$ && %f [rad/s]\\\\\n", omega_0);
-fprintf(gain , "Gain ($\\omega_0$) && %f [dB]\\\\\n", 20*log10 (abs(transf (omega_0*j))));
+fprintf( "$\\omega_0$ && %f [rad/s]\\\\\n", omega_0);
+fprintf( "Gain ($\\omega_0$) && %f [dB]\\\\\n", 20*log10 (abs(transf (omega_0*j))));
 
-fclose (gain);
+
 
 %Imput Inpeadence for omega = omega_0
-theoZin = fopen("theoZin.tex" , "w");
-fprintf(theoZin , "$Z_in$ && %f [Ohm]\\\\\n", (1)/(j*omega_0*Clcut)+Rlcut);
-fclose(theoZin);
+
+printf( "$Z_in$ && %f [Ohm]\\\\\n", (1)/(j*omega_0*Clcut)+Rlcut);
+
 
 %Output Inpeadence for omega = omega_0
 
