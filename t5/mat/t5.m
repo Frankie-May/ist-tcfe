@@ -1,12 +1,3 @@
-%Variables
-
-%Ci = 0.3u;
-%Ri = 1000;
-%R4 = 1k;
-%R3 = 10k;
-%Ro = 100;
-%Co = 8E-7;
-
 %Gain Stage
 
 Vcc=5.0;
@@ -74,15 +65,9 @@ fclose (fileoutp);
 
 while (i <= 100)
 	Af(i) = 20*log10 (abs(transf (w(i)*j)));
-	PHf(i) = arg (transf (w(i)*j))*(180)/(pi);
-	%printf("w(%d) = %f\n", i, w(i));
-	%printf("Af(%d) = %f\n", i, Af(i));
-	%printf("\n");
+	PHf(i) = arg (transf (w(i)*j));
 	i++;
 endwhile;
-
-%printf("%g\n", Af);
-
 
 gain = figure();
 semilogx(w , Af , "y");
@@ -109,7 +94,6 @@ Gain_0 = abs(transf (omega_0*j));
 i=1;
 
 while (i < length(t))
-	%printf("i= %f\n", i);
 	vin(i) = 10e-3*sin(2*pi*1e3*t(i)*10^-3);
 	vout(i) = Gain_0*vin(i);
 	i++;

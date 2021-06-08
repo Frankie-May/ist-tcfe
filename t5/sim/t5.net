@@ -47,8 +47,8 @@ CIRCUIT
 .ends
 
 
-.param Ci_val = 1E-6;
-.param Ri_val = 100E3;
+.param Ci_val = 10E-6;
+.param Ri_val = 1E3;
 .param R4_val = 1k;
 .param R3_val = 100k;
 .param Ro_val = 1E3;
@@ -72,7 +72,7 @@ X1 ninv_in inv_in vcc vee out uA741
 
 *Input filter
 
-Ci ninv_in in Ci_val
+Ci in ninv_in Ci_val
 Ri ninv_in 0 Ri_val
 
 *Coupling resistances
@@ -100,48 +100,44 @@ set color4=violet
 set color5=rgb:3/8/0
 set color6=rgb:4/0/0
 
-*time analysis
-tran 1e-5 1e-2
-plot v(outr) v(in)
-echo "voin_FIG"
-hardcopy voin.ps v(outr) v(in)
-echo "voinout_FIG"
-
 *frequency analysis
 ac dec 10 .01 100MEG
 plot vdb(outr)
 plot vp(outr)
+
 echo "vo1_FIG"
 hardcopy vo1.ps vdb(outr)
 echo "vo1out_FIG"
+
 echo "voph_FIG"
 hardcopy voph.ps vp(outr)
 echo "vophout_FIG"
 
 *Frequency Analysis Measurements
-let bond = vecmax(vdb(out))-3;
+let gain = 'vdb(outr)-vdb(in)';
+let bond = 'vecmax(gain)-3';
 
-meas ac lowf WHEN vdb(outr)=bond CROSS=1;
-meas ac highf WHEN vdb(outr)=bond CROSS=LAST;
-meas ac vout_t FIND v(outr) AT=1000;
+meas ac lowf WHEN gain=bond CROSS=1;
+meas ac highf WHEN gain=bond CROSS=LAST;
+meas ac vout_t FIND gain AT=1000;
 
 let Bandwidth = 'highf-lowf';
 let LowerCutOffF = lowf;
 let HigherCutOffF = highf;
 let MeanFreq = 'sqrt(lowf*highf)';
 let FreqDeviation = 'abs(MeanFreq - 1000)'
-let OutputVoltage = vout_t;
-let Gain = 'OutputVoltage/(10m)';
-let GaindB = '20*log10(Gain)';
-let GainDeviation = abs(GaindB-40);
+let BandpassGain = '10^(vecmax(gain)/20)';
+let BandpassGaindB = 'vecmax(gain)';
+let GainDeviation = abs(BandpassGaindB-40);
 
 echo "SIM_RESULTS_TAB"
 print LowerCutOffF;
 print HigherCutOffF;
 print Bandwidth;
 print MeanFreq;
-print Gain;
-print GaindB;
+print BandpassGain;
+print BandpassGaindB;
+print GainDeviation;
 echo "SIM_RESULTS_END"
 
 let OPAMPcost = '(8.661E-12 + 30.00E-12)*1000000 + 5*0.1 + 2*0.1 + (100E3 + 5.305E3 + 5.305E3 + 1.836E3 + 1.863E3 + 13.19E6 + 50 + 100 + 18.16E3)/(1000)' 
@@ -155,16 +151,16 @@ let Cost = 'OPAMPcost + resist + capacit'
 let Merit = '1/(Cost * (GainDeviation + FreqDeviation + 10E-6))'
 
 echo "MERIT_TAB"
-print OPAMPcost;
 print Cost;
-print Merit;
 print FreqDeviation;
 print GainDeviation;
+print Merit;
 echo "MERIT_END"
 
 *Input Impedance
 let Zi = 'v(in)[40]/(-vin#branch[40])/1000';
 let ModuleZi = 'abs(Zi)'
+
 echo "Zi_TAB"
 print Zi;
 print ModuleZi;
