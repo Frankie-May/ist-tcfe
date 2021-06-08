@@ -47,20 +47,24 @@ omega_H = (1)/(Rhcut*Chcut);
 
 omega_0 = sqrt(omega_L*omega_H);
 
+Zi = (((1)/(j*omega_0*Clcut)+Rlcut)/1000);
+Zo = (((1)/(j*omega_0*Chcut+(1)/(Rhcut)))/1000);
 
 
 %Imput Impedance and Output Impedance for omega = omega_0
 
 fileoutp = fopen("outputstg.tex" , "w");
 
-fprintf(fileoutp , "The Gain of the Gain Stage & %f \\\\ \\hline \n" , (1+(R2)/(R1)));
+fprintf(fileoutp , "OPAMP Gain & %f \\\\ \\hline \n" , (1+(R2)/(R1)));
 fprintf(fileoutp , "$\\omega_L$ [rad/s] & %f \\\\ \\hline \n" , omega_L);
 fprintf(fileoutp , "$\\omega_H$ [rad/s] & %f \\\\ \\hline \n" , omega_H);
 fprintf(fileoutp , "$\\omega_0$ [rad/s] & %f \\\\ \\hline \n" , omega_0);
 fprintf(fileoutp , "Gain ($\\omega_0$) [dB] & %f \\\\ \\hline \n" , 20*log10 (abs(transf (omega_0*j))));
 fprintf(fileoutp , "Gain ($2000\\pi$) [dB] & %f \\\\ \\hline \n" , 20*log10 (abs(transf (2000*pi()*j))));
-fprintf(fileoutp , "Imput Impedance $Z_in$ [kOhm] & %f \\\\ \\hline \n" , (((1)/(j*omega_0*Clcut)+Rlcut)/1000));
-fprintf(fileoutp , "Output Impedance $Z_out$ [kOhm] & %f \\\\ \\hline \n" , (((1)/(j*omega_0*Chcut+(1)/(Rhcut)))/1000));
+fprintf(fileoutp , "Input Impedance $Z_in$ [kOhm] & %f%+fj \\\\ \\hline \n" , real(Zi) , imag(Zi));
+fprintf(fileoutp , "Input Impedance $Z_in$ absolute value [kOhm] & %f \\\\ \\hline \n" , abs(Zi));
+fprintf(fileoutp , "Output Impedance $Z_in$ [kOhm] & %f%+fj \\\\ \\hline \n" , real(Zo) , imag(Zo));
+fprintf(fileoutp , "Output Impedance $Z_out$ absolute value [kOhm] & %f \\\\ \\hline \n" , abs(Zo));
 
 fclose (fileoutp);
 
