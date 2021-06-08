@@ -1,0 +1,33 @@
+This file contains legacy values for the circuit filter's resistance and capacitance
+and can be used in order to validate the models used in our laboratory assignement. This values could
+not be used in the laboratory due to the restrictions imposed by the number of resistors and capacitors
+we could use and by the resistance and capacitance each of these components had.
+
+In order to use these values we must change them manually in the three following files:
+
+	mat/t5.m
+	sim/t5.net
+	sim/outputimpedance.net
+
+The variables names differ from the .m and the .net files, therefore the first variable name is the variable
+name in the .net files and the second name is the variable name in the .m file.
+
+---------------------
+| .net |  .m | value|
+|Ri_val|Rlcut| 2.4e3|
+|Ci_val|Clcut|1e-6  |
+|Ro_val|Rhcut|0.01e3|
+|Co_val|Chcut| 1e-6 |
+---------------------
+
+.net files: Change values in the top parameters
+Example: .param Ci_val = %value%;
+
+.m files: Change values in the top variable declaration and inside the transfer function
+(use find [CTRL+F] to make it easier)
+
+Example: Clcut = %value%;
+
+
+With these values we maximized merit as much we could and had really small gain and frequency deviations.
+The merit wass low due to the high cost imposed by the OPAMP.
