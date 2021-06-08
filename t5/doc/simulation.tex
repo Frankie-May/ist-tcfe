@@ -2,13 +2,13 @@
 \label{sec:simulation}
 To simulate the Bandpass filter circuit it was used three parts, the low-frequency cut, the gain stage, and the high-frequency cut.
 To amplify the voltage measured at the input it is necessary to use a gain stage circuit that adds gain throw the use of an OP-AMP (Operational Amplifier) and applying reverse feedback to ensure that the voltages at the positive and negative inputs of the OP-AMP have the same voltage. This reverse feedback is done by connecting a resistor from the output to the negative input of the OP-AMP, and the negative input is also connected to the ground through a resistor.
-To isolate a frequency of 1 kHz it was used a high pass filter and a low pass filter with cut high and low frequencies.
+To isolate a frequency of 1 kHz it was used a high pass filter and a low pass filter which cuts high and low frequencies.
 
 We also computed for the same frequency the input and the output impedance, and the output voltage. The input impedance was calculated by the quotient of the input voltage and the input current, and the output impedance was calculated by the quotient of the output voltage and the output current.
 
 In order to obtain the circuit's output impedance, we had to create a new script that allowed us to compute this value. For this we removed the input from the circuit and created a new voltage source in the output terminal, computing the impedance with the values of our auxiliary voltage source and the current flowing through it.
 
-We also plotted the input and the output voltages and the gain and the phase of the OP-AMP.
+We also plotted the input and the output voltages, the gain and the phase of the OP-AMP.
 The data obtained through Ngspice is as follows:
 
 \begin{figure}[h] 
@@ -40,7 +40,7 @@ The data obtained through Ngspice is as follows:
 {\bf Name} & {\bf Value} \\ \hline
     \input{SIM_RESULTS_tab}
 \end{tabular}
-\caption{\textbf{Circuit's Cut-Off Frequencies, Bandwidth (in Hz) and Output Amplitude (either in V and dB)}}
+\caption{Circuit's Cut-Off Frequencies, Bandwidth (in Hz) and Output Amplitude (either in V and dB)}
 \end{table}
 
 \begin{table}[H]
@@ -51,10 +51,10 @@ The data obtained through Ngspice is as follows:
     \input{Zi_tab}
     \input{ZO_tab}
 \end{tabular}
-\caption{\textbf{Input and Output Impedance (in Ohm) }}
+\caption{Input and Output Impedance (in Ohm)}
 \end{table}
 
-The following table shows the Merit achived in the simulated Band Pass filter circuit.
+The following table shows the Merit achived in the simulated Amplifier Band Pass filter circuit.
 
 \begin{table}[H]
 \centering
@@ -63,7 +63,7 @@ The following table shows the Merit achived in the simulated Band Pass filter ci
 {\bf Name} & {\bf Value} \\ \hline
     \input{MERIT_tab}
 \end{tabular}
-\caption{\textbf{Merit}}
+\caption{Merit}
 \end{table}
 
 The results regarding the circuit tested in the laboratory are plotted in the following figures for frequencies of 10 Hz, 100 Hz, and 1000 Hz.
