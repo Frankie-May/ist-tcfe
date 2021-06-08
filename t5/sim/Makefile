@@ -1,11 +1,11 @@
-all: t4simb.log outimpb.log
+all: expb.log outimpb.log
 	@cp *.eps *.tex ../doc
 	@rm -f *.log *.ps *.eps *.tex
 	
-t4sima.log:t4.net
+exp.log:exp.net
 	@ngspice -b $< -o $@
 
-t4simb.log:t4sima.log
+expb.log:exp.log
 	@$(eval NGSTABS=$(shell grep _TAB $< | sed 's/_TAB//g' | sed ':a;N;$!ba;s/\n/ /g'))
 	@$(foreach i, $(NGSTABS), sed -n '/^$i_TAB/,/^$i_END/{p;/^$i_END/q}' $< | grep -v $i_TAB | grep -v $i_END | grep -v '#' | sed 's/\=/\&/g' | sed 's/\,/\ + j*/g' | sed 's/$$/\\\\ \\hline/g' > $i_tab.tex;)
 	$(eval NGSFIGS=$(shell grep _FIG $< | sed 's/_FIG//g' | sed ':a;N;$!ba;s/\n/ /g'))
@@ -18,3 +18,8 @@ outimpa.log:outputimpedance.net
 outimpb.log:outimpa.log
 	@$(eval NGSTABS=$(shell grep _TAB $< | sed 's/_TAB//g' | sed ':a;N;$!ba;s/\n/ /g'))
 	@$(foreach i, $(NGSTABS), sed -n '/^$i_TAB/,/^$i_END/{p;/^$i_END/q}' $< | grep -v $i_TAB | grep -v $i_END | grep -v '#' | sed 's/\=/\&/g' | sed 's/\,/\ + j*/g' | sed 's/$$/\\\\ \\hline/g' > $i_tab.tex;)
+
+clean: 
+	@rm -f *.tex *.log *.eps *.ps
+
+.PHONY: all clean

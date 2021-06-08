@@ -65,6 +65,17 @@ printf("Zi = %f [Ohm]\n", (1)/(j*omega_0*Clcut)+Rlcut);
 
 printf("Zout = %f [Ohm]\n", (1)/(j*omega_0*Chcut+(1)/(Rhcut)));
 
+fileoutp = fopen("outputstg.tex" , "w");
+
+fprintf(fileoutp , "The Gain of the Gain Stage & %f \\\\ \\hline \n" , (1+(R2)/(R1)));
+fprintf(fileoutp , "$\omega_L$ [rad/s] & %f \\\\ \\hline \n" , omega_L);
+fprintf(fileoutp , "$\omega_H$ [rad/s] & %f \\\\ \\hline \n" , omega_H);
+fprintf(fileoutp , "$\omega_0$ [rad/s] & %f \\\\ \\hline \n" , omega_0);
+fprintf(fileoutp , "Gain ($\omega_0$) [dB] & %f \\\\ \\hline \n" , 20*log10 (abs(transf (omega_0*j))));
+fprintf(fileoutp , "Imput Inpeadence Zi [Ohm] & %f \\\\ \\hline \n" , (1)/(j*omega_0*Clcut)+Rlcut);
+fprintf(fileoutp , "Output Inpeadence Zout [Ohm] & %f \\\\ \\hline \n" , (1)/(j*omega_0*Chcut+(1)/(Rhcut)));
+
+fclose (fileoutp);
 
 while (i <= 100)
 	Af(i) = 20*log10 (abs(transf (w(i)*j)));

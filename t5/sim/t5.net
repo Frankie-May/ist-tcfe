@@ -89,15 +89,19 @@ print all
 * time analysis
 tran 1e-5 1e-2
 plot v(out) v(in)
+echo "voin_FIG"
 hardcopy voin.ps v(out) v(in)
-
+echo "voinout_FIG"
 
 * frequency analysis
 ac dec 10 10 100MEG
 plot vdb(out)
 plot vp(out)
 hardcopy vo1.ps vdb(out)
+echo "vo1out_FIG"
+echo "voph_FIG"
 hardcopy voph.ps vp(out)
+echo "vophout_FIG"
 
 print v(in)[5]
 print -vin#branch[40]

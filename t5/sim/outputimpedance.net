@@ -88,15 +88,28 @@ Co outr 0 Co_val
 *Auxiliar Voltage Source
 Vaux outr 0 0 ac 1.0 sin(0 10m 1k)
 
+.op
+.end
+
 .control
+
+*makes plots in color
+set hcopypscolor=0
+set color0=white
+set color1=black
+set color2=red
+set color3=blue
+set color4=violet
+set color5=rgb:3/8/0
+set color6=rgb:4/0/0
 
 ac dec 10 .01 100MEG
 let Zo = v(outr)[40]/vaux#branch[40]/1000;
-let Module_Zo = 'abs(Zo)';
+let ModuleZo = 'abs(Zo)';
 
 echo "ZO_TAB"
 print Zo;
-print Module_Zo;
+print ModuleZo;
 echo "ZO_END"
 
 .endc

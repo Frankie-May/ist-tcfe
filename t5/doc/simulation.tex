@@ -13,24 +13,32 @@ The data obtained through Ngspice is as follows:
 
 \begin{figure}[h] 
 \centering
-\includegraphics[width=0.6\linewidth]{vdbcoll.eps}
-\caption{Gain Stage Gain in dB.}
-\label{Fig3: GainStgGaindB}
+\includegraphics[width=0.6\linewidth]{voin.eps}
+\caption{Simulated Input and Output voltages.}
+\label{Fig3: InOutvoltage}
 \end{figure}
 
 \begin{figure}[h] 
 \centering
-\includegraphics[width=0.6\linewidth]{vdbout.eps}
-\caption{Circuit Total Gain in dB.}
-\label{Fig4: SimGaindB}
+\includegraphics[width=0.6\linewidth]{vo1.eps}
+\caption{Simulated Circuit Gain in dB.}
+\label{Fig4: GaindB}
 \end{figure}
+
+\begin{figure}[h] 
+\centering
+\includegraphics[width=0.6\linewidth]{voph.eps}
+\caption{Simulated Phase of the Band Pass filter.}
+\label{Fig5: Phase}
+\end{figure}
+
 
 \begin{table}[H]
 \centering
 \begin{tabular}{|l|l|}
 \hline
 {\bf Name} & {\bf Value} \\ \hline
-    \input{SIM_RESULTS_TAB}
+    \input{SIM_RESULTS_tab}
 \end{tabular}
 \caption{\textbf{Circuit's Cut-Off Frequencies, Bandwidth (in Hz) and Output Amplitude (either in V and dB)}}
 \end{table}
@@ -40,20 +48,43 @@ The data obtained through Ngspice is as follows:
 \begin{tabular}{|l|l|}
 \hline
 {\bf Name} & {\bf Value} \\ \hline
-    \input{ZI_TAB}
-    \input{ZO_TAB}
+    \input{Zi_tab}
+    \input{ZO_tab}
 \end{tabular}
 \caption{\textbf{Input and Output Impedance (in Ohm) }}
 \end{table}
 
-The following table proves that the circuit is working in forward active region.
+The following table shows the Merit achived in the simulated Band Pass filter circuit.
 
 \begin{table}[H]
 \centering
 \begin{tabular}{|l|l|}
 \hline
 {\bf Name} & {\bf Value} \\ \hline
-    \input{FAR_TAB}
+    \input{MERIT_tab}
 \end{tabular}
-\caption{\textbf{Forward Active Region Verification}}
+\caption{\textbf{Merit}}
 \end{table}
+
+The results regarding the circuit tested in the laboratory are plotted in the following figures for frequencies of 10 Hz, 100 Hz, and 1000 Hz.
+
+\begin{figure}[h] 
+\centering
+\includegraphics[width=0.6\linewidth]{10Hz.jpeg}
+\caption{The voltage of the laboratory test for a frequency of 10Hz.}
+\label{Fig9: 10Hz}
+\end{figure}
+
+\begin{figure}[h] 
+\centering
+\includegraphics[width=0.6\linewidth]{100Hz.jpeg}
+\caption{The voltage of the laboratory test for a frequency of 100Hz.}
+\label{Fig10: 100Hz}
+\end{figure}
+
+\begin{figure}[h] 
+\centering
+\includegraphics[width=0.6\linewidth]{1000Hz.jpeg}
+\caption{The voltage of the laboratory test for a frequency of 1000Hz.}
+\label{Fig11: 1000Hz}
+\end{figure}

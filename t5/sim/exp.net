@@ -90,17 +90,33 @@ Co outr 0 Co_val
 
 .control
 
+*makes plots in color
+set hcopypscolor=0
+set color0=white
+set color1=black
+set color2=red
+set color3=blue
+set color4=violet
+set color5=rgb:3/8/0
+set color6=rgb:4/0/0
+
 *time analysis
 tran 1e-5 1e-2
 plot v(outr) v(in)
+echo "voin_FIG"
 hardcopy voin.ps v(outr) v(in)
+echo "voinout_FIG"
 
 *frequency analysis
 ac dec 10 .01 100MEG
 plot vdb(outr)
 plot vp(outr)
+echo "vo1_FIG"
 hardcopy vo1.ps vdb(outr)
+echo "vo1out_FIG"
+echo "voph_FIG"
 hardcopy voph.ps vp(outr)
+echo "vophout_FIG"
 
 *Frequency Analysis Measurements
 let bond = vecmax(vdb(out))-3;
@@ -128,18 +144,18 @@ print Gain;
 print GaindB;
 echo "SIM_RESULTS_END"
 
-let OPAMP_cost = '(8.661E-12 + 30.00E-12)*1000000 + 5*0.1 + 2*0.1 + (100E3 + 5.305E3 + 5.305E3 + 1.836E3 + 1.863E3 + 13.19E6 + 50 + 100 + 18.16E3)/(1000)' 
+let OPAMPcost = '(8.661E-12 + 30.00E-12)*1000000 + 5*0.1 + 2*0.1 + (100E3 + 5.305E3 + 5.305E3 + 1.836E3 + 1.863E3 + 13.19E6 + 50 + 100 + 18.16E3)/(1000)' 
 
-*OPAMP_cost = capacitors + diodes + transistors + resistors
+*OPAMPcost = capacitors + diodes + transistors + resistors
 
 let resist = '(Ri_val + R4_val + R3_val + Ro_val)/1000';
 let capacit = '(Ci_val + Co_val)*1000000'
-let Cost = 'OPAMP_cost + resist + capacit'
+let Cost = 'OPAMPcost + resist + capacit'
 
 let Merit = '1/(Cost * (GainDeviation + FreqDeviation + 10E-6))'
 
 echo "MERIT_TAB"
-print OPAMP_cost;
+print OPAMPcost;
 print Cost;
 print Merit;
 print FreqDeviation;
@@ -148,10 +164,10 @@ echo "MERIT_END"
 
 *Input Impedance
 let Zi = 'v(in)[40]/(-vin#branch[40])/1000';
-let Module_Zi = 'abs(Zi)'
+let ModuleZi = 'abs(Zi)'
 echo "Zi_TAB"
 print Zi;
-print Module_Zi;
+print ModuleZi;
 echo "Zi_END"
 
 .endc

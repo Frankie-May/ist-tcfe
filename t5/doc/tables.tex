@@ -6,16 +6,55 @@
 \caption{Plots from theoretical and simulation analysis}
 \begin{subfigure}{\textwidth}
 \centering
-\includegraphics[width=.8\linewidth]{gain.eps}
-\caption{Theoretical analysis obtained with ngspice. The graph shows the evolution of the amplifier's gain with the frequency.}
+\includegraphics[width=0.6\linewidth]{inoutput.eps}
+\caption{Theoretical Input and Output voltages.}
 \end{subfigure}
 \begin{subfigure}{\textwidth}
 \centering
-\includegraphics[width=.7\linewidth]{vdbout.eps}
-\caption{Simulated analysis obtained with octave. The graph shows the evolution of the amplifier's gain with the frequency. The curve in red is the gain and the line in blue is the auxiliar line used to calculate the low and high cutoff frequencies.}
+\includegraphics[width=0.6\linewidth]{voin.eps}
+\caption{Simulated Input and Output voltages.}
 \end{subfigure}
 \end{figure}
 
+\begin{figure}[H]
+\centering
+\caption{Plots from theoretical and simulation analysis}
+\begin{subfigure}{\textwidth}
+\centering
+\includegraphics[width=0.6\linewidth]{gain.eps}
+\caption{Theoretical Gain in dB.}
+\end{subfigure}
+\begin{subfigure}{\textwidth}
+\centering
+\includegraphics[width=0.6\linewidth]{vo1.eps}
+\caption{Simulated Circuit Gain in dB.}
+\end{subfigure}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\caption{Plots from theoretical and simulation analysis}
+\begin{subfigure}{\textwidth}
+\centering
+\includegraphics[width=0.6\linewidth]{phase.eps}
+\caption{Theoretical Phase of the Band Pass filter.}
+\end{subfigure}
+\begin{subfigure}{\textwidth}
+\centering
+\includegraphics[width=0.6\linewidth]{voph.eps}
+\caption{Simulated Phase of the Band Pass filter.}
+\end{subfigure}
+\end{figure}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|}
+\hline
+{\bf Name} & {\bf Value} \\ \hline
+    \input{outputstg}
+\end{tabular}
+\caption{\textbf{Theoretical Low and High cut-off frequencies, central frequency, Input Impedance and Output Impedance.}}
+\end{table}
 
 \begin{table}[H]
 \centering
@@ -27,16 +66,6 @@
     \input{ZO_TAB}
 \end{tabular}
 \caption{\textbf{Simulation results, input and Output Impedance (in Ohm) }}
-\end{table}
-
-\begin{table}[H]
-\centering
-\begin{tabular}{|l|l|}
-\hline
-{\bf Name} & {\bf Value} \\ \hline
-    \input{total}
-\end{tabular}
-\caption{\textbf{Circuit Theoretical Gain, Output Impedance and Input Impedance.}}
 \end{table}
 
 Due to reasons explained before, we did not compute the cutoff frequencies in the theoretical analysis so we are not able to compute the theoretical bandwith.

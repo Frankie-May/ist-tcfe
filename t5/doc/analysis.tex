@@ -32,23 +32,6 @@ Through octave, we were able to predict some simulation results. Because with oc
 
 The results are as follow:
 
-\begin{figure}[h] 
-\centering
-\includegraphics[width=0.6\linewidth]{gain.eps}
-\caption{Theoretical Gain in dB.}
-\label{Fig2: TheoGaindB}
-\end{figure}
-
-\begin{table}[H]
-\centering
-\begin{tabular}{|l|l|}
-\hline
-{\bf Name} & {\bf Value} \\ \hline
-    \input{gainstg}
-\end{tabular}
-\caption{\textbf{Gain Stage Theoretical Gain, Output Impedance and Input Impedance.}}
-\end{table}
-
 \begin{table}[H]
 \centering
 \begin{tabular}{|l|l|}
@@ -56,15 +39,27 @@ The results are as follow:
 {\bf Name} & {\bf Value} \\ \hline
     \input{outputstg}
 \end{tabular}
-\caption{\textbf{Output Stage Theoretical Gain, Output Impedance and Input Impedance.}}
+\caption{\textbf{Low and High cut-off frequencies, central frequency, Input Impedance and Output Impedance.}}
 \end{table}
 
-\begin{table}[H]
+\begin{figure}[h] 
 \centering
-\begin{tabular}{|l|l|}
-\hline
-{\bf Name} & {\bf Value} \\ \hline
-    \input{total}
-\end{tabular}
-\caption{\textbf{Circuit Theoretical Gain, Output Impedance and Input Impedance.}}
-\end{table}
+\includegraphics[width=0.6\linewidth]{inoutput.eps}
+\caption{Theoretical Input and Output voltages.}
+\label{Fig6: TheoVoltage}
+\end{figure}
+
+\begin{figure}[h] 
+\centering
+\includegraphics[width=0.6\linewidth]{gain.eps}
+\caption{Theoretical Gain in dB.}
+\label{Fig7: TheoGaindB}
+\end{figure}
+
+\begin{figure}[h] 
+\centering
+\includegraphics[width=0.6\linewidth]{phase.eps}
+\caption{Theoretical Phase of the Band Pass filter.}
+\label{Fig8: TheoPhasedB}
+\end{figure}
+
