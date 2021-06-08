@@ -124,8 +124,7 @@ echo "vophout_FIG"
 *Frequency Analysis Measurements
 let gain = 'vdb(outr)-vdb(in)';
 
-meas ac maxgain FIND gain AT=1000;
-
+let maxgain = vecmax(gain);
 let bound = 'maxgain-3';
 
 meas ac lowf WHEN gain=bond CROSS=1;
