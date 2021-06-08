@@ -166,7 +166,6 @@ let Merit = '1/(Cost * (GainDeviation + FreqDeviation + 10^-6))'
 
 echo "MERIT_TAB"
 print Cost;
-print OPAMPcost;
 print FreqDeviation;
 print GainDeviation;
 print Merit;
