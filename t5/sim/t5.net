@@ -131,24 +131,27 @@ let bound = 'max_gain-3';
 meas ac lowf WHEN gain=bond CROSS=1;
 meas ac highf WHEN gain=bond CROSS=LAST;
 
-
-let Bandwidth = '(highf-lowf)*2*pi';
 let LowerCutOffF = lowf*2*pi;
 let HigherCutOffF = highf*2*pi;
 let MeanFreq = 'sqrt(LowerCutOffF*HigherCutOffF)';
-let FreqDeviation = 'abs(MeanFreq - 1000*2*pi)'
-let BandpassGain = '10^(vecmax(gain)/20)';
-let BandpassGaindB = 'vecmax(gain)';
+let FreqDeviation = 'abs(MeanFreq - 1000*2*pi)';
+
+meas ac gainmean FIND gain AT='MeanFreq/(2*pi)';
+
+let BandpassGainMean = '10^(gainmean/20)';
+let BandpassGainMeandB = gainmean;
+let BandpassGain = '10^(max_gain)/20)';
+let BandpassGaindB = 'max_gain';
 let GainDeviation = abs(BandpassGaindB-40);
 
 echo "SIM_RESULTS_TAB"
 print LowerCutOffF;
 print HigherCutOffF;
-print Bandwidth;
 print MeanFreq;
+print BandpassGainMean;
+print BandpassGainMeandB;
 print BandpassGain;
 print BandpassGaindB;
-print GainDeviation;
 echo "SIM_RESULTS_END"
 
 let OPAMPcost = '(8.661E-12 + 30.00E-12)*1000000 + 5*0.1 + 2*0.1 + (100E3 + 5.305E3 + 5.305E3 + 1.836E3 + 1.863E3 + 13.19E6 + 50 + 100 + 18.16E3)/(1000)' 
@@ -163,7 +166,6 @@ let Merit = '1/(Cost * (GainDeviation + FreqDeviation + 10^-6))'
 
 echo "MERIT_TAB"
 print Cost;
-print OPAMPcost;
 print FreqDeviation;
 print GainDeviation;
 print Merit;
