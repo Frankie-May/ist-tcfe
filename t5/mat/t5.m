@@ -59,8 +59,8 @@ fprintf(fileoutp , "$\\omega_H$ [rad/s] && %f \\\\ \\hline \n" , omega_H);
 fprintf(fileoutp , "$\\omega_0$ [rad/s] && %f \\\\ \\hline \n" , omega_0);
 fprintf(fileoutp , "Gain ($\\omega_0$) [dB] && %f \\\\ \\hline \n" , 20*log10 (abs(transf (omega_0*j))));
 fprintf(fileoutp , "Gain ($2000\\pi$) [dB] && %f \\\\ \\hline \n" , 20*log10 (abs(transf (2000*pi()*j))));
-fprintf(fileoutp , "Imput Impedance $Z_in$ [Ohm] && %f \\\\ \\hline \n" , (1)/(j*omega_0*Clcut)+Rlcut);
-fprintf(fileoutp , "Output Impedance $Z_out$ [Ohm] && %f \\\\ \\hline \n" , (1)/(j*omega_0*Chcut+(1)/(Rhcut)));
+fprintf(fileoutp , "Imput Impedance $Z_in$ [kOhm] && %f \\\\ \\hline \n" , (((1)/(j*omega_0*Clcut)+Rlcut)/1000));
+fprintf(fileoutp , "Output Impedance $Z_out$ [kOhm] && %f \\\\ \\hline \n" , (((1)/(j*omega_0*Chcut+(1)/(Rhcut)))/1000));
 fclose (fileoutp);
 
 while (i <= 100)
