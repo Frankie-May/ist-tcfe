@@ -35,7 +35,7 @@ f = [];
 Af = zeros(100);
 PHf = zeros(100);
 i = 1;
-w=logspace(0, 8, 100);
+f=logspace(0, 8, 100);
 j=sqrt(-1);
 
 
@@ -64,26 +64,26 @@ fprintf(fileoutp , "Output Impedance $Z_{out}$ [Ohm] & %f \\\\ \\hline \n" , (1)
 fclose (fileoutp);
 
 while (i <= 100)
-	Af(i) = 20*log10 (abs(transf (w(i)*j)));
-	PHf(i) = arg (transf (w(i)*j));
+	Af(i) = 20*log10 (abs(transf (2*pi*f(i)*j)));
+	PHf(i) = arg (transf (2*pi*f(i)*j));
 	i++;
 endwhile;
 
 gain = figure();
-semilogx(w , Af , "y");
+semilogx(f , Af , "y");
 title("Gain in decibels");
 legend("Gain");
 grid on;
-xlabel ("log_{10} (w) [rad/s]");
+xlabel ("log_{10} (f) [Hz]");
 ylabel ("Gain [dB]");
 print (gain, "gain.eps", "-depsc");
 
 phase = figure();
-semilogx(w , PHf , "c");
+semilogx(f , PHf , "c");
 title("Phase in radians");
 legend("Phase");
 grid on;
-xlabel ("log_{10} (w) [rad/s]");
+xlabel ("log_{10} (f) [Hz]");
 ylabel ("Phase [radians]");
 print (phase, "phase.eps", "-depsc");
 

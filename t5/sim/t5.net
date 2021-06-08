@@ -101,6 +101,13 @@ set color4=violet
 set color5=rgb:3/8/0
 set color6=rgb:4/0/0
 
+* time analysis
+tran 1e-5 1e-2
+plot v(outr) v(in)
+echo "voin_FIG"
+hardcopy voin.ps v(outr) v(in)
+echo "voinout_FIG"
+
 *frequency analysis
 ac dec 10 .01 100MEG
 plot vdb(outr)
