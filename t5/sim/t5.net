@@ -47,11 +47,12 @@ CIRCUIT
 .ends
 
 
-.param Ci_val = 10E-6;
-.param Ri_val = 1E3;
+
+.param Ci_val = 1E-6;
+.param Ri_val = 100k;
 .param R4_val = 1k;
 .param R3_val = 100k;
-.param Ro_val = 1E3;
+.param Ro_val = 1k;
 .param Co_val = 1E-6;
 
 .csparam Ci_val = {Ci_val};

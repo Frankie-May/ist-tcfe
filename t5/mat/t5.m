@@ -61,6 +61,7 @@ fprintf(fileoutp , "Gain ($\\omega_0$) [dB] && %f \\\\ \\hline \n" , 20*log10 (a
 fprintf(fileoutp , "Gain ($2000\\pi$) [dB] && %f \\\\ \\hline \n" , 20*log10 (abs(transf (2000*pi()*j))));
 fprintf(fileoutp , "Imput Impedance $Z_in$ [kOhm] && %f \\\\ \\hline \n" , (((1)/(j*omega_0*Clcut)+Rlcut)/1000));
 fprintf(fileoutp , "Output Impedance $Z_out$ [kOhm] && %f \\\\ \\hline \n" , (((1)/(j*omega_0*Chcut+(1)/(Rhcut)))/1000));
+
 fclose (fileoutp);
 
 while (i <= 100)
@@ -80,11 +81,11 @@ print (gain, "gain.eps", "-depsc");
 
 phase = figure();
 semilogx(w , PHf , "c");
-title("Phase in degrees");
+title("Phase in radians");
 legend("Phase");
 grid on;
 xlabel ("log_{10} (w) [rad/s]");
-ylabel ("Phase [degrees]");
+ylabel ("Phase [radians]");
 print (phase, "phase.eps", "-depsc");
 
 t=0:0.05:10;
