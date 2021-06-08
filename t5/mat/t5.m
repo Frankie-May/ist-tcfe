@@ -49,36 +49,27 @@ j=sqrt(-1);
 
 
 %The Gain of the Gain Stage
-fprintf( "Gain from Gain Stage && %f\\\\\n", (1+(R2)/(R1)));
+
 omega_L = (1)/(Rlcut*Clcut);
-fprintf( "$\\omega_L$ && %f [rad/s]\\\\\n", omega_L);
+
 omega_H = (1)/(Rhcut*Chcut);
-fprintf( "$\\omega_H$ && %f [rad/s]\\\\\n", omega_H);
+
 omega_0 = sqrt(omega_L*omega_H);
-fprintf( "$\\omega_0$ && %f [rad/s]\\\\\n", omega_0);
-fprintf( "Gain ($\\omega_0$) && %f [dB]\\\\\n", 20*log10 (abs(transf (omega_0*j))));
 
 
 
-%Imput Inpeadence for omega = omega_0
-
-printf( "$Z_in$ && %f [Ohm]\\\\\n", (1)/(j*omega_0*Clcut)+Rlcut);
-
-
-%Output Inpeadence for omega = omega_0
-
-printf("Zout = %f [Ohm]\n", (1)/(j*omega_0*Chcut+(1)/(Rhcut)));
+%Imput Impedance and Output Impedance for omega = omega_0
 
 fileoutp = fopen("outputstg.tex" , "w");
 
-fprintf(fileoutp , "The Gain of the Gain Stage & %f \\\\ \\hline \n" , (1+(R2)/(R1)));
-fprintf(fileoutp , "$\omega_L$ [rad/s] & %f \\\\ \\hline \n" , omega_L);
-fprintf(fileoutp , "$\omega_H$ [rad/s] & %f \\\\ \\hline \n" , omega_H);
-fprintf(fileoutp , "$\omega_0$ [rad/s] & %f \\\\ \\hline \n" , omega_0);
-fprintf(fileoutp , "Gain ($\omega_0$) [dB] & %f \\\\ \\hline \n" , 20*log10 (abs(transf (omega_0*j))));
-fprintf(fileoutp , "Imput Inpeadence Zi [Ohm] & %f \\\\ \\hline \n" , (1)/(j*omega_0*Clcut)+Rlcut);
-fprintf(fileoutp , "Output Inpeadence Zout [Ohm] & %f \\\\ \\hline \n" , (1)/(j*omega_0*Chcut+(1)/(Rhcut)));
-
+fprintf(fileoutp , "The Gain of the Gain Stage && %f \\\\ \\hline \n" , (1+(R2)/(R1)));
+fprintf(fileoutp , "$\\omega_L$ [rad/s] && %f \\\\ \\hline \n" , omega_L);
+fprintf(fileoutp , "$\\omega_H$ [rad/s] && %f \\\\ \\hline \n" , omega_H);
+fprintf(fileoutp , "$\\omega_0$ [rad/s] && %f \\\\ \\hline \n" , omega_0);
+fprintf(fileoutp , "Gain ($\\omega_0$) [dB] && %f \\\\ \\hline \n" , 20*log10 (abs(transf (omega_0*j))));
+fprintf(fileoutp , "Gain ($2000\\pi$) [dB] && %f \\\\ \\hline \n" , 20*log10 (abs(transf (2000*pi()*j))));
+fprintf(fileoutp , "Imput Impedance $Z_in$ [Ohm] && %f \\\\ \\hline \n" , (1)/(j*omega_0*Clcut)+Rlcut);
+fprintf(fileoutp , "Output Impedance $Z_out$ [Ohm] && %f \\\\ \\hline \n" , (1)/(j*omega_0*Chcut+(1)/(Rhcut)));
 fclose (fileoutp);
 
 while (i <= 100)

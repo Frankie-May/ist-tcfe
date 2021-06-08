@@ -1,3 +1,4 @@
+CIRCUIT
 *-----------------------------------------------------------------------------
 *
 * To use a subcircuit, the name must begin with 'X'.  For example:
@@ -46,6 +47,19 @@
 .ends
 
 
+.param Ci_val = 1E-6;
+.param Ri_val = 100E3;
+.param R4_val = 1k;
+.param R3_val = 100k;
+.param Ro_val = 1E3;
+.param Co_val = 1E-6;
+
+.csparam Ci_val = {Ci_val};
+.csparam Ri_val = {Ri_val};
+.csparam R4_val = {R4_val};
+.csparam R3_val = {R3_val};
+.csparam Ro_val = {Ro_val};
+.csparam Co_val = {Co_val};
 
 .options savecurrents
 
@@ -53,21 +67,23 @@ Vcc vcc 0 5.0
 Vee vee 0 -5.0
 Vin in 0 0 ac 1.0 sin(0 10m 1k)
 
-X1 in_1 inv_in vcc vee out uA741
 
-R1 0 inv_in 1k
-R2 inv_in out 100k
+X1 ninv_in inv_in vcc vee out uA741
 
-*Low frequency cut
-Rlcut in_1 0 1k
-Clcut in in_1 1u
+*Input filter
 
-*High frequency cut
-Rhcut out out_1 1k
-Chcut out_1 0 1u
+Ci ninv_in in Ci_val
+Ri ninv_in 0 Ri_val
 
-* load
-RL out_1 0 8
+*Coupling resistances
+
+R4 inv_in 0 R4_val
+R3 out inv_in R3_val
+
+*Output filter
+
+Ro out outr Ro_val
+Co outr 0 Co_val
 
 .op
 .end
@@ -84,32 +100,77 @@ set color4=violet
 set color5=rgb:3/8/0
 set color6=rgb:4/0/0
 
-print all
-
-* time analysis
+*time analysis
 tran 1e-5 1e-2
-plot v(out) v(in)
+plot v(outr) v(in)
 echo "voin_FIG"
-hardcopy voin.ps v(out) v(in)
+hardcopy voin.ps v(outr) v(in)
 echo "voinout_FIG"
 
-* frequency analysis
-ac dec 10 10 100MEG
-plot vdb(out)
-plot vp(out)
-hardcopy vo1.ps vdb(out)
+*frequency analysis
+ac dec 10 .01 100MEG
+plot vdb(outr)
+plot vp(outr)
+echo "vo1_FIG"
+hardcopy vo1.ps vdb(outr)
 echo "vo1out_FIG"
 echo "voph_FIG"
-hardcopy voph.ps vp(out)
+hardcopy voph.ps vp(outr)
 echo "vophout_FIG"
 
-print v(in)[5]
-print -vin#branch[40]
+*Frequency Analysis Measurements
+let bond = vecmax(vdb(out))-3;
 
-*input impedance in kohm, current in vin is the same in R1, but has opposite direction
-print 'v(in)[40]/(-vin#branch[40])/1000';
+meas ac lowf WHEN vdb(outr)=bond CROSS=1;
+meas ac highf WHEN vdb(outr)=bond CROSS=LAST;
+meas ac vout_t FIND v(outr) AT=1000;
 
-*need a different setup to measure output impedance
+let Bandwidth = 'highf-lowf';
+let LowerCutOffF = lowf;
+let HigherCutOffF = highf;
+let MeanFreq = 'sqrt(lowf*highf)';
+let FreqDeviation = 'abs(MeanFreq - 1000)'
+let OutputVoltage = vout_t;
+let Gain = 'OutputVoltage/(10m)';
+let GaindB = '20*log10(Gain)';
+let GainDeviation = abs(GaindB-40);
 
-.endc 
+echo "SIM_RESULTS_TAB"
+print LowerCutOffF;
+print HigherCutOffF;
+print Bandwidth;
+print MeanFreq;
+print Gain;
+print GaindB;
+echo "SIM_RESULTS_END"
+
+let OPAMPcost = '(8.661E-12 + 30.00E-12)*1000000 + 5*0.1 + 2*0.1 + (100E3 + 5.305E3 + 5.305E3 + 1.836E3 + 1.863E3 + 13.19E6 + 50 + 100 + 18.16E3)/(1000)' 
+
+*OPAMPcost = capacitors + diodes + transistors + resistors
+
+let resist = '(Ri_val + R4_val + R3_val + Ro_val)/1000';
+let capacit = '(Ci_val + Co_val)*1000000'
+let Cost = 'OPAMPcost + resist + capacit'
+
+let Merit = '1/(Cost * (GainDeviation + FreqDeviation + 10E-6))'
+
+echo "MERIT_TAB"
+print OPAMPcost;
+print Cost;
+print Merit;
+print FreqDeviation;
+print GainDeviation;
+echo "MERIT_END"
+
+*Input Impedance
+let Zi = 'v(in)[40]/(-vin#branch[40])/1000';
+let ModuleZi = 'abs(Zi)'
+echo "Zi_TAB"
+print Zi;
+print ModuleZi;
+echo "Zi_END"
+
+.endc
+
+
 
