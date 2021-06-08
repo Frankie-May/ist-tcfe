@@ -129,9 +129,9 @@ meas ac lowf WHEN gain=bond CROSS=1;
 meas ac highf WHEN gain=bond CROSS=LAST;
 meas ac vout_t FIND gain AT=1000;
 
-let Bandwidth = 'highf-lowf';
-let LowerCutOffF = lowf;
-let HigherCutOffF = highf;
+let Bandwidth = '(highf-lowf)*2*pi';
+let LowerCutOffF = lowf*2*pi;
+let HigherCutOffF = highf*2*pi;
 let MeanFreq = 'sqrt(lowf*highf)';
 let FreqDeviation = 'abs(MeanFreq - 1000)'
 let BandpassGain = '10^(vecmax(gain)/20)';
