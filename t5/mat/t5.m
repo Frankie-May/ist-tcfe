@@ -8,22 +8,22 @@ R2=100e3;
 
 %Low Frequency Cut
 
-Rlcut=2.4e3;
-Clcut=1e-6;
+Rlcut=1e3;
+Clcut=220e-9;
 
 %High Frequency Cut
 
-Rhcut=0.01e3;
-Chcut=1e-6;
+Rhcut=0.5e3;
+Chcut=220e-9;
 
 
 retval = 0;
 
 function retval = transf (s)
-	Rlcut=2.4e3;
-	Clcut=1e-6;
-	Rhcut=0.01e3;
-	Chcut=1e-6;
+	Rlcut=1e3;
+	Clcut=220e-9;
+	Rhcut=0.5e3;
+	Chcut=220e-9;
 	R1=1e3;
 	R2=100e3;
   retval = ((Rlcut*Clcut*s)/(1+Rlcut*Clcut*s))*(1+(R2)/(R1))*((1)/(1+Rhcut*Chcut*s));
@@ -63,10 +63,10 @@ fprintf(fileoutp , "Gain ($\\omega_0$) & %f \\\\ \\hline \n" , (abs(transf (omeg
 fprintf(fileoutp , "Gain ($\\omega_0$) [dB] & %f \\\\ \\hline \n" , 20*log10 (abs(transf (omega_0*j))));
 fprintf(fileoutp , "Gain ($2000\\pi$) & %f \\\\ \\hline \n" ,  (abs(transf (2000*pi()*j))));
 fprintf(fileoutp , "Gain ($2000\\pi$) [dB] & %f \\\\ \\hline \n" , 20*log10 (abs(transf (2000*pi()*j))));
-fprintf(fileoutp , "Input Impedance $Z_in$ [kOhm] & %f%+fj \\\\ \\hline \n" , real(Zi) , imag(Zi));
-fprintf(fileoutp , "Input Impedance $Z_in$ absolute value [kOhm] & %f \\\\ \\hline \n" , abs(Zi));
-fprintf(fileoutp , "Output Impedance $Z_in$ [kOhm] & %f%+fj \\\\ \\hline \n" , real(Zo) , imag(Zo));
-fprintf(fileoutp , "Output Impedance $Z_out$ absolute value [kOhm] & %f \\\\ \\hline \n" , abs(Zo));
+fprintf(fileoutp , "Input Impedance $Z_{in}$ [kOhm] & %f%+fj \\\\ \\hline \n" , real(Zi) , imag(Zi));
+fprintf(fileoutp , "Input Impedance $Z_{in}$ absolute value [kOhm] & %f \\\\ \\hline \n" , abs(Zi));
+fprintf(fileoutp , "Output Impedance $Z_{out}$ [kOhm] & %f%+fj \\\\ \\hline \n" , real(Zo) , imag(Zo));
+fprintf(fileoutp , "Output Impedance $Z_{out}$ absolute value [kOhm] & %f \\\\ \\hline \n" , abs(Zo));
 fclose (fileoutp);
 
 while (i <= 100)

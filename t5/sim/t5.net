@@ -48,12 +48,12 @@ CIRCUIT
 
 
 
-.param Ci_val = 1E-6;
-.param Ri_val = 2.4k;
+.param Ci_val = 220E-9;
+.param Ri_val = 1k;
 .param R4_val = 1k;
 .param R3_val = 100k;
-.param Ro_val = 0.01k;
-.param Co_val = 1E-6;
+.param Ro_val = 0.5k;
+.param Co_val = 220E-9;
 
 .csparam Ci_val = {Ci_val};
 .csparam Ri_val = {Ri_val};
