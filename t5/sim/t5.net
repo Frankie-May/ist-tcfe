@@ -49,10 +49,10 @@ CIRCUIT
 
 
 .param Ci_val = 1E-6;
-.param Ri_val = 100k;
+.param Ri_val = 2.4k;
 .param R4_val = 1k;
 .param R3_val = 100k;
-.param Ro_val = 1k;
+.param Ro_val = 0.01k;
 .param Co_val = 1E-6;
 
 .csparam Ci_val = {Ci_val};
@@ -110,29 +110,32 @@ echo "voinout_FIG"
 
 *frequency analysis
 ac dec 10 .01 100MEG
-plot vdb(outr)
-plot vp(outr)
+plot 'vdb(outr)-vdb(in)'
+plot 'vp(outr)-vp(in)'
 
 echo "vo1_FIG"
-hardcopy vo1.ps vdb(outr)
+hardcopy vo1.ps 'vdb(outr)-vdb(in)'
 echo "vo1out_FIG"
 
 echo "voph_FIG"
-hardcopy voph.ps vp(outr)
+hardcopy voph.ps 'vp(outr)-vp(in)'
 echo "vophout_FIG"
 
 *Frequency Analysis Measurements
 let gain = 'vdb(outr)-vdb(in)';
-let bond = 'vecmax(gain)-3';
+
+meas ac max_gain FIND gain AT=1000;
+
+let bound = 'max_gain-3';
 
 meas ac lowf WHEN gain=bond CROSS=1;
 meas ac highf WHEN gain=bond CROSS=LAST;
-meas ac vout_t FIND gain AT=1000;
+
 
 let Bandwidth = '(highf-lowf)*2*pi';
 let LowerCutOffF = lowf*2*pi;
 let HigherCutOffF = highf*2*pi;
-let MeanFreq = 'sqrt(lowf*highf)';
+let MeanFreq = 'sqrt(LowerCutOffF*HigherCutOffF)';
 let FreqDeviation = 'abs(MeanFreq - 1000*2*pi)'
 let BandpassGain = '10^(vecmax(gain)/20)';
 let BandpassGaindB = 'vecmax(gain)';
@@ -156,10 +159,11 @@ let resist = '(Ri_val + R4_val + R3_val + Ro_val)/1000';
 let capacit = '(Ci_val + Co_val)*1000000'
 let Cost = 'OPAMPcost + resist + capacit'
 
-let Merit = '1/(Cost * (GainDeviation + FreqDeviation + 10E-6))'
+let Merit = '1/(Cost * (GainDeviation + FreqDeviation + 10^-6))'
 
 echo "MERIT_TAB"
 print Cost;
+print OPAMPcost;
 print FreqDeviation;
 print GainDeviation;
 print Merit;

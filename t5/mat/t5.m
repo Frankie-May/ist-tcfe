@@ -8,21 +8,21 @@ R2=100e3;
 
 %Low Frequency Cut
 
-Rlcut=100e3;
+Rlcut=2.4e3;
 Clcut=1e-6;
 
 %High Frequency Cut
 
-Rhcut=1e3;
+Rhcut=0.01e3;
 Chcut=1e-6;
 
 
 retval = 0;
 
 function retval = transf (s)
-	Rlcut=100e3;
+	Rlcut=2.4e3;
 	Clcut=1e-6;
-	Rhcut=1e3;
+	Rhcut=0.01e3;
 	Chcut=1e-6;
 	R1=1e3;
 	R2=100e3;
