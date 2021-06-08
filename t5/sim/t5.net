@@ -124,7 +124,7 @@ echo "vophout_FIG"
 *Frequency Analysis Measurements
 let gain = 'vdb(outr)-vdb(in)';
 
-meas ac maxgain FIND gain AT=1000;
+meas ac maxgain FIND gain AT=1000
 
 let bound = 'maxgain-3';
 
@@ -135,12 +135,13 @@ let LowerCutOffF = lowf*2*pi;
 let HigherCutOffF = highf*2*pi;
 let MeanFreq = 'sqrt(LowerCutOffF*HigherCutOffF)';
 let FreqDeviation = 'abs(MeanFreq - 1000*2*pi)';
+let MeanFreqHz = 'MeanFreq/(2*pi)';
 
-meas ac gainmean FIND gain AT='MeanFreq/(2*pi)';
+meas ac gainmean FIND gain AT=MeanFreqHz;
 
 let BandpassGainMean = '10^(gainmean/20)';
 let BandpassGainMeandB = gainmean;
-let BandpassGain = '10^(maxgain)/20)';
+let BandpassGain = '10^((maxgain)/20)';
 let BandpassGaindB = 'maxgain';
 let GainDeviation = abs(BandpassGaindB-40);
 
